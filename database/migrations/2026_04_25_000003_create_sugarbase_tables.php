@@ -11,39 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // TABEL AKUN (Parent Table)
-        Schema::create('akun', function (Blueprint $table) {
-            $table->id('id_akun')->comment('Primary key akun');
-            $table->string('nama', 100)->comment('Nama lengkap');
-            $table->string('email', 100)->unique()->comment('Email unik untuk login');
-            $table->string('password', 255)->comment('Password terenkripsi');
-            $table->enum('role', ['admin', 'pelanggan'])->comment('admin / pelanggan');
-            $table->enum('status_akun', ['aktif', 'nonaktif'])->default('aktif')->comment('aktif / nonaktif');
-            $table->date('tanggal_daftar')->comment('Tanggal registrasi');
-            $table->string('no_hp', 15)->nullable()->comment('Nomor HP opsional');
-            $table->timestamps();
-        });
-
-        // TABEL ADMIN (Child dari AKUN)
-        Schema::create('admin', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_akun')->comment('FK ke AKUN');
-            $table->enum('level_akses', ['superadmin', 'admin'])->comment('superadmin / admin');
-            $table->enum('status_admin', ['aktif', 'nonaktif'])->default('aktif')->comment('aktif / nonaktif');
-            $table->primary('id_akun');
-            $table->foreign('id_akun')->references('id_akun')->on('akun')->onDelete('cascade')->onUpdate('cascade');
-        });
-
-        // TABEL PELANGGAN (Child dari AKUN)
-        Schema::create('pelanggan', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_akun')->comment('FK ke AKUN');
-            $table->date('tanggal_lahir')->nullable()->comment('Tanggal lahir opsional');
-            $table->enum('jenis_kelamin', ['L', 'P'])->nullable()->comment('L / P');
-            $table->string('foto_profil', 255)->nullable()->comment('Path foto profil');
-            $table->enum('status_member', ['reguler', 'premium'])->default('reguler')->comment('reguler / premium');
-            $table->primary('id_akun');
-            $table->foreign('id_akun')->references('id_akun')->on('akun')->onDelete('cascade')->onUpdate('cascade');
-        });
-
         // TABEL KATEGORI
         Schema::create('kategori', function (Blueprint $table) {
             $table->id('id_kategori')->comment('Primary key kategori');
@@ -52,11 +19,11 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // TABEL PRODUK
+        // TABEL PRODUK (menggunakan users table bawaan Laravel)
         Schema::create('produk', function (Blueprint $table) {
             $table->id('id_produk')->comment('Primary key produk');
             $table->unsignedBigInteger('id_kategori')->nullable()->comment('FK ke KATEGORI');
-            $table->unsignedBigInteger('id_akun')->nullable()->comment('FK ke ADMIN yang mengelola');
+            $table->unsignedBigInteger('user_id')->nullable()->comment('FK ke users yang mengelola');
             $table->string('nama_produk', 100)->comment('Nama produk');
             $table->decimal('harga', 12, 2)->comment('Harga produk');
             $table->integer('stok')->default(0)->comment('Jumlah stok tersedia');
@@ -65,17 +32,17 @@ return new class extends Migration
             $table->string('deskripsi_produk', 255)->nullable()->comment('Deskripsi produk');
             $table->timestamps();
             $table->foreign('id_kategori')->references('id_kategori')->on('kategori')->onDelete('set null')->onUpdate('cascade');
-            $table->foreign('id_akun')->references('id_akun')->on('admin')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
         });
 
         // TABEL KERANJANG
         Schema::create('keranjang', function (Blueprint $table) {
             $table->id('id_keranjang')->comment('Primary key keranjang');
-            $table->unsignedBigInteger('id_akun')->nullable()->comment('FK ke PELANGGAN');
+            $table->unsignedBigInteger('user_id')->nullable()->comment('FK ke users (pelanggan)');
             $table->date('tanggal_dibuat')->comment('Tanggal keranjang dibuat');
             $table->enum('status_keranjang', ['aktif', 'checkout'])->default('aktif')->comment('aktif / checkout');
             $table->timestamps();
-            $table->foreign('id_akun')->references('id_akun')->on('pelanggan')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
 
         // TABEL KERANJANG_ITEM
@@ -94,12 +61,12 @@ return new class extends Migration
         // TABEL PESANAN
         Schema::create('pesanan', function (Blueprint $table) {
             $table->id('id_pesanan')->comment('Primary key pesanan');
-            $table->unsignedBigInteger('id_akun')->nullable()->comment('FK ke PELANGGAN');
+            $table->unsignedBigInteger('user_id')->nullable()->comment('FK ke users (pelanggan)');
             $table->date('tanggal_pesan')->comment('Tanggal pesanan dibuat');
             $table->decimal('total_harga', 12, 2)->comment('Total harga pesanan');
             $table->enum('status_pesanan', ['pending', 'diproses', 'dikirim', 'selesai', 'dibatalkan'])->default('pending')->comment('Status pesanan');
             $table->timestamps();
-            $table->foreign('id_akun')->references('id_akun')->on('pelanggan')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
         });
 
         // TABEL PESANAN_ITEM
@@ -141,13 +108,13 @@ return new class extends Migration
         // TABEL NOTIFIKASI
         Schema::create('notifikasi', function (Blueprint $table) {
             $table->id('id_notifikasi')->comment('Primary key notifikasi');
-            $table->unsignedBigInteger('id_akun')->nullable()->comment('FK ke AKUN (bisa admin atau pelanggan)');
+            $table->unsignedBigInteger('user_id')->nullable()->comment('FK ke users');
             $table->string('judul', 100)->comment('Judul notifikasi');
             $table->string('pesan', 255)->comment('Isi pesan notifikasi');
             $table->dateTime('waktu_kirim')->comment('Waktu notifikasi dikirim');
             $table->enum('status_baca', ['belum', 'sudah'])->default('belum')->comment('belum / sudah');
             $table->timestamps();
-            $table->foreign('id_akun')->references('id_akun')->on('akun')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -165,8 +132,5 @@ return new class extends Migration
         Schema::dropIfExists('keranjang');
         Schema::dropIfExists('produk');
         Schema::dropIfExists('kategori');
-        Schema::dropIfExists('pelanggan');
-        Schema::dropIfExists('admin');
-        Schema::dropIfExists('akun');
     }
 };
