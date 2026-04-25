@@ -25,29 +25,6 @@ SugarBase
     ├── Pesanan     → List pesanan, update status
     └── Pelanggan   → List & detail pelanggan
 ```
-
----
-
-## ⚠️ PENTING SEBELUM MULAI
-
-Tambahkan migration ini **pertama** sebelum fitur apapun:
-
-```bash
-php artisan make:migration add_role_to_users_table
-```
-
-Isi method `up()`:
-```php
-$table->enum('role', ['admin', 'pelanggan'])->default('pelanggan')->after('name');
-```
-
-Lalu jalankan:
-```bash
-php artisan migrate
-```
-
----
-
 ---
 
 # 👤 ANGGOTA A — Auth, Layout & Katalog
