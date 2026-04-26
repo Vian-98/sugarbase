@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title') - Sugarbase</title>
+    <title>@yield('title', 'SugarBase') - E-Commerce</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         * {
             margin: 0;
@@ -20,19 +21,23 @@
             --dark: #1f2937;
             --light: #f3f4f6;
             --border: #e5e7eb;
+            --bg-light: #fbfbfb;
+            --card-bg: #e8f9ff;
+            --border-accent: #c4d9ff;
+            --highlight: #c5baff;
         }
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--light);
+            background: var(--bg-light);
             color: var(--dark);
         }
         
-        /* TOP NAVIGATION */
+        /* ─── TOP NAVIGATION ─── */
         .top-nav {
             background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 15px 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -42,294 +47,335 @@
         }
         
         .nav-brand {
-            font-size: 1.5em;
+            font-size: 1.3em;
             font-weight: bold;
-            color: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         
         .nav-brand:hover {
-            color: var(--secondary);
+            opacity: 0.8;
         }
         
-        .nav-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5em;
-            cursor: pointer;
-            color: var(--primary);
+        .nav-center {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            margin: 0 20px;
         }
-        
+
+        .search-bar {
+            width: 300px;
+            padding: 10px 16px;
+            border: 2px solid var(--border-accent);
+            border-radius: 24px;
+            background: var(--card-bg);
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 8px rgba(102, 126, 234, 0.2);
+        }
+
         .nav-right {
             display: flex;
             align-items: center;
             gap: 20px;
         }
-        
-        /* SIDEBAR */
-        .container {
-            display: flex;
-            min-height: calc(100vh - 60px);
+
+        .nav-icon-btn {
+            background: none;
+            border: none;
+            font-size: 1.3em;
+            cursor: pointer;
+            position: relative;
+            padding: 8px;
+            transition: all 0.3s ease;
         }
-        
-        .sidebar {
-            width: 250px;
-            background: white;
-            border-right: 1px solid var(--border);
-            overflow-y: auto;
-            transition: transform 0.3s ease;
+
+        .nav-icon-btn:hover {
+            transform: scale(1.1);
         }
-        
-        .sidebar-menu {
-            list-style: none;
-            padding: 20px 0;
-        }
-        
-        .sidebar-menu li {
-            margin: 0;
-        }
-        
-        .sidebar-menu a {
+
+        .badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px 20px;
-            color: var(--dark);
-            text-decoration: none;
+            justify-content: center;
+            font-size: 0.75em;
+            font-weight: bold;
+        }
+
+        .avatar-dropdown {
+            position: relative;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
             transition: all 0.3s ease;
-            border-left: 3px solid transparent;
         }
-        
-        .sidebar-menu a:hover,
-        .sidebar-menu a.active {
-            background: var(--light);
-            color: var(--primary);
-            border-left-color: var(--primary);
-            padding-left: 17px;
+
+        .avatar:hover {
+            transform: scale(1.1);
         }
-        
-        .sidebar-menu a.active {
-            font-weight: 600;
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            min-width: 180px;
+            z-index: 1000;
+            margin-top: 8px;
         }
-        
-        .sidebar-menu .icon {
-            font-size: 1.2em;
-            min-width: 24px;
+
+        .dropdown-menu.active {
+            display: block;
         }
-        
-        /* MAIN CONTENT */
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-        
-        .page-header {
-            margin-bottom: 30px;
-        }
-        
-        .page-header h1 {
-            font-size: 2em;
+
+        .dropdown-menu a,
+        .dropdown-menu form button {
+            display: block;
+            width: 100%;
+            padding: 12px 16px;
+            text-decoration: none;
             color: var(--dark);
-            margin-bottom: 5px;
+            text-align: left;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.2s ease;
         }
-        
-        .page-header p {
-            color: #6b7280;
+
+        .dropdown-menu a:hover,
+        .dropdown-menu form button:hover {
+            background: var(--light);
         }
-        
-        /* TABLET & MOBILE */
+
+        .dropdown-menu form button {
+            color: var(--danger);
+        }
+
+        /* ─── CONTENT AREA ─── */
+        .main-content {
+            padding: 20px 0;
+            min-height: calc(100vh - 70px - 80px);
+            padding-bottom: 100px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* ─── BOTTOM NAVIGATION (MOBILE) ─── */
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid var(--border);
+            padding: 8px 0;
+            z-index: 99;
+        }
+
+        .bottom-nav-items {
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+        }
+
+        .bottom-nav-items a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 10px;
+            text-decoration: none;
+            color: #999;
+            font-size: 0.8em;
+            transition: color 0.3s ease;
+        }
+
+        .bottom-nav-items a:hover,
+        .bottom-nav-items a.active {
+            color: var(--primary);
+        }
+
+        .nav-icon {
+            font-size: 1.5em;
+        }
+
+        /* ─── RESPONSIVE ─── */
         @media (max-width: 768px) {
-            .nav-toggle {
+            .top-nav {
+                gap: 10px;
+            }
+
+            .nav-center {
+                display: none;
+            }
+
+            .search-bar {
+                width: 40px;
+                padding: 8px;
+                border: none;
+            }
+
+            .main-content {
+                padding-bottom: 120px;
+            }
+
+            .bottom-nav {
                 display: block;
             }
-            
-            .sidebar {
-                position: fixed;
-                left: 0;
-                top: 60px;
-                height: calc(100vh - 60px);
-                width: 250px;
-                z-index: 99;
-                transform: translateX(-100%);
+        }
+
+        @media (max-width: 480px) {
+            .nav-brand {
+                font-size: 1em;
             }
-            
-            .sidebar.active {
-                transform: translateX(0);
-                box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-            }
-            
-            .main-content {
-                width: 100%;
-            }
-            
-            .page-header h1 {
-                font-size: 1.5em;
-            }
-            
+
             .nav-right {
                 gap: 10px;
             }
         }
-        
-        @media (max-width: 480px) {
-            .top-nav {
-                padding: 12px 15px;
-            }
-            
-            .nav-brand {
-                font-size: 1.2em;
-            }
-            
-            .main-content {
-                padding: 15px;
-            }
-            
-            .page-header h1 {
-                font-size: 1.3em;
-            }
-        }
-        
-        /* CONTENT SECTIONS */
-        .card {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border: 1px solid var(--border);
-            margin-bottom: 20px;
-        }
-        
-        .card h2 {
-            color: var(--primary);
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            border-radius: 6px;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            font-size: 0.95em;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-        
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-        }
-        
-        .btn-secondary {
-            background: var(--light);
-            color: var(--dark);
-            border: 1px solid var(--border);
-        }
-        
-        .btn-secondary:hover {
-            background: var(--border);
-        }
     </style>
 </head>
 <body>
+
     <!-- TOP NAVIGATION -->
-    <div class="top-nav">
-        <a href="/" class="nav-brand">🍬 Sugarbase</a>
-        <div class="nav-right">
-            <button class="nav-toggle" onclick="toggleSidebar()">☰</button>
+    <nav class="top-nav">
+        <a href="/" class="nav-brand">
+            <span style="font-size: 1.2em;">🍰</span>
+            SugarBase
+        </a>
+
+        <div class="nav-center">
+            <input type="text" class="search-bar" placeholder="Cari produk..." id="searchInput">
         </div>
-    </div>
-    
-    <!-- CONTAINER -->
-    <div class="container">
-        <!-- SIDEBAR -->
-        <aside class="sidebar" id="sidebar">
-            <ul class="sidebar-menu">
-                <li>
-                    <a href="/" class="@if(request()->is('/')) active @endif">
-                        <span class="icon">📊</span>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/produk" class="@if(request()->is('produk*')) active @endif">
-                        <span class="icon">📦</span>
-                        <span>Produk</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/kategori" class="@if(request()->is('kategori*')) active @endif">
-                        <span class="icon">📂</span>
-                        <span>Kategori</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/pesanan" class="@if(request()->is('pesanan*')) active @endif">
-                        <span class="icon">🛒</span>
-                        <span>Pesanan</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/pelanggan" class="@if(request()->is('pelanggan*')) active @endif">
-                        <span class="icon">👥</span>
-                        <span>Pelanggan</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/pembayaran" class="@if(request()->is('pembayaran*')) active @endif">
-                        <span class="icon">💳</span>
-                        <span>Pembayaran</span>
-                    </a>
-                </li>
-            </ul>
-        </aside>
-        
-        <!-- MAIN CONTENT -->
-        <main class="main-content">
+
+        <div class="nav-right">
+            <!-- Notification Bell -->
+            <button class="nav-icon-btn" id="notifBtn">
+                🔔
+                <span class="badge" style="display: none;">3</span>
+            </button>
+
+            <!-- Cart -->
+            <button class="nav-icon-btn" onclick="window.location.href='/keranjang'">
+                🛒
+                <span class="badge" style="display: none;">2</span>
+            </button>
+
+            <!-- Avatar Dropdown -->
+            <div class="avatar-dropdown">
+                <div class="avatar" id="avatarBtn">
+                    {{ substr(auth()->user()->name ?? 'U', 0, 1) }}
+                </div>
+                <div class="dropdown-menu" id="avatarMenu">
+                    <a href="/profil">👤 Profil</a>
+                    <a href="/pesanan/saya">📦 Pesanan Saya</a>
+                    <a href="/riwayat">📋 Riwayat</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit">🚪 Logout</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <div class="container">
             @yield('content')
-        </main>
-    </div>
-    
+        </div>
+    </main>
+
+    <!-- BOTTOM NAVIGATION (MOBILE) -->
+    <nav class="bottom-nav">
+        <ul class="bottom-nav-items">
+            <li><a href="/" class="nav-link {{ request()->is('/') || request()->is('beranda') ? 'active' : '' }}">
+                <span class="nav-icon">🏠</span>
+                <span>Beranda</span>
+            </a></li>
+            <li><a href="/katalog" class="nav-link {{ request()->is('katalog*') ? 'active' : '' }}">
+                <span class="nav-icon">🍰</span>
+                <span>Katalog</span>
+            </a></li>
+            <li><a href="/keranjang" class="nav-link {{ request()->is('keranjang*') ? 'active' : '' }}">
+                <span class="nav-icon">🛒</span>
+                <span>Keranjang</span>
+            </a></li>
+            <li><a href="/pesanan/saya" class="nav-link {{ request()->is('pesanan*') ? 'active' : '' }}">
+                <span class="nav-icon">📦</span>
+                <span>Pesanan</span>
+            </a></li>
+            <li><a href="/profil" class="nav-link {{ request()->is('profil*') ? 'active' : '' }}">
+                <span class="nav-icon">👤</span>
+                <span>Profil</span>
+            </a></li>
+        </ul>
+    </nav>
+
     <script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('active');
-        }
-        
-        // Close sidebar saat klik di area lain (mobile)
+        // Avatar Dropdown Toggle
+        document.getElementById('avatarBtn').addEventListener('click', function() {
+            document.getElementById('avatarMenu').classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
         document.addEventListener('click', function(event) {
-            const sidebar = document.getElementById('sidebar');
-            const toggle = document.querySelector('.nav-toggle');
-            
-            if (!sidebar.contains(event.target) && !toggle.contains(event.target)) {
-                if (window.innerWidth <= 768) {
-                    sidebar.classList.remove('active');
+            const avatar = document.getElementById('avatarBtn');
+            const menu = document.getElementById('avatarMenu');
+            if (!avatar.contains(event.target) && !menu.contains(event.target)) {
+                menu.classList.remove('active');
+            }
+        });
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                const q = this.value;
+                if (q.trim()) {
+                    window.location.href = '/katalog?q=' + encodeURIComponent(q);
                 }
             }
         });
-        
-        // Update active menu on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            const links = document.querySelectorAll('.sidebar-menu a');
-            links.forEach(link => {
-                if (link.href === window.location.href) {
-                    link.classList.add('active');
-                }
-            });
-        });
     </script>
+
 </body>
 </html>
