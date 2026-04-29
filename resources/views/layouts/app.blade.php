@@ -49,9 +49,7 @@
         .nav-brand {
             font-size: 1.3em;
             font-weight: bold;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--dark);
             text-decoration: none;
             display: flex;
             align-items: center;

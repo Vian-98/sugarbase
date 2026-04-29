@@ -6,8 +6,12 @@
     <title>Daftar – SugarBase</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+        }
         body {
-            background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             min-height: 100vh;
         }
     </style>
@@ -21,7 +25,7 @@
 
             {{-- Logo --}}
             <div class="flex flex-col items-center mb-8">
-                <div class="w-16 h-16 bg-amber-400 rounded-full flex items-center justify-center shadow-md mb-3">
+                <div class="w-16 h-16 rounded-full flex items-center justify-center shadow-md mb-3" style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-white" fill="none"
                          viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -30,7 +34,7 @@
                                  2.704 2.704 0 00-3 0 2.704 2.704 0 01-1.5-.454M9 6l3-3 3 3m-3-3v12"/>
                     </svg>
                 </div>
-                <h1 class="text-2xl font-bold text-amber-700 tracking-wide">SugarBase</h1>
+                <h1 class="text-2xl font-bold tracking-wide" style="color: var(--primary);">SugarBase</h1>
                 <p class="text-sm text-gray-400 mt-1">Buat akun baru</p>
             </div>
 
@@ -51,7 +55,7 @@
                         autocomplete="name"
                         placeholder="Nama Anda"
                         class="w-full px-4 py-2.5 rounded-lg border
-                               {{ $errors->has('name') ? 'border-red-400 bg-red-50 focus:ring-red-300' : 'border-gray-300 focus:ring-amber-300' }}
+                               {{ $errors->has('name') ? 'border-red-400 bg-red-50 focus:ring-red-300' : 'border-gray-300 focus:ring-purple-300' }}
                                focus:outline-none focus:ring-2 text-gray-800 text-sm transition"
                     >
                     @error('name')
@@ -72,7 +76,7 @@
                         autocomplete="email"
                         placeholder="contoh@email.com"
                         class="w-full px-4 py-2.5 rounded-lg border
-                               {{ $errors->has('email') ? 'border-red-400 bg-red-50 focus:ring-red-300' : 'border-gray-300 focus:ring-amber-300' }}
+                               {{ $errors->has('email') ? 'border-red-400 bg-red-50 focus:ring-red-300' : 'border-gray-300 focus:ring-purple-300' }}
                                focus:outline-none focus:ring-2 text-gray-800 text-sm transition"
                     >
                     @error('email')
@@ -93,7 +97,7 @@
                             autocomplete="new-password"
                             placeholder="Minimal 8 karakter"
                             class="w-full px-4 py-2.5 pr-10 rounded-lg border
-                                   {{ $errors->has('password') ? 'border-red-400 bg-red-50 focus:ring-red-300' : 'border-gray-300 focus:ring-amber-300' }}
+                                   {{ $errors->has('password') ? 'border-red-400 bg-red-50 focus:ring-red-300' : 'border-gray-300 focus:ring-purple-300' }}
                                    focus:outline-none focus:ring-2 text-gray-800 text-sm transition"
                         >
                         <button type="button"
@@ -127,7 +131,7 @@
                             autocomplete="new-password"
                             placeholder="Ulangi password"
                             class="w-full px-4 py-2.5 pr-10 rounded-lg border
-                                   {{ $errors->has('password_confirmation') ? 'border-red-400 bg-red-50 focus:ring-red-300' : 'border-gray-300 focus:ring-amber-300' }}
+                                   {{ $errors->has('password_confirmation') ? 'border-red-400 bg-red-50 focus:ring-red-300' : 'border-gray-300 focus:ring-purple-300' }}
                                    focus:outline-none focus:ring-2 text-gray-800 text-sm transition"
                         >
                         <button type="button"
@@ -150,8 +154,8 @@
 
                 {{-- Submit --}}
                 <button type="submit"
-                        class="w-full bg-amber-400 hover:bg-amber-500 active:bg-amber-600
-                               text-white font-semibold py-2.5 rounded-lg transition text-sm shadow-sm">
+                        class="w-full text-white font-semibold py-2.5 rounded-lg transition text-sm shadow-sm"
+                        style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);">
                     Buat Akun
                 </button>
             </form>
@@ -159,7 +163,7 @@
             {{-- Login Link --}}
             <p class="mt-6 text-center text-sm text-gray-500">
                 Sudah punya akun?
-                <a href="{{ url('/login') }}" class="text-amber-600 font-medium hover:underline">
+                <a href="{{ url('/login') }}" class="font-medium hover:underline" style="color: var(--primary);">
                     Masuk
                 </a>
             </p>
