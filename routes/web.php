@@ -16,3 +16,8 @@ Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan.index
 Route::get('/pelanggan', [PelangganController::class, 'index'])->name('pelanggan.index');
 Route::get('/pembayaran', [PembayaranController::class, 'index'])->name('pembayaran.index');
 Route::get('/qr', function () { return view('qrcode'); })->name('qr');
+Route::post('/kategori/store', [KategoriController::class, 'store'])->name('kategori.store');
+
+Route::get('/notifikasi', function () {
+    return view('notifikasi.index');
+})->name('notifikasi.index');

@@ -242,6 +242,29 @@
         .btn-secondary:hover {
             background: var(--border);
         }
+        
+        .notification {
+            position: relative;
+            font-size: 1.4em;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            min-width: 18px;
+            height: 18px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px;
+        }
     </style>
 </head>
 <body>
@@ -249,7 +272,16 @@
     <div class="top-nav">
         <a href="/" class="nav-brand">🍬 Sugarbase</a>
         <div class="nav-right">
-            <button class="nav-toggle" onclick="toggleSidebar()">☰</button>
+
+        <a href="/notifikasi" class="notification">
+            🔔
+            @if($unreadCount > 0)
+                <span class="badge">{{ $unreadCount }}</span>
+            @endif
+        </a>
+
+        <button class="nav-toggle" onclick="toggleSidebar()">☰</button>
+
         </div>
     </div>
     
