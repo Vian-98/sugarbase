@@ -7,6 +7,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\NotifikasiController;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.view');
@@ -17,7 +18,6 @@ Route::get('/pelanggan', [PelangganController::class, 'index'])->name('pelanggan
 Route::get('/pembayaran', [PembayaranController::class, 'index'])->name('pembayaran.index');
 Route::get('/qr', function () { return view('qrcode'); })->name('qr');
 Route::post('/kategori/store', [KategoriController::class, 'store'])->name('kategori.store');
-
-Route::get('/notifikasi', function () {
-    return view('notifikasi.index');
-})->name('notifikasi.index');
+Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi.index');
+Route::patch('/notifikasi/{id}/read', [NotifikasiController::class, 'markAsRead'])->name('notifikasi.read');
+Route::patch('/notifikasi/read-all', [NotifikasiController::class, 'markAllAsRead'])->name('notifikasi.readAll');
