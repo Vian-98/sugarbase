@@ -1,11 +1,5 @@
-<?php
-
-namespace App\Http\Controllers;
-
-class ProdukController extends Controller
+public function show($id)
 {
-    public function index()
-    {
-        return view('produk.index');
-    }
+    $produk = \App\Models\Produk::findOrFail($id);
+    return view('produk.show', compact('produk'));
 }
