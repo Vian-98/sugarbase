@@ -18,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
 
             $unreadCount = DB::table('notifikasi')
-                ->where('is_read', 0)
+                ->where('status_baca', 'belum')
                 ->count();
 
             $view->with('unreadCount', $unreadCount);
