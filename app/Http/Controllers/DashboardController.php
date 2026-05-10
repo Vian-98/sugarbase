@@ -14,7 +14,7 @@ class DashboardController extends Controller
         $totalPesanan = DB::table('pesanan')->count();
         $totalKategori = DB::table('kategori')->count();
         
-        return view('dashboard', [
+        return view('admin.dashboard', [
             'totalAkun' => $totalUser,
             'totalProduk' => $totalProduk,
             'totalPesanan' => $totalPesanan,

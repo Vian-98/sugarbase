@@ -1,4 +1,4 @@
-# 👥 PEMBAGIAN TUGAS TIM SUGARBASE
+# � PEMBAGIAN TUGAS TIM SUGARBASE
 ## Proyek: E-Commerce Dessert — Laravel Full-Stack
 ### Format: 3 Orang × Full-Stack (Frontend + Backend + Database)
 
@@ -25,9 +25,10 @@ SugarBase
     ├── Pesanan     → List pesanan, update status
     └── Pelanggan   → List & detail pelanggan
 ```
+
 ---
 
-# 👤 ANGGOTA A — Auth, Layout & Katalog
+# 👤 ANGGOTA A — Auth, Layout & Katalog ✅ COMPLETE
 
 ## Tanggung Jawab Utama:
 Halaman Login, Register, struktur Layout + Sidebar + Navbar, halaman Beranda, halaman Katalog (filter + sort), dan fitur Search global.
@@ -36,14 +37,15 @@ Halaman Login, Register, struktur Layout + Sidebar + Navbar, halaman Beranda, ha
 
 ## 📋 DAFTAR TASK DETAIL
 
-### A1. Migration Tambahan
+### A1. Migration Tambahan ✅
 File: `database/migrations/2026_04_25_000004_add_role_to_users_table.php`
 - Tambahkan kolom `role` enum ('admin', 'pelanggan') ke tabel `users`
 - Jalankan `php artisan migrate`
+- **Status**: ✅ COMPLETED
 
 ---
 
-### A2. Halaman Login
+### A2. Halaman Login ✅
 **Route:** `GET /login` | `POST /login`
 **Controller:** `AuthController@showLogin`, `AuthController@login`
 **View:** `resources/views/auth/login.blade.php`
@@ -76,10 +78,11 @@ public function login(Request $request)
     return back()->withErrors(['email' => 'Email atau password salah.']);
 }
 ```
+- **Status**: ✅ COMPLETED
 
 ---
 
-### A3. Halaman Register
+### A3. Halaman Register ✅
 **Route:** `GET /register` | `POST /register`
 **Controller:** `AuthController@showRegister`, `AuthController@register`
 **View:** `resources/views/auth/register.blade.php`
@@ -89,10 +92,11 @@ Tampilan yang harus ada:
 - Role default otomatis = 'pelanggan' (tidak ditampilkan ke user)
 - Validasi: email unique, password minimal 8 karakter, konfirmasi password cocok
 - Redirect ke `/beranda` setelah berhasil daftar + auto-login
+- **Status**: ✅ COMPLETED
 
 ---
 
-### A4. Middleware & Auth Guard
+### A4. Middleware & Auth Guard ✅
 **File baru:** `app/Http/Middleware/AdminMiddleware.php`
 
 ```php
@@ -113,10 +117,11 @@ Daftarkan di `bootstrap/app.php`:
     ]);
 })
 ```
+- **Status**: ✅ COMPLETED
 
 ---
 
-### A5. Layout Utama (Pelanggan)
+### A5. Layout Utama (Pelanggan) ✅
 **File:** `resources/views/layouts/app.blade.php`
 
 Struktur halaman:
@@ -136,10 +141,11 @@ Komponen yang harus ada di layout ini:
 - **Navbar:** Logo, search bar (input global), bell icon + badge count unread notif, cart icon + badge count, avatar dropdown (Profil, Riwayat Pesanan, Logout)
 - **Bottom Nav Mobile:** Beranda, Katalog, Keranjang, Pesanan, Profil
 - Include CSS color: `#FBFBFB` (background), `#E8F9FF` (card), `#C4D9FF` (border/accent), `#C5BAFF` (highlight)
+- **Status**: ✅ COMPLETED
 
 ---
 
-### A6. Layout Admin
+### A6. Layout Admin ✅
 **File:** `resources/views/layouts/admin.blade.php`
 
 Struktur:
@@ -163,10 +169,11 @@ Fitur sidebar:
 - Active link highlight menggunakan `request()->routeIs('admin.*')`
 - Search bar di dalam sidebar untuk filter menu
 - Collapse ke icon saja di layar kecil
+- **Status**: ✅ COMPLETED
 
 ---
 
-### A7. Halaman Beranda (Pelanggan)
+### A7. Halaman Beranda (Pelanggan) ✅
 **Route:** `GET /beranda` (atau `/`)
 **Controller:** `BerandaController@index`
 **View:** `resources/views/beranda/index.blade.php`
@@ -201,10 +208,11 @@ $produkTerlaris = Produk::where('status_produk', 'aktif')
 
 **7e. Banner Promo** (opsional)
 - Banner statis atau dari database
+- **Status**: ✅ COMPLETED
 
 ---
 
-### A8. Halaman Katalog
+### A8. Halaman Katalog ✅
 **Route:** `GET /katalog`
 **Controller:** `KatalogController@index`
 **View:** `resources/views/katalog/index.blade.php`
@@ -241,10 +249,11 @@ Tampilan:
 - Filter bar di atas grid (tab kategori + sort dropdown)
 - Grid produk: 2 kolom mobile, 3 kolom tablet, 4 kolom desktop
 - Pagination laravel di bawah
+- **Status**: ✅ COMPLETED
 
 ---
 
-### A9. Search Real-Time (Global)
+### A9. Search Real-Time (Global) ✅
 **Route:** `GET /search` (AJAX)
 **Controller:** `SearchController@index`
 **View partial:** `resources/views/components/search-results.blade.php`
@@ -266,10 +275,11 @@ public function index(Request $request)
     return response()->json($produk);
 }
 ```
+- **Status**: ✅ COMPLETED
 
 ---
 
-### A10. Model yang Dibuat Anggota A
+### A10. Model yang Dibuat Anggota A ✅
 ```bash
 php artisan make:model Kategori
 php artisan make:model Produk
@@ -304,10 +314,11 @@ public function produk()
     return $this->hasMany(Produk::class, 'id_kategori', 'id_kategori');
 }
 ```
+- **Status**: ✅ COMPLETED
 
 ---
 
-### A11. Routes yang Dibuat Anggota A
+### A11. Routes yang Dibuat Anggota A ✅
 Tambahkan ke `routes/web.php`:
 ```php
 /* Auth */
@@ -326,28 +337,30 @@ Route::middleware('auth')->group(function () {
     Route::get('/search', [SearchController::class, 'index'])->name('search');
 });
 ```
+- **Status**: ✅ COMPLETED
 
 ---
 
-### A12. Checklist Anggota A
-- [ ] Migration `add_role_to_users_table` berjalan
-- [ ] Login berhasil + redirect berdasarkan role
-- [ ] Register membuat akun dengan role 'pelanggan'
-- [ ] Middleware admin menolak pelanggan masuk area admin
-- [ ] Layout app.blade.php tampil di semua halaman pelanggan
-- [ ] Layout admin.blade.php tampil di semua halaman admin
-- [ ] Sidebar admin memiliki active link indicator
-- [ ] Beranda menampilkan: hero, kategori, produk terlaris, terbaru
-- [ ] Katalog dapat filter by kategori
-- [ ] Katalog dapat sort (harga naik, harga turun, terbaru)
-- [ ] Search real-time menghasilkan dropdown
-- [ ] Responsive: beranda & katalog tampil baik di mobile
+### A12. Checklist Anggota A ✅
+- [x] Migration `add_role_to_users_table` berjalan
+- [x] Login berhasil + redirect berdasarkan role
+- [x] Register membuat akun dengan role 'pelanggan'
+- [x] Middleware admin menolak pelanggan masuk area admin
+- [x] Layout app.blade.php tampil di semua halaman pelanggan
+- [x] Layout admin.blade.php tampil di semua halaman admin
+- [x] Sidebar admin memiliki active link indicator
+- [x] Beranda menampilkan: hero, kategori, produk terlaris, terbaru
+- [x] Katalog dapat filter by kategori
+- [x] Katalog dapat sort (harga naik, harga turun, terbaru)
+- [x] Search real-time menghasilkan dropdown
+- [x] Responsive: beranda & katalog tampil baik di mobile
+- **Status**: ✅ 100% COMPLETED & VERIFIED
 
 ---
 
 ---
 
-# 👤 ANGGOTA B — Keranjang, Pesanan & Pembayaran
+# 👤 ANGGOTA B — Keranjang, Pesanan & Pembayaran ⏳ PENDING
 
 ## Tanggung Jawab Utama:
 Halaman Detail Produk, Keranjang belanja, proses Checkout, halaman Pembayaran (pilih metode, konfirmasi, upload bukti), dan halaman Riwayat Pesanan milik pelanggan.
@@ -711,7 +724,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
 ---
 
-# 👤 ANGGOTA C — Tracking, Notifikasi & Admin Panel
+# 👤 ANGGOTA C — Tracking, Notifikasi & Admin Panel ⏳ PENDING
 
 ## Tanggung Jawab Utama:
 Order Tracking real-time, sistem Notifikasi (bell icon + badge), Admin Dashboard, Admin CRUD Produk, Admin CRUD Kategori, Admin manajemen Pelanggan, dan dark mode toggle (opsional).
