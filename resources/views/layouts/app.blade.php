@@ -297,7 +297,6 @@
             <!-- Cart -->
             <button class="nav-icon-btn" onclick="window.location.href='/keranjang'">
                 🛒
-                <span class="badge" style="display: none;">2</span>
             </button>
 
             <!-- Avatar Dropdown -->
