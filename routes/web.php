@@ -1,7 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\KatalogController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PembayaranController;
@@ -29,17 +35,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('/pesanan/{id}/status', [App\Http\Controllers\Admin\PesananController::class, 'updateStatus']);
     Route::post('/pembayaran/{id}/konfirmasi', [App\Http\Controllers\Admin\PembayaranController::class, 'konfirmasi']);
 });
-
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ProdukController;
-use App\Http\Controllers\KategoriController;
-use App\Http\Controllers\PesananController;
-use App\Http\Controllers\PelangganController;
-use App\Http\Controllers\PembayaranController;
-use App\Http\Controllers\BerandaController;
-use App\Http\Controllers\KatalogController;
-use App\Http\Controllers\SearchController;
 
 // ─── AUTH (guest only) ────────────────────────────────────────────────────────
 Route::middleware('guest')->group(function () {

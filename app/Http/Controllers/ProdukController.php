@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-public function show($id)
-{
-    $produk = \App\Models\Produk::findOrFail($id);
-    return view('produk.show', compact('produk'));
-}
-=======
 <?php
 
 namespace App\Http\Controllers;
@@ -19,13 +12,9 @@ class ProdukController extends Controller
         return view('produk.index');
     }
 
-    /**
-     * Display product detail page
-     */
     public function show($id)
     {
         $produk = Produk::with('kategori')->findOrFail($id);
         return view('produk.show', compact('produk'));
     }
 }
->>>>>>> origin/feat/auth-layout-katalog
