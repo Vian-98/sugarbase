@@ -8,6 +8,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\KatalogController;
 use App\Http\Controllers\SearchController;
@@ -45,6 +46,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/katalog', [KatalogController::class, 'index'])->name('katalog');
     Route::get('/search', [SearchController::class, 'index'])->name('search');
     Route::get('/produk/{id}', [ProdukController::class, 'show'])->name('produk.show');
+    Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi.index');
+    Route::patch('/notifikasi/{id}/read', [NotifikasiController::class, 'markAsRead'])->name('notifikasi.read');
+    Route::patch('/notifikasi/read-all', [NotifikasiController::class, 'markAllAsRead'])->name('notifikasi.readAll');
 
     Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang');
     Route::post('/keranjang/tambah', [KeranjangController::class, 'tambah']);
