@@ -11,6 +11,8 @@ use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\KatalogController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\KeranjangController;
+use App\Http\Controllers\CheckoutController;
 
 // ─── AUTH (guest only) ────────────────────────────────────────────────────────
 Route::middleware('guest')->group(function () {
@@ -29,9 +31,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/produk',    [ProdukController::class,   'index'])->name('produk.index');
     Route::get('/kategori',  [KategoriController::class, 'index'])->name('kategori.index');
-    Route::get('/pesanan',   [PesananController::class,  'index'])->name('pesanan.index');
+    Route::get('/pesanan', [App\Http\Controllers\Admin\PesananController::class, 'index'])->name('pesanan.index');
+    Route::post('/pesanan/{id}/status', [App\Http\Controllers\Admin\PesananController::class, 'updateStatus'])->name('pesanan.status');
     Route::get('/pelanggan', [PelangganController::class,'index'])->name('pelanggan.index');
-    Route::get('/pembayaran',[PembayaranController::class,'index'])->name('pembayaran.index');
+    Route::get('/pembayaran', [App\Http\Controllers\Admin\PembayaranController::class, 'index'])->name('pembayaran.index');
+    Route::post('/pembayaran/{id}/konfirmasi', [App\Http\Controllers\Admin\PembayaranController::class, 'konfirmasi'])->name('pembayaran.konfirmasi');
     Route::get('/qr', function () { return view('qrcode'); })->name('qr');
 });
 
@@ -41,6 +45,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/katalog', [KatalogController::class, 'index'])->name('katalog');
     Route::get('/search', [SearchController::class, 'index'])->name('search');
     Route::get('/produk/{id}', [ProdukController::class, 'show'])->name('produk.show');
+
+    Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang');
+    Route::post('/keranjang/tambah', [KeranjangController::class, 'tambah']);
+    Route::post('/keranjang/update/{id}', [KeranjangController::class, 'update']);
+    Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'hapus']);
+
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+    Route::post('/checkout', [CheckoutController::class, 'proses']);
+    Route::get('/pembayaran/{id}', [PembayaranController::class, 'show'])->name('pembayaran.show');
+    Route::get('/pesanan/saya', [PesananController::class, 'milikSaya'])->name('pesanan.saya');
 });
 
 // ─── ROOT REDIRECT ────────────────────────────────────────────────────────────
