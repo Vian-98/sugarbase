@@ -15,8 +15,26 @@ class KategoriController extends Controller
 
     public function store(Request $request)
     {
-        Kategori::create($request->all());
+        $validated = $request->validate([
+            'nama_kategori' => 'required|string|max:255',
+            'deskripsi_kategori' => 'nullable|string',
+        ]);
 
-        return redirect('/kategori');
+        Kategori::create($validated);
+
+        return redirect()
+            ->route('admin.kategori.index')
+            ->with('success', 'Kategori berhasil ditambahkan');
+    }
+
+    public function destroy($id)
+    {
+        $kategori = Kategori::findOrFail($id);
+
+        $kategori->delete();
+
+        return redirect()
+            ->route('admin.kategori.index')
+            ->with('success', 'Kategori berhasil dihapus');
     }
 }

@@ -55,10 +55,10 @@ class ProdukController extends Controller
             'foto' => $path,
             'status_produk' => 'aktif',
             'deskripsi_produk' => $request->deskripsi_produk,
-            'user_id' => 1
+            'user_id' => auth()->id()
         ]);
 
-        return redirect()->route('produk.index')->with('success', 'Produk berhasil ditambahkan');
+        return redirect()->route('admin.produk.index')->with('success', 'Produk berhasil ditambahkan');
     }
 
     /**
@@ -108,7 +108,7 @@ class ProdukController extends Controller
             'deskripsi_produk' => $request->deskripsi_produk,
         ]);
 
-        return redirect()->route('produk.index')->with('success', 'Produk berhasil diupdate');
+        return redirect()->route('admin.produk.index')->with('success', 'Produk berhasil diupdate');
     }
 
     /**
