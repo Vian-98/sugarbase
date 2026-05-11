@@ -1,136 +1,193 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
-@section('title', 'Manajemen Pesanan')
-
-@section('page_title')
-    <h1>📋 Manajemen Pesanan</h1>
-    <p>Kelola pesanan masuk dan pantau status pengiriman secara efisien.</p>
-@endsection
+@section('title', 'Admin — Manajemen Pesanan')
 
 @section('content')
-<div class="container-fluid p-0">
-    
-    {{-- Top Stats Area --}}
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 30px;">
-        <div style="background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border-left: 5px solid #ef4444;">
-            <p style="color: #94a3b8; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">Revenue Hari Ini</p>
-            <h3 style="color: #1e293b; font-size: 1.6rem; font-weight: 700; margin: 0;">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</h3>
-        </div>
-        <!-- Tambahkan stat lain di sini jika perlu -->
+
+<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; flex-wrap: wrap; gap: 12px;">
+    <div>
+        <h1 style="font-size: 1.8em; color: #1f2937; margin: 0 0 4px; font-weight: 700;">📋 Manajemen Pesanan</h1>
+        <p style="margin: 0; color: #9ca3af; font-size: 0.9em;">Kelola semua pesanan yang masuk</p>
     </div>
-
-    {{-- Table Container --}}
-    <div style="background: white; border-radius: 16px; box-shadow: 0 4px 25px rgba(0,0,0,0.05); overflow: hidden;">
-        
-        {{-- Header & Filter --}}
-        <div style="padding: 20px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-            <div style="display: flex; gap: 8px;">
-                @foreach(['Semua','pending','diproses','dikirim','selesai','dibatalkan'] as $tab)
-                    <a href="?status={{ $tab }}" 
-                       style="text-decoration: none; padding: 8px 16px; border-radius: 10px; font-size: 0.9rem; transition: all 0.2s; 
-                       {{ request('status', 'Semua') === $tab ? 'background: #667eea; color: white; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);' : 'color: #64748b; background: #f8fafc;' }}">
-                        {{ ucfirst($tab) }}
-                    </a>
-                @endforeach
-            </div>
-        </div>
-
-        <div class="table-responsive">
-            <table class="table align-middle mb-0" style="min-width: 1000px;">
-                <thead>
-                    <tr style="background: #f8fafc;">
-                        <th style="padding: 18px 24px; color: #64748b; font-weight: 600; font-size: 0.85rem; border: none;">PESANAN</th>
-                        <th style="padding: 18px 24px; color: #64748b; font-weight: 600; font-size: 0.85rem; border: none;">PELANGGAN</th>
-                        <th style="padding: 18px 24px; color: #64748b; font-weight: 600; font-size: 0.85rem; border: none;">TOTAL BAYAR</th>
-                        <th style="padding: 18px 24px; color: #64748b; font-weight: 600; font-size: 0.85rem; border: none;">PEMBAYARAN</th>
-                        <th style="padding: 18px 24px; color: #64748b; font-weight: 600; font-size: 0.85rem; border: none;">STATUS</th>
-                        <th style="padding: 18px 24px; color: #64748b; font-weight: 600; font-size: 0.85rem; border: none; text-align: center;">AKSI</th>
-                    </tr>
-                </thead>
-                <tbody style="border-top: 1px solid #f1f5f9;">
-                    @forelse($pesanan as $p)
-                    <tr style="transition: background 0.2s; cursor: default;">
-                        {{-- ID Column (Dibuat lebih bergaya) --}}
-                        <td style="padding: 18px 24px;">
-                            <span style="display: block; font-weight: 700; color: #1e293b; margin-bottom: 2px;">#ORD-{{ str_pad($p->id_pesanan, 4, '0', STR_PAD_LEFT) }}</span>
-                            <small style="color: #94a3b8;">{{ \Carbon\Carbon::parse($p->tanggal_pesan)->format('d M, H:i') }}</small>
-                        </td>
-                        
-                        {{-- Pelanggan --}}
-                        <td style="padding: 18px 24px;">
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <div style="width: 35px; height: 35px; background: #e2e8f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; color: #64748b;">
-                                    {{ strtoupper(substr($p->user->name ?? 'G', 0, 1)) }}
-                                </div>
-                                <div>
-                                    <span style="display: block; font-weight: 600; color: #334155;">{{ $p->user->name ?? 'Guest' }}</span>
-                                    <small style="color: #94a3b8;">{{ $p->user->email ?? 'no-email@mail.com' }}</small>
-                                </div>
-                            </div>
-                        </td>
-
-                        {{-- Harga --}}
-                        <td style="padding: 18px 24px;">
-                            <span style="font-weight: 700; color: #10b981;">Rp {{ number_format($p->total_harga, 0, ',', '.') }}</span>
-                        </td>
-
-                        {{-- Status Bayar --}}
-                        <td style="padding: 18px 24px;">
-                            @php $sp = $p->pembayaran->status_pembayaran ?? 'menunggu' @endphp
-                            <span style="padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; 
-                                {{ $sp === 'lunas' ? 'background: #ecfdf5; color: #10b981;' : ($sp === 'gagal' ? 'background: #fef2f2; color: #ef4444;' : 'background: #fffbeb; color: #f59e0b;') }}">
-                                {{ $sp }}
-                            </span>
-                        </td>
-
-                        {{-- Status Pesanan --}}
-                        <td style="padding: 18px 24px;">
-                            @php
-                                $statusStyles = match($p->status_pesanan) {
-                                    'pending'    => ['bg' => '#fef3c7', 'text' => '#d97706'],
-                                    'diproses'   => ['bg' => '#dbeafe', 'text' => '#2563eb'],
-                                    'dikirim'    => ['bg' => '#f3e8ff', 'text' => '#9333ea'],
-                                    'selesai'    => ['bg' => '#d1fae5', 'text' => '#059669'],
-                                    'dibatalkan' => ['bg' => '#fee2e2', 'text' => '#dc2626'],
-                                    default      => ['bg' => '#f1f5f9', 'text' => '#475569'],
-                                };
-                            @endphp
-                            <span style="padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; background: {{ $statusStyles['bg'] }}; color: {{ $statusStyles['text'] }};">
-                                {{ ucfirst($p->status_pesanan) }}
-                            </span>
-                        </td>
-
-                        {{-- Action --}}
-                        <td style="padding: 18px 24px; text-align: center;">
-                            <form method="POST" action="/admin/pesanan/{{ $p->id_pesanan }}/status" class="d-flex gap-2 justify-content-center">
-                                @csrf
-                                <select name="status" style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 5px 10px; font-size: 0.85rem; color: #475569; outline: none;">
-                                    @foreach(['pending','diproses','dikirim','selesai','dibatalkan'] as $s)
-                                        <option value="{{ $s }}" {{ $p->status_pesanan === $s ? 'selected' : '' }}>{{ ucfirst($s) }}</option>
-                                    @endforeach
-                                </select>
-                                <button type="submit" style="background: #667eea; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; transition: 0.3s;">
-                                    Update
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="6" style="padding: 50px; text-align: center; color: #94a3b8;">
-                            <div style="font-size: 40px; margin-bottom: 10px;">📦</div>
-                            <p>Belum ada pesanan masuk.</p>
-                        </td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+    <div style="display: flex; gap: 10px;">
+        <a href="/admin/dashboard" style="padding: 10px 18px; background: #f3f4f6; color: #374151; border-radius: 8px; text-decoration: none; font-size: 0.85em; font-weight: 600; border: 1px solid #e5e7eb;">← Dashboard</a>
     </div>
 </div>
 
-<style>
-    tr:hover { background-color: #f8fafc; }
-    button:hover { background: #5a67d8 !important; transform: translateY(-1px); }
-</style>
+<!-- FLASH MESSAGE -->
+@if(session('success'))
+<div style="background: #f0fdf4; border: 1px solid #86efac; color: #16a34a; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px;">
+    ✅ {{ session('success') }}
+</div>
+@endif
+
+<!-- STATISTIK REVENUE HARI INI -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px;">
+    @php
+    $hariIni = \Carbon\Carbon::today();
+    $revenueHariIni = $pesanan->where('tanggal_pesan', $hariIni->toDateString())->sum('total_harga');
+    $totalPesanan = $pesanan->count();
+    $pending = $pesanan->where('status_pesanan', 'pending')->count();
+    $selesai = $pesanan->where('status_pesanan', 'selesai')->count();
+    @endphp
+
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 20px; color: white;">
+        <p style="margin: 0 0 6px; font-size: 0.85em; opacity: 0.85;">💰 Revenue Hari Ini</p>
+        <p style="margin: 0; font-size: 1.5em; font-weight: 700;">Rp {{ number_format($revenueHariIni, 0, ',', '.') }}</p>
+    </div>
+
+    <div style="background: white; border-radius: 12px; padding: 20px; border: 1px solid #e5e7eb; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+        <p style="margin: 0 0 6px; font-size: 0.85em; color: #9ca3af;">📦 Total Pesanan</p>
+        <p style="margin: 0; font-size: 1.5em; font-weight: 700; color: #1f2937;">{{ $totalPesanan }}</p>
+    </div>
+
+    <div style="background: white; border-radius: 12px; padding: 20px; border: 1px solid #e5e7eb; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+        <p style="margin: 0 0 6px; font-size: 0.85em; color: #9ca3af;">⏳ Pending</p>
+        <p style="margin: 0; font-size: 1.5em; font-weight: 700; color: #d97706;">{{ $pending }}</p>
+    </div>
+
+    <div style="background: white; border-radius: 12px; padding: 20px; border: 1px solid #e5e7eb; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+        <p style="margin: 0 0 6px; font-size: 0.85em; color: #9ca3af;">✅ Selesai</p>
+        <p style="margin: 0; font-size: 1.5em; font-weight: 700; color: #16a34a;">{{ $selesai }}</p>
+    </div>
+</div>
+
+<!-- FILTER & SEARCH -->
+<div style="background: white; border-radius: 12px; border: 1px solid #e5e7eb; box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden; margin-bottom: 20px;">
+    <div style="padding: 16px 20px; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <span style="font-weight: 600; color: #374151; font-size: 0.9em;">Filter:</span>
+        @php
+        $statuses = ['semua' => 'Semua', 'pending' => 'Pending', 'diproses' => 'Diproses', 'dikirim' => 'Dikirim', 'selesai' => 'Selesai', 'dibatalkan' => 'Dibatalkan'];
+        $aktif = request('status', 'semua');
+        @endphp
+        @foreach($statuses as $key => $label)
+        <a href="/admin/pesanan?status={{ $key }}"
+            style="padding: 6px 14px; border-radius: 20px; text-decoration: none; font-size: 0.82em; font-weight: 600; transition: all 0.2s;
+                   background: {{ $aktif === $key ? 'linear-gradient(135deg, #667eea, #764ba2)' : '#f3f4f6' }};
+                   color: {{ $aktif === $key ? 'white' : '#6b7280' }};">
+            {{ $label }}
+        </a>
+        @endforeach
+    </div>
+
+    <!-- TABEL PESANAN -->
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.88em;">
+            <thead>
+                <tr style="background: #f9fafb; color: #6b7280; text-transform: uppercase; font-size: 0.8em; letter-spacing: 0.4px;">
+                    <th style="padding: 13px 20px; text-align: left; font-weight: 600;">ID</th>
+                    <th style="padding: 13px 12px; text-align: left; font-weight: 600;">Pelanggan</th>
+                    <th style="padding: 13px 12px; text-align: left; font-weight: 600;">Tanggal</th>
+                    <th style="padding: 13px 12px; text-align: center; font-weight: 600;">Items</th>
+                    <th style="padding: 13px 12px; text-align: right; font-weight: 600;">Total</th>
+                    <th style="padding: 13px 12px; text-align: center; font-weight: 600;">Pembayaran</th>
+                    <th style="padding: 13px 12px; text-align: center; font-weight: 600;">Status</th>
+                    <th style="padding: 13px 20px; text-align: center; font-weight: 600;">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($pesanan as $item)
+                @php
+                $statusColors = [
+                    'pending'    => ['bg' => '#fffbeb', 'text' => '#d97706'],
+                    'diproses'   => ['bg' => '#eff6ff', 'text' => '#2563eb'],
+                    'dikirim'    => ['bg' => '#f0fdf4', 'text' => '#16a34a'],
+                    'selesai'    => ['bg' => '#f0fdf4', 'text' => '#15803d'],
+                    'dibatalkan' => ['bg' => '#fef2f2', 'text' => '#dc2626'],
+                ];
+                $sc = $statusColors[$item->status_pesanan] ?? ['bg' => '#f3f4f6', 'text' => '#6b7280'];
+                $bayarColor = $item->pembayaran && $item->pembayaran->status_pembayaran === 'lunas'
+                    ? ['bg' => '#f0fdf4', 'text' => '#16a34a', 'label' => 'Lunas']
+                    : ['bg' => '#fffbeb', 'text' => '#d97706', 'label' => 'Menunggu'];
+                @endphp
+                <tr style="border-top: 1px solid #e5e7eb; transition: background 0.15s;"
+                    onmouseover="this.style.background='#fafafa'" onmouseout="this.style.background='white'">
+
+                    <td style="padding: 14px 20px; font-weight: 700; color: #667eea;">#{{ $item->id_pesanan }}</td>
+
+                    <td style="padding: 14px 12px;">
+                        <p style="margin: 0; font-weight: 600; color: #111827;">{{ $item->user->name ?? 'N/A' }}</p>
+                        <p style="margin: 2px 0 0; font-size: 0.8em; color: #9ca3af;">{{ $item->user->email ?? '' }}</p>
+                    </td>
+
+                    <td style="padding: 14px 12px; color: #6b7280;">
+                        {{ \Carbon\Carbon::parse($item->tanggal_pesan)->format('d M Y') }}
+                    </td>
+
+                    <td style="padding: 14px 12px; text-align: center; color: #374151; font-weight: 600;">
+                        {{ $item->items->count() }} item
+                    </td>
+
+                    <td style="padding: 14px 12px; text-align: right; font-weight: 700; color: #1f2937; white-space: nowrap;">
+                        Rp {{ number_format($item->total_harga, 0, ',', '.') }}
+                    </td>
+
+                    <td style="padding: 14px 12px; text-align: center;">
+                        <span style="padding: 4px 10px; border-radius: 20px; font-size: 0.8em; font-weight: 600;
+                                     background: {{ $bayarColor['bg'] }}; color: {{ $bayarColor['text'] }};">
+                            {{ $bayarColor['label'] }}
+                        </span>
+                        @if($item->pembayaran && $item->pembayaran->status_pembayaran !== 'lunas')
+                        <form action="/admin/pembayaran/{{ $item->pembayaran->id_pembayaran }}/konfirmasi" method="POST" style="display: inline; margin-left: 6px;">
+                            @csrf
+                            <button type="submit" onclick="return confirm('Konfirmasi pembayaran ini?')"
+                                style="padding: 3px 8px; background: #667eea; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.75em; font-weight: 600;">
+                                ✔ Konfirmasi
+                            </button>
+                        </form>
+                        @endif
+                    </td>
+
+                    <td style="padding: 14px 12px; text-align: center;">
+                        <span style="padding: 4px 12px; border-radius: 20px; font-size: 0.8em; font-weight: 600;
+                                     background: {{ $sc['bg'] }}; color: {{ $sc['text'] }};">
+                            {{ ucfirst($item->status_pesanan) }}
+                        </span>
+                    </td>
+
+                    <td style="padding: 14px 20px; text-align: center;">
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap;">
+                            <!-- Update Status -->
+                            <form action="/admin/pesanan/{{ $item->id_pesanan }}/status" method="POST" style="display: flex; gap: 4px;">
+                                @csrf
+                                <select name="status"
+                                    style="padding: 5px 8px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.8em; background: white; color: #374151; cursor: pointer;">
+                                    @foreach(['pending','diproses','dikirim','selesai','dibatalkan'] as $s)
+                                    <option value="{{ $s }}" {{ $item->status_pesanan === $s ? 'selected' : '' }}>{{ ucfirst($s) }}</option>
+                                    @endforeach
+                                </select>
+                                <button type="submit"
+                                    style="padding: 5px 10px; background: #667eea; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.8em; font-weight: 600;">
+                                    Update
+                                </button>
+                            </form>
+
+                            <!-- Detail -->
+                            <a href="/pesanan/{{ $item->id_pesanan }}"
+                                style="padding: 5px 10px; background: #f3f4f6; color: #374151; border-radius: 6px; text-decoration: none; font-size: 0.8em; font-weight: 600; border: 1px solid #e5e7eb;">
+                                Detail
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="8" style="padding: 60px; text-align: center; color: #9ca3af;">
+                        <div style="font-size: 3em; margin-bottom: 12px;">📭</div>
+                        Tidak ada pesanan ditemukan.
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+
+    <!-- PAGINATION -->
+    @if(method_exists($pesanan, 'links'))
+    <div style="padding: 16px 20px; border-top: 1px solid #e5e7eb; display: flex; justify-content: flex-end;">
+        {{ $pesanan->appends(request()->query())->links() }}
+    </div>
+    @endif
+</div>
+
 @endsection

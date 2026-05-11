@@ -1,77 +1,408 @@
 @extends('layouts.app')
+
+@section('title', 'Pembayaran #' . $pesanan->id_pesanan)
+
 @section('content')
-<div class="container py-4" style="max-width:600px">
-    <h2 class="fw-bold mb-4">💳 Halaman Pembayaran</h2>
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+<!-- STEP INDICATOR -->
+<div style="display: flex; align-items: center; margin-bottom: 32px; gap: 0;">
+    <div style="display: flex; align-items: center; gap: 8px;">
+        <div style="width: 32px; height: 32px; background: #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.85em; font-weight: 700;">✓</div>
+        <span style="font-size: 0.85em; font-weight: 600; color: #22c55e;">Keranjang</span>
+    </div>
+    <div style="flex: 1; height: 2px; background: #22c55e; margin: 0 12px;"></div>
+    <div style="display: flex; align-items: center; gap: 8px;">
+        <div style="width: 32px; height: 32px; background: #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.85em; font-weight: 700;">✓</div>
+        <span style="font-size: 0.85em; font-weight: 600; color: #22c55e;">Konfirmasi</span>
+    </div>
+    <div style="flex: 1; height: 2px; background: #667eea; margin: 0 12px;"></div>
+    <div style="display: flex; align-items: center; gap: 8px;">
+        <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.85em; font-weight: 700;">3</div>
+        <span style="font-size: 0.85em; font-weight: 600; color: #667eea;">Pembayaran</span>
+    </div>
+</div>
 
-    <div class="card shadow-sm text-center">
-        <div class="card-body py-5">
-            <p class="text-muted mb-1">Order ID</p>
-            <h5 class="fw-bold">#{{ $pembayaran->id_pesanan }}</h5>
-            <hr>
-            <h4 class="text-danger fw-bold mb-4">
-                Rp {{ number_format($pembayaran->jumlah_bayar, 0, ',', '.') }}
-            </h4>
+<!-- FLASH MESSAGES -->
+@if(session('success'))
+<div style="background: #f0fdf4; border: 1px solid #86efac; color: #16a34a; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px;">
+    ✅ {{ session('success') }}
+</div>
+@endif
 
-            @if($pembayaran->metode_pembayaran === 'transfer')
-                <div style="font-size:3rem">🏦</div>
-                <h5 class="mt-2 fw-bold">Transfer Bank</h5>
-                <div class="alert alert-info text-start mt-3">
-                    <table class="table table-sm table-borderless mb-0">
-                        <tr><td class="text-muted">Bank</td><td><strong>BCA</strong></td></tr>
-                        <tr><td class="text-muted">No. Rekening</td><td><strong>1234567890</strong></td></tr>
-                        <tr><td class="text-muted">Atas Nama</td><td><strong>SugarBase</strong></td></tr>
-                        <tr><td class="text-muted">Jumlah</td>
-                            <td><strong>Rp {{ number_format($pembayaran->jumlah_bayar, 0, ',', '.') }}</strong></td>
-                        </tr>
-                    </table>
+<div style="display: grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: start;">
+
+    <!-- KIRI: Instruksi Pembayaran -->
+    <div>
+
+        @php $metode = $pesanan->pembayaran->metode_pembayaran ?? 'transfer'; @endphp
+
+        {{-- ============================================ --}}
+        {{-- TRANSFER BANK --}}
+        {{-- ============================================ --}}
+        @if($metode === 'transfer')
+        <div style="background: white; border-radius: 12px; border: 1px solid #e5e7eb; box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden;">
+            <div style="padding: 20px 24px; border-bottom: 1px solid #e5e7eb; background: linear-gradient(135deg, #eff6ff, #dbeafe);">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 2em;">🏦</span>
+                    <div>
+                        <h2 style="margin: 0; font-size: 1.1em; font-weight: 700; color: #1e40af;">Transfer Bank</h2>
+                        <p style="margin: 2px 0 0; font-size: 0.85em; color: #3b82f6;">Selesaikan pembayaran sebelum 24 jam</p>
+                    </div>
                 </div>
-                <p class="text-muted small">Pastikan jumlah transfer tepat sesuai nominal di atas</p>
-                <form method="POST" action="/pembayaran/{{ $pembayaran->id_pembayaran }}/konfirmasi">
+            </div>
+
+            <div style="padding: 24px;">
+                <!-- Rekening Tujuan -->
+                <p style="font-size: 0.9em; font-weight: 600; color: #374151; margin: 0 0 16px;">Pilih rekening tujuan transfer:</p>
+
+                @php
+                $rekenings = [
+                    ['bank' => 'BCA', 'no' => '1234567890', 'nama' => 'SugarBase Indonesia', 'warna' => '#0064b0', 'logo' => '🔵'],
+                    ['bank' => 'Mandiri', 'no' => '1100009876543', 'nama' => 'SugarBase Indonesia', 'warna' => '#003d79', 'logo' => '🟡'],
+                    ['bank' => 'BRI', 'no' => '00890001234567', 'nama' => 'SugarBase Indonesia', 'warna' => '#003087', 'logo' => '🟦'],
+                ]
+                @endphp
+
+                <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
+                    @foreach($rekenings as $rek)
+                    <div style="border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <span style="font-size: 1.8em;">{{ $rek['logo'] }}</span>
+                            <div>
+                                <p style="margin: 0; font-weight: 700; color: #1f2937; font-size: 0.95em;">{{ $rek['bank'] }}</p>
+                                <p style="margin: 4px 0 0; font-family: monospace; font-size: 1.05em; color: #374151; letter-spacing: 1px;" id="rek-{{ $rek['bank'] }}">{{ $rek['no'] }}</p>
+                                <p style="margin: 2px 0 0; font-size: 0.8em; color: #9ca3af;">a/n {{ $rek['nama'] }}</p>
+                            </div>
+                        </div>
+                        <button onclick="copyRek('{{ $rek['no'] }}', this)"
+                            style="padding: 7px 14px; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 6px; cursor: pointer; font-size: 0.8em; color: #374151; font-weight: 600; white-space: nowrap;">
+                            📋 Salin
+                        </button>
+                    </div>
+                    @endforeach
+                </div>
+
+                <!-- Jumlah Transfer -->
+                <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 10px; padding: 16px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <p style="margin: 0; font-size: 0.85em; color: #6b7280;">Jumlah yang harus ditransfer</p>
+                        <p style="margin: 6px 0 0; font-size: 1.4em; font-weight: 700; color: #16a34a;">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
+                    </div>
+                    <button onclick="copyRek('{{ $pesanan->total_harga }}', this)"
+                        style="padding: 7px 14px; background: #dcfce7; border: 1px solid #86efac; border-radius: 6px; cursor: pointer; font-size: 0.8em; color: #16a34a; font-weight: 600; white-space: nowrap;">
+                        📋 Salin
+                    </button>
+                </div>
+
+                <!-- Instruksi -->
+                <div style="background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px; padding: 16px; margin-bottom: 24px;">
+                    <p style="margin: 0 0 10px; font-weight: 600; color: #92400e; font-size: 0.9em;">⚠️ Perhatian:</p>
+                    <ol style="margin: 0; padding-left: 18px; font-size: 0.85em; color: #78350f; line-height: 1.8;">
+                        <li>Transfer sesuai nominal tepat (termasuk angka unik jika ada)</li>
+                        <li>Simpan bukti transfer kamu</li>
+                        <li>Klik tombol konfirmasi setelah transfer selesai</li>
+                        <li>Pesanan diproses setelah pembayaran diverifikasi</li>
+                    </ol>
+                </div>
+
+                <form action="/pembayaran/{{ $pesanan->id_pesanan }}/konfirmasi" method="POST">
                     @csrf
-                    <button class="btn btn-success px-5 py-2 fw-bold">
+                    <button type="submit"
+                        style="width: 100%; padding: 14px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 1em; font-weight: 600; cursor: pointer;">
                         ✅ Saya Sudah Transfer
                     </button>
                 </form>
+            </div>
+        </div>
 
-            @elseif($pembayaran->metode_pembayaran === 'cod')
-                <div style="font-size:3rem">🚚</div>
-                <h5 class="mt-2 fw-bold">COD — Bayar Saat Barang Tiba</h5>
-                <div class="alert alert-warning mt-3">
-                    Pesanan kamu sedang diproses.<br>
-                    Siapkan uang tunai <strong>Rp {{ number_format($pembayaran->jumlah_bayar, 0, ',', '.') }}</strong>
-                    saat kurir tiba.
+
+        {{-- ============================================ --}}
+        {{-- COD --}}
+        {{-- ============================================ --}}
+        @elseif($metode === 'cod')
+        <div style="background: white; border-radius: 12px; border: 1px solid #e5e7eb; box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden;">
+            <div style="padding: 20px 24px; border-bottom: 1px solid #e5e7eb; background: linear-gradient(135deg, #f0fdf4, #dcfce7);">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 2em;">🚚</span>
+                    <div>
+                        <h2 style="margin: 0; font-size: 1.1em; font-weight: 700; color: #166534;">COD — Bayar di Tempat</h2>
+                        <p style="margin: 2px 0 0; font-size: 0.85em; color: #22c55e;">Tidak perlu bayar sekarang!</p>
+                    </div>
                 </div>
-                <a href="/pesanan/saya" class="btn btn-primary px-5 py-2 fw-bold">
-                    OK, Mengerti
+            </div>
+
+            <div style="padding: 24px; text-align: center;">
+                <div style="font-size: 5em; margin: 20px 0;">🛵</div>
+                <h3 style="font-size: 1.3em; color: #1f2937; margin: 0 0 12px;">Pesanan Sedang Diproses!</h3>
+                <p style="color: #6b7280; font-size: 0.95em; line-height: 1.7; margin-bottom: 24px;">
+                    Pesananmu sedang dipersiapkan. Kurir kami akan segera mengantar ke alamatmu.<br>
+                    <strong>Siapkan uang tunai</strong> sebesar <strong style="color: #667eea;">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</strong> saat barang tiba.
+                </p>
+
+                <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 10px; padding: 20px; margin-bottom: 24px; text-align: left;">
+                    <p style="margin: 0 0 8px; font-weight: 600; color: #166534; font-size: 0.9em;">📋 Yang perlu kamu lakukan:</p>
+                    <ul style="margin: 0; padding-left: 18px; font-size: 0.85em; color: #374151; line-height: 2;">
+                        <li>Pastikan ada di rumah saat kurir datang</li>
+                        <li>Siapkan uang pas jika memungkinkan</li>
+                        <li>Cek kondisi produk sebelum membayar</li>
+                        <li>Simpan struk pembayaran dari kurir</li>
+                    </ul>
+                </div>
+
+                <a href="/pesanan/saya"
+                    style="display: inline-block; padding: 13px 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.95em;">
+                    📦 Pantau Status Pesanan
                 </a>
+            </div>
+        </div>
 
-            @else
-                <div style="font-size:3rem">📱</div>
-                <h5 class="mt-2 fw-bold">E-Wallet</h5>
-                <div class="alert alert-info text-start mt-3">
-                    <table class="table table-sm table-borderless mb-0">
-                        <tr><td class="text-muted">Platform</td><td><strong>GoPay / OVO / Dana</strong></td></tr>
-                        <tr><td class="text-muted">Nomor</td><td><strong>081234567890</strong></td></tr>
-                        <tr><td class="text-muted">Jumlah</td>
-                            <td><strong>Rp {{ number_format($pembayaran->jumlah_bayar, 0, ',', '.') }}</strong></td>
-                        </tr>
-                    </table>
+
+        {{-- ============================================ --}}
+        {{-- E-WALLET / QRIS --}}
+        {{-- ============================================ --}}
+        @else
+        <div style="background: white; border-radius: 12px; border: 1px solid #e5e7eb; box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden;">
+            <div style="padding: 20px 24px; border-bottom: 1px solid #e5e7eb; background: linear-gradient(135deg, #fdf4ff, #f3e8ff);">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 2em;">📱</span>
+                    <div>
+                        <h2 style="margin: 0; font-size: 1.1em; font-weight: 700; color: #6b21a8;">E-Wallet / QRIS</h2>
+                        <p style="margin: 2px 0 0; font-size: 0.85em; color: #a855f7;">Scan & bayar dalam hitungan detik</p>
+                    </div>
                 </div>
-                <form method="POST" action="/pembayaran/{{ $pembayaran->id_pembayaran }}/konfirmasi">
+            </div>
+
+            <div style="padding: 24px;">
+
+                <!-- Tab E-Wallet Pilihan -->
+                <div style="display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;">
+                    @foreach([['id'=>'qris','label'=>'QRIS','emoji'=>'⬛'],['id'=>'gopay','label'=>'GoPay','emoji'=>'💚'],['id'=>'ovo','label'=>'OVO','emoji'=>'💜'],['id'=>'dana','label'=>'DANA','emoji'=>'💙']] as $ew)
+                    <button onclick="pilihEwallet('{{ $ew['id'] }}')" id="tab-{{ $ew['id'] }}"
+                        style="padding: 8px 16px; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer; font-size: 0.85em; font-weight: 600; background: white; color: #6b7280; transition: all 0.2s; display: flex; align-items: center; gap: 6px;">
+                        {{ $ew['emoji'] }} {{ $ew['label'] }}
+                    </button>
+                    @endforeach
+                </div>
+
+                <!-- QRIS QR Code -->
+                <div id="panel-qris" class="ewallet-panel" style="text-align: center;">
+                    <p style="font-size: 0.9em; color: #6b7280; margin-bottom: 16px;">Scan QR Code di bawah menggunakan aplikasi apapun yang mendukung QRIS</p>
+
+                    <!-- QR Code Visual -->
+                    <div style="display: inline-block; padding: 20px; background: white; border: 3px solid #1f2937; border-radius: 12px; margin-bottom: 16px; position: relative;">
+                        <!-- SVG QRIS Simulasi -->
+                        <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Outer corners -->
+                            <rect x="10" y="10" width="50" height="50" rx="4" fill="none" stroke="#1f2937" stroke-width="8"/>
+                            <rect x="18" y="18" width="34" height="34" fill="#1f2937" rx="2"/>
+                            <rect x="140" y="10" width="50" height="50" rx="4" fill="none" stroke="#1f2937" stroke-width="8"/>
+                            <rect x="148" y="18" width="34" height="34" fill="#1f2937" rx="2"/>
+                            <rect x="10" y="140" width="50" height="50" rx="4" fill="none" stroke="#1f2937" stroke-width="8"/>
+                            <rect x="18" y="148" width="34" height="34" fill="#1f2937" rx="2"/>
+                            <!-- Data modules (random-ish pattern) -->
+                            <rect x="72" y="10" width="8" height="8" fill="#1f2937"/><rect x="82" y="10" width="8" height="8" fill="#1f2937"/><rect x="100" y="10" width="8" height="8" fill="#1f2937"/>
+                            <rect x="120" y="10" width="8" height="8" fill="#1f2937"/><rect x="72" y="20" width="8" height="8" fill="#1f2937"/>
+                            <rect x="92" y="20" width="8" height="8" fill="#1f2937"/><rect x="110" y="20" width="8" height="8" fill="#1f2937"/>
+                            <rect x="130" y="20" width="8" height="8" fill="#1f2937"/><rect x="72" y="30" width="8" height="8" fill="#1f2937"/>
+                            <rect x="82" y="30" width="8" height="8" fill="#1f2937"/><rect x="102" y="30" width="8" height="8" fill="#1f2937"/>
+                            <rect x="120" y="30" width="8" height="8" fill="#1f2937"/><rect x="72" y="50" width="8" height="8" fill="#1f2937"/>
+                            <rect x="92" y="50" width="8" height="8" fill="#1f2937"/><rect x="72" y="60" width="8" height="8" fill="#1f2937"/>
+                            <rect x="82" y="60" width="8" height="8" fill="#1f2937"/><rect x="100" y="60" width="8" height="8" fill="#1f2937"/>
+                            <rect x="120" y="60" width="8" height="8" fill="#1f2937"/><rect x="130" y="60" width="8" height="8" fill="#1f2937"/>
+                            <rect x="10" y="72" width="8" height="8" fill="#1f2937"/><rect x="30" y="72" width="8" height="8" fill="#1f2937"/>
+                            <rect x="50" y="72" width="8" height="8" fill="#1f2937"/><rect x="70" y="72" width="8" height="8" fill="#1f2937"/>
+                            <rect x="90" y="72" width="8" height="8" fill="#1f2937"/><rect x="110" y="72" width="8" height="8" fill="#1f2937"/>
+                            <rect x="140" y="72" width="8" height="8" fill="#1f2937"/><rect x="160" y="72" width="8" height="8" fill="#1f2937"/>
+                            <rect x="180" y="72" width="8" height="8" fill="#1f2937"/><rect x="10" y="82" width="8" height="8" fill="#1f2937"/>
+                            <rect x="40" y="82" width="8" height="8" fill="#1f2937"/><rect x="60" y="82" width="8" height="8" fill="#1f2937"/>
+                            <rect x="80" y="82" width="8" height="8" fill="#1f2937"/><rect x="100" y="82" width="8" height="8" fill="#1f2937"/>
+                            <rect x="130" y="82" width="8" height="8" fill="#1f2937"/><rect x="150" y="82" width="8" height="8" fill="#1f2937"/>
+                            <rect x="170" y="82" width="8" height="8" fill="#1f2937"/><rect x="10" y="92" width="8" height="8" fill="#1f2937"/>
+                            <rect x="20" y="92" width="8" height="8" fill="#1f2937"/><rect x="50" y="92" width="8" height="8" fill="#1f2937"/>
+                            <rect x="70" y="92" width="8" height="8" fill="#1f2937"/><rect x="90" y="92" width="8" height="8" fill="#1f2937"/>
+                            <rect x="120" y="92" width="8" height="8" fill="#1f2937"/><rect x="140" y="92" width="8" height="8" fill="#1f2937"/>
+                            <rect x="160" y="92" width="8" height="8" fill="#1f2937"/><rect x="180" y="92" width="8" height="8" fill="#1f2937"/>
+                            <!-- Center logo area -->
+                            <rect x="85" y="85" width="30" height="30" rx="4" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+                            <text x="100" y="106" text-anchor="middle" font-size="18">🍰</text>
+                            <!-- More data -->
+                            <rect x="10" y="110" width="8" height="8" fill="#1f2937"/><rect x="30" y="110" width="8" height="8" fill="#1f2937"/>
+                            <rect x="60" y="110" width="8" height="8" fill="#1f2937"/><rect x="80" y="110" width="8" height="8" fill="#1f2937"/>
+                            <rect x="130" y="110" width="8" height="8" fill="#1f2937"/><rect x="150" y="110" width="8" height="8" fill="#1f2937"/>
+                            <rect x="170" y="110" width="8" height="8" fill="#1f2937"/><rect x="10" y="120" width="8" height="8" fill="#1f2937"/>
+                            <rect x="40" y="120" width="8" height="8" fill="#1f2937"/><rect x="70" y="120" width="8" height="8" fill="#1f2937"/>
+                            <rect x="100" y="120" width="8" height="8" fill="#1f2937"/><rect x="120" y="120" width="8" height="8" fill="#1f2937"/>
+                            <rect x="140" y="120" width="8" height="8" fill="#1f2937"/><rect x="180" y="120" width="8" height="8" fill="#1f2937"/>
+                            <rect x="72" y="140" width="8" height="8" fill="#1f2937"/><rect x="82" y="140" width="8" height="8" fill="#1f2937"/>
+                            <rect x="100" y="140" width="8" height="8" fill="#1f2937"/><rect x="120" y="140" width="8" height="8" fill="#1f2937"/>
+                            <rect x="72" y="150" width="8" height="8" fill="#1f2937"/><rect x="92" y="150" width="8" height="8" fill="#1f2937"/>
+                            <rect x="110" y="150" width="8" height="8" fill="#1f2937"/><rect x="130" y="150" width="8" height="8" fill="#1f2937"/>
+                            <rect x="72" y="160" width="8" height="8" fill="#1f2937"/><rect x="100" y="160" width="8" height="8" fill="#1f2937"/>
+                            <rect x="120" y="160" width="8" height="8" fill="#1f2937"/><rect x="72" y="170" width="8" height="8" fill="#1f2937"/>
+                            <rect x="82" y="170" width="8" height="8" fill="#1f2937"/><rect x="110" y="170" width="8" height="8" fill="#1f2937"/>
+                            <rect x="130" y="170" width="8" height="8" fill="#1f2937"/><rect x="72" y="180" width="8" height="8" fill="#1f2937"/>
+                            <rect x="100" y="180" width="8" height="8" fill="#1f2937"/><rect x="120" y="180" width="8" height="8" fill="#1f2937"/>
+                        </svg>
+                        <!-- QRIS label -->
+                        <div style="position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%); background: #ef4444; color: white; padding: 2px 10px; border-radius: 0 0 6px 6px; font-size: 0.7em; font-weight: 700; letter-spacing: 2px; white-space: nowrap;">QRIS</div>
+                    </div>
+
+                    <div style="background: #fdf4ff; border: 1px solid #e9d5ff; border-radius: 10px; padding: 16px; margin-bottom: 20px; display: inline-block; min-width: 260px;">
+                        <p style="margin: 0 0 4px; font-size: 0.8em; color: #9ca3af;">Total Pembayaran</p>
+                        <p style="margin: 0; font-size: 1.5em; font-weight: 700; color: #6b21a8;">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
+                        <p style="margin: 6px 0 0; font-size: 0.75em; color: #9ca3af;">a/n SugarBase Indonesia</p>
+                    </div>
+
+                    <p style="font-size: 0.8em; color: #9ca3af; margin-bottom: 20px;">
+                        Buka aplikasi e-wallet atau bank kamu → Pilih Scan QR / QRIS → Scan kode di atas → Konfirmasi
+                    </p>
+                </div>
+
+                <!-- GoPay Panel -->
+                <div id="panel-gopay" class="ewallet-panel" style="display: none; text-align: center;">
+                    <div style="font-size: 4em; margin: 20px 0 12px;">💚</div>
+                    <h3 style="font-size: 1.1em; color: #1f2937; margin: 0 0 8px;">GoPay</h3>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-bottom: 16px;">Nomor GoPay tujuan:</p>
+                    <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 10px; padding: 16px; display: inline-block; margin-bottom: 20px;">
+                        <p style="margin: 0; font-family: monospace; font-size: 1.4em; font-weight: 700; color: #166534; letter-spacing: 2px;">0812-3456-7890</p>
+                        <p style="margin: 6px 0 0; font-size: 0.8em; color: #9ca3af;">a/n SugarBase</p>
+                    </div>
+                    <p style="font-size: 1.2em; font-weight: 700; color: #667eea; margin-bottom: 20px;">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
+                </div>
+
+                <!-- OVO Panel -->
+                <div id="panel-ovo" class="ewallet-panel" style="display: none; text-align: center;">
+                    <div style="font-size: 4em; margin: 20px 0 12px;">💜</div>
+                    <h3 style="font-size: 1.1em; color: #1f2937; margin: 0 0 8px;">OVO</h3>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-bottom: 16px;">Nomor OVO tujuan:</p>
+                    <div style="background: #fdf4ff; border: 1px solid #e9d5ff; border-radius: 10px; padding: 16px; display: inline-block; margin-bottom: 20px;">
+                        <p style="margin: 0; font-family: monospace; font-size: 1.4em; font-weight: 700; color: #6b21a8; letter-spacing: 2px;">0813-9876-5432</p>
+                        <p style="margin: 6px 0 0; font-size: 0.8em; color: #9ca3af;">a/n SugarBase</p>
+                    </div>
+                    <p style="font-size: 1.2em; font-weight: 700; color: #667eea; margin-bottom: 20px;">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
+                </div>
+
+                <!-- DANA Panel -->
+                <div id="panel-dana" class="ewallet-panel" style="display: none; text-align: center;">
+                    <div style="font-size: 4em; margin: 20px 0 12px;">💙</div>
+                    <h3 style="font-size: 1.1em; color: #1f2937; margin: 0 0 8px;">DANA</h3>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-bottom: 16px;">Nomor DANA tujuan:</p>
+                    <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 16px; display: inline-block; margin-bottom: 20px;">
+                        <p style="margin: 0; font-family: monospace; font-size: 1.4em; font-weight: 700; color: #1d4ed8; letter-spacing: 2px;">0821-1122-3344</p>
+                        <p style="margin: 6px 0 0; font-size: 0.8em; color: #9ca3af;">a/n SugarBase</p>
+                    </div>
+                    <p style="font-size: 1.2em; font-weight: 700; color: #667eea; margin-bottom: 20px;">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
+                </div>
+
+                <!-- Tombol Konfirmasi -->
+                <form action="/pembayaran/{{ $pesanan->id_pesanan }}/konfirmasi" method="POST" style="margin-top: 4px;">
                     @csrf
-                    <button class="btn btn-success px-5 py-2 fw-bold">
+                    <button type="submit"
+                        style="width: 100%; padding: 14px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 1em; font-weight: 600; cursor: pointer;">
                         ✅ Konfirmasi Pembayaran
                     </button>
                 </form>
+            </div>
+        </div>
+        @endif
+
+    </div>
+
+    <!-- KANAN: Detail Pesanan -->
+    <div style="position: sticky; top: 20px; display: flex; flex-direction: column; gap: 16px;">
+
+        <!-- Info Pesanan -->
+        <div style="background: white; border-radius: 12px; border: 1px solid #e5e7eb; box-shadow: 0 2px 10px rgba(0,0,0,0.05); padding: 20px;">
+            <h3 style="margin: 0 0 16px; font-size: 1em; font-weight: 700; color: #374151; border-bottom: 1px solid #e5e7eb; padding-bottom: 12px;">📄 Detail Pesanan</h3>
+
+            <div style="display: flex; justify-content: space-between; font-size: 0.85em; margin-bottom: 8px; color: #6b7280;">
+                <span>No. Pesanan</span>
+                <span style="font-weight: 600; color: #1f2937;">#{{ $pesanan->id_pesanan }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85em; margin-bottom: 8px; color: #6b7280;">
+                <span>Tanggal</span>
+                <span style="font-weight: 600; color: #1f2937;">{{ \Carbon\Carbon::parse($pesanan->tanggal_pesan)->format('d M Y') }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85em; margin-bottom: 8px; color: #6b7280;">
+                <span>Status</span>
+                <span style="background: #fffbeb; color: #d97706; padding: 2px 10px; border-radius: 20px; font-size: 0.9em; font-weight: 600;">
+                    {{ ucfirst($pesanan->status_pesanan) }}
+                </span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85em; margin-bottom: 8px; color: #6b7280;">
+                <span>Metode</span>
+                <span style="font-weight: 600; color: #1f2937; text-transform: capitalize;">{{ $metode }}</span>
+            </div>
+
+            <div style="border-top: 1px solid #e5e7eb; padding-top: 12px; margin-top: 4px; display: flex; justify-content: space-between; font-size: 1em; font-weight: 700; color: #1f2937;">
+                <span>Total</span>
+                <span style="color: #667eea;">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</span>
+            </div>
+        </div>
+
+        <!-- Status Pembayaran -->
+        <div style="background: white; border-radius: 12px; border: 1px solid #e5e7eb; box-shadow: 0 2px 10px rgba(0,0,0,0.05); padding: 20px;">
+            <h3 style="margin: 0 0 14px; font-size: 1em; font-weight: 700; color: #374151;">Status Pembayaran</h3>
+            @php $sp = $pesanan->pembayaran->status_pembayaran ?? 'menunggu'; @endphp
+            @if($sp === 'lunas')
+            <div style="display: flex; align-items: center; gap: 10px; padding: 12px; background: #f0fdf4; border-radius: 8px; border: 1px solid #86efac;">
+                <span style="font-size: 1.5em;">✅</span>
+                <div>
+                    <p style="margin: 0; font-weight: 600; color: #166534; font-size: 0.9em;">Lunas</p>
+                    <p style="margin: 2px 0 0; font-size: 0.78em; color: #22c55e;">Pembayaran terkonfirmasi</p>
+                </div>
+            </div>
+            @else
+            <div style="display: flex; align-items: center; gap: 10px; padding: 12px; background: #fffbeb; border-radius: 8px; border: 1px solid #fcd34d;">
+                <span style="font-size: 1.5em;">⏳</span>
+                <div>
+                    <p style="margin: 0; font-weight: 600; color: #92400e; font-size: 0.9em;">Menunggu Pembayaran</p>
+                    <p style="margin: 2px 0 0; font-size: 0.78em; color: #d97706;">Selesaikan pembayaranmu</p>
+                </div>
+            </div>
             @endif
         </div>
+
+        <a href="/pesanan/saya"
+            style="display: block; padding: 12px; background: #f9fafb; color: #6b7280; text-align: center; border-radius: 8px; text-decoration: none; font-size: 0.9em; border: 1px solid #e5e7eb;">
+            📦 Lihat Semua Pesanan
+        </a>
     </div>
-    <a href="/pesanan/saya" class="btn btn-outline-secondary w-100 mt-3">
-        Lihat Riwayat Pesanan
-    </a>
+
 </div>
+
+<script>
+function copyRek(text, btn) {
+    navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = '✅ Disalin!';
+        btn.style.color = '#16a34a';
+        setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 2000);
+    });
+}
+
+function pilihEwallet(id) {
+    document.querySelectorAll('.ewallet-panel').forEach(p => p.style.display = 'none');
+    document.getElementById('panel-' + id).style.display = 'block';
+    document.querySelectorAll('[id^="tab-"]').forEach(t => {
+        t.style.borderColor = '#e5e7eb';
+        t.style.background = 'white';
+        t.style.color = '#6b7280';
+    });
+    const tab = document.getElementById('tab-' + id);
+    tab.style.borderColor = '#667eea';
+    tab.style.background = '#f0f4ff';
+    tab.style.color = '#4338ca';
+}
+
+// Default: pilih QRIS
+pilihEwallet('qris');
+</script>
+
+<style>
+@media (max-width: 900px) {
+    div[style*="grid-template-columns: 1fr 320px"] { grid-template-columns: 1fr !important; }
+}
+</style>
+
 @endsection

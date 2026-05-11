@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('title', $produk->nama_produk)
 
 @section('content')

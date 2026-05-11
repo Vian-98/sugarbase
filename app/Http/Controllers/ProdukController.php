@@ -127,9 +127,6 @@ class ProdukController extends Controller
         return back()->with('success', 'Produk berhasil dihapus');
     }
 
-    /**
-     * Display product detail page
-     */
     public function show($id)
     {
         $produk = Produk::with('kategori')->findOrFail($id);
