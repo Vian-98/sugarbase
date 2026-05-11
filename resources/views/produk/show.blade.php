@@ -12,8 +12,13 @@
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
     
     <!-- FOTO PRODUK -->
-    <div style="display: flex; align-items: center; justify-content: center; background: #f3f4f6; border-radius: 8px; min-height: 300px; font-size: 5em;">
-        {{ $produk->foto ?? '🍰' }}
+    <div style="background: #f3f4f6; border-radius: 8px; min-height: 300px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+        @if($produk->foto)
+            <img src="{{ asset('storage/' . $produk->foto) }}" alt="{{ $produk->nama_produk }}"
+                 style="width: 100%; height: 300px; object-fit: contain;">
+        @else
+            <div style="font-size: 5em;">🍰</div>
+        @endif
     </div>
     
     <!-- INFO PRODUK -->
