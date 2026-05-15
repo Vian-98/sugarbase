@@ -1,16 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
-@section('title', 'Admin — Manajemen Pesanan')
+@section('breadcrumb', 'Admin › Manajemen Pesanan')
 
 @section('content')
 
-<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; flex-wrap: wrap; gap: 12px;">
+<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
     <div>
-        <h1 style="font-size: 1.8em; color: #1f2937; margin: 0 0 4px; font-weight: 700;">📋 Manajemen Pesanan</h1>
-        <p style="margin: 0; color: #9ca3af; font-size: 0.9em;">Kelola semua pesanan yang masuk</p>
-    </div>
-    <div style="display: flex; gap: 10px;">
-        <a href="/admin/dashboard" style="padding: 10px 18px; background: #f3f4f6; color: #374151; border-radius: 8px; text-decoration: none; font-size: 0.85em; font-weight: 600; border: 1px solid #e5e7eb;">← Dashboard</a>
+        <h1 style="font-size: 1.6em; color: #1f2937; margin: 0; font-weight: 700;">📋 Manajemen Pesanan</h1>
     </div>
 </div>
 
@@ -24,8 +20,6 @@
 <!-- STATISTIK REVENUE HARI INI -->
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px;">
     @php
-    $hariIni = \Carbon\Carbon::today();
-    $revenueHariIni = $pesanan->where('tanggal_pesan', $hariIni->toDateString())->sum('total_harga');
     $totalPesanan = $pesanan->count();
     $pending = $pesanan->where('status_pesanan', 'pending')->count();
     $selesai = $pesanan->where('status_pesanan', 'selesai')->count();
@@ -163,7 +157,7 @@
                             </form>
 
                             <!-- Detail -->
-                            <a href="/pesanan/{{ $item->id_pesanan }}"
+                            <a href="/admin/pesanan/{{ $item->id_pesanan }}"
                                 style="padding: 5px 10px; background: #f3f4f6; color: #374151; border-radius: 6px; text-decoration: none; font-size: 0.8em; font-weight: 600; border: 1px solid #e5e7eb;">
                                 Detail
                             </a>

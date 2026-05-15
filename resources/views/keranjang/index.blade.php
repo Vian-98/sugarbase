@@ -60,9 +60,14 @@
                         <!-- Foto + Nama -->
                         <td style="padding: 18px 24px;">
                             <div style="display: flex; align-items: center; gap: 14px;">
+                                @if($item->produk->foto)
+                                <img src="{{ asset('storage/' . $item->produk->foto) }}" alt="{{ $item->produk->nama_produk }}" 
+                                    style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px; flex-shrink: 0;">
+                                @else
                                 <div style="width: 64px; height: 64px; background: #f3f4f6; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 2em; flex-shrink: 0;">
-                                    {{ $item->produk->foto ?? '🍰' }}
+                                    🍰
                                 </div>
+                                @endif
                                 <div>
                                     <p style="margin: 0; font-weight: 600; color: #111827; font-size: 0.95em;">{{ $item->produk->nama_produk }}</p>
                                     <p style="margin: 4px 0 0; font-size: 0.8em; color: #9ca3af;">{{ $item->produk->kategori->nama_kategori ?? '' }}</p>
@@ -77,7 +82,7 @@
 
                         <!-- Update Qty -->
                         <td style="padding: 18px 12px; text-align: center;">
-                            <form action="/keranjang/update/{{ $item->id_keranjang_item ?? $item->id }}" method="POST" style="display: flex; align-items: center; justify-content: center; gap: 0;">
+                            <form action="/keranjang/update/{{ $item->id_item }}" method="POST" style="display: flex; align-items: center; justify-content: center; gap: 0;">
                                 @csrf
                                 <button type="button" onclick="ubahQtyItem(this, -1)"
                                     style="width: 32px; height: 32px; border: 1px solid #d1d5db; background: #f9fafb; color: #374151; cursor: pointer; border-radius: 6px 0 0 6px; font-size: 1em;">−</button>
@@ -97,7 +102,7 @@
 
                         <!-- Hapus -->
                         <td style="padding: 18px 24px; text-align: center;">
-                            <form action="/keranjang/hapus/{{ $item->id_keranjang_item ?? $item->id }}" method="POST">
+                            <form action="/keranjang/hapus/{{ $item->id_item }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" onclick="return confirm('Hapus item ini?')"

@@ -13,6 +13,7 @@ use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PesananController;
+use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\ProdukController;
 
 Route::get('/', function () {
@@ -29,11 +30,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout', [CheckoutController::class, 'proses']);
     Route::get('/pembayaran/{id}', [PembayaranController::class, 'show'])->name('pembayaran.show');
     Route::get('/pesanan/saya', [PesananController::class, 'milikSaya'])->name('pesanan.saya');
+    Route::get('/pesanan/{id}', [TrackingController::class, 'show'])->name('pesanan.show');
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/pesanan', [App\Http\Controllers\Admin\PesananController::class, 'index']);
+    Route::get('/pesanan/{id}', [App\Http\Controllers\Admin\PesananController::class, 'show']);
     Route::post('/pesanan/{id}/status', [App\Http\Controllers\Admin\PesananController::class, 'updateStatus']);
+    Route::post('/pesanan/{id}/tracking', [App\Http\Controllers\Admin\PesananController::class, 'addTracking']);
     Route::post('/pembayaran/{id}/konfirmasi', [App\Http\Controllers\Admin\PembayaranController::class, 'konfirmasi']);
 });
 
@@ -62,8 +66,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/kategori/store', [KategoriController::class, 'store'])->name('kategori.store');
     Route::delete('/kategori/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
     Route::get('/pesanan', [App\Http\Controllers\Admin\PesananController::class, 'index'])->name('pesanan.index');
+    Route::get('/pesanan/{id}', [App\Http\Controllers\Admin\PesananController::class, 'show'])->name('pesanan.show');
     Route::post('/pesanan/{id}/status', [App\Http\Controllers\Admin\PesananController::class, 'updateStatus'])->name('pesanan.status');
     Route::get('/pelanggan', [PelangganController::class,'index'])->name('pelanggan.index');
+    Route::get('/pelanggan/{id}', [PelangganController::class,'show'])->name('pelanggan.show');
     Route::get('/pembayaran', [App\Http\Controllers\Admin\PembayaranController::class, 'index'])->name('pembayaran.index');
     Route::post('/pembayaran/{id}/konfirmasi', [App\Http\Controllers\Admin\PembayaranController::class, 'konfirmasi'])->name('pembayaran.konfirmasi');
     Route::get('/qr', function () { return view('qrcode'); })->name('qr');

@@ -7,6 +7,12 @@ use App\Models\Pembayaran;
 
 class PembayaranController extends Controller
 {
+    public function index()
+    {
+        $pembayaran = Pembayaran::with('pesanan')->orderBy('created_at', 'desc')->get();
+        return view('admin.pembayaran.index', compact('pembayaran'));
+    }
+
     public function konfirmasi($id)
     {
         $pembayaran = Pembayaran::with('pesanan')->findOrFail($id);
