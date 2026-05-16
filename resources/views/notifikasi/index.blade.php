@@ -17,16 +17,14 @@
         </div>
 
         @if($notifikasi->where('status_baca', 'belum')->count() > 0)
-            <form action="{{ route('notifikasi.readAll') }}" method="POST" style="margin: 0;">
-                @csrf
-                @method('PATCH')
-                <button type="submit"
+            <div style="margin: 0;">
+                <button id="markAllBtn" data-url="{{ route('notifikasi.readAll') }}" type="button"
                     style="background: #ffffff; color: #475569; border: 1px solid #e2e8f0; padding: 12px 24px; border-radius: 14px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s; display: flex; align-items: center; gap: 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);"
                     onmouseover="this.style.background='#f8fafc'; this.style.borderColor='#cbd5e1'" 
                     onmouseout="this.style.background='#ffffff'; this.style.borderColor='#e2e8f0'">
                     <span>Mark all as read</span>
                 </button>
-            </form>
+            </div>
         @endif
     </div>
 
@@ -104,19 +102,15 @@
 
                 {{-- Tombol Aksi --}}
                 @if($isUnread)
-                    <form action="{{ route('notifikasi.read', $item->id_notifikasi) }}" method="POST" style="margin: 0;">
-                        @csrf
-                        @method('PATCH')
-                        <button type="submit" style="
-                            background: transparent; color: #8b5cf6; border: 2px solid #f5f3ff; 
-                            width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-                            cursor: pointer; transition: all 0.2s; font-size: 1.1rem;
-                        " title="Tandai sudah dibaca"
-                        onmouseover="this.style.background='#8b5cf6'; this.style.color='white'; this.style.borderColor='#8b5cf6';" 
-                        onmouseout="this.style.background='transparent'; this.style.color='#8b5cf6'; this.style.borderColor='#f5f3ff';">
-                            ✓
-                        </button>
-                    </form>
+                    <button class="mark-read-btn" data-url="{{ route('notifikasi.read', $item->id_notifikasi) }}" data-id="{{ $item->id_notifikasi }}" type="button" style="
+                        background: transparent; color: #8b5cf6; border: 2px solid #f5f3ff; 
+                        width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+                        cursor: pointer; transition: all 0.2s; font-size: 1.1rem;
+                    " title="Tandai sudah dibaca"
+                    onmouseover="this.style.background='#8b5cf6'; this.style.color='white'; this.style.borderColor='#8b5cf6';" 
+                    onmouseout="this.style.background='transparent'; this.style.color='#8b5cf6'; this.style.borderColor='#f5f3ff';">
+                        ✓
+                    </button>
                 @endif
             </div>
         @empty
@@ -129,3 +123,83 @@
     </div>
 </div>
 @endsection
+
+    @section('scripts')
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const csrf = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+
+        function updateBadge(delta) {
+            const badge = document.getElementById('notifBadge');
+            if (!badge) return;
+            let val = parseInt(badge.textContent || '0', 10);
+            val = Math.max(0, val - delta);
+            if (val === 0) {
+                badge.remove();
+            } else {
+                badge.textContent = val;
+            }
+        }
+
+        function setAdminTotal(val) {
+            const el = document.getElementById('adminNotifTotal');
+            if (!el) return;
+            el.textContent = val + ' total';
+        }
+
+        document.querySelectorAll('.mark-read-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const url = this.dataset.url;
+                fetch(url, {
+                    method: 'PATCH',
+                    headers: {
+                        'X-CSRF-TOKEN': csrf,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                }).then(res => {
+                    if (!res.ok) throw new Error('Network error');
+                    return res.json().catch(() => ({}));
+                }).then(data => {
+                    // update UI
+                    const card = btn.closest('div[style]');
+                    if (card) {
+                        card.style.background = '#f8fafc';
+                        card.style.borderColor = '#f1f5f9';
+                    }
+                    const dot = card && card.querySelector('div[style*="position: absolute"]');
+                    if (dot) dot.remove();
+                    btn.remove();
+                    updateBadge(1);
+                    if (data.admin_total !== undefined) setAdminTotal(data.admin_total);
+                }).catch(err => console.error(err));
+            });
+        });
+
+        const markAll = document.getElementById('markAllBtn');
+        if (markAll) {
+            markAll.addEventListener('click', function () {
+                const url = this.dataset.url;
+                fetch(url, {
+                    method: 'PATCH',
+                    headers: {
+                        'X-CSRF-TOKEN': csrf,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                }).then(res => {
+                    if (!res.ok) throw new Error('Network error');
+                    return res.json().catch(() => ({}));
+                }).then(data => {
+                    document.querySelectorAll('.mark-read-btn').forEach(b => b.remove());
+                    document.querySelectorAll('div[style*="position: absolute"]').forEach(d => d.remove());
+                    const badge = document.getElementById('notifBadge'); if (badge) badge.remove();
+                    if (data.admin_total !== undefined) setAdminTotal(data.admin_total);
+                }).catch(err => console.error(err));
+            });
+        }
+    });
+    </script>
+    @endsection

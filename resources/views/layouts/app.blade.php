@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'SugarBase') - E-Commerce</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
@@ -117,6 +118,19 @@
             justify-content: center;
             font-size: 0.75em;
             font-weight: bold;
+        }
+
+        .admin-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #111827;
+            color: white;
+            border-radius: 999px;
+            padding: 4px 8px;
+            font-size: 0.7em;
+            font-weight: 700;
+            margin-left: 8px;
         }
 
         .avatar-dropdown {
@@ -287,10 +301,13 @@
 
         <div class="nav-right">
             <!-- Notification Bell -->
-            <button class="nav-icon-btn" onclick="window.location.href='/notifikasi'">
+            <button class="nav-icon-btn" id="notifBtn" onclick="window.location.href='/notifikasi'">
                 🔔
                 @if(($unreadCount ?? 0) > 0)
-                    <span class="badge">{{ $unreadCount }}</span>
+                    <span class="badge" id="notifBadge">{{ $unreadCount }}</span>
+                @endif
+                @if(auth()->check() && (auth()->user()->role ?? null) === 'admin')
+                    <span class="admin-badge" id="adminNotifTotal">{{ $adminNotifTotal ?? 0 }} total</span>
                 @endif
             </button>
 
