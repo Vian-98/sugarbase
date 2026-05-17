@@ -255,7 +255,7 @@
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
             font-weight: 700;
-            font-size: 0.75em;
+            font-size: 0.95em;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -325,11 +325,11 @@
         .admin-content {
             grid-column: 1;
             grid-row: 2;
-            /* flexible padding: min 16px, preferred 4vw, max 56px */
-            padding: clamp(16px, 4vw, 56px);
+            /* tighter flexible padding to reduce gap under navbar */
+            padding: clamp(10px, 2.5vw, 32px);
             overflow-y: auto;
             background: var(--light);
-            min-height: calc(100vh - 70px);
+            min-height: calc(100vh - 64px);
         }
 
         /* centered container to control content width and rhythm */
@@ -339,6 +339,11 @@
             padding: 0 20px;
         }
             .hero-title { font-size: 2.25em; font-weight: 700; letter-spacing: -1px; color: var(--dark); margin: 0 0 8px 0; }
+
+            /* Ensure headings use consistent casing and rhythm */
+            .hero-title, .page-header h1, .page-title h1 { text-transform: none; }
+
+            .hero-sub { color: var(--muted); font-weight: 500; margin-top: 6px; }
 
         .page-title {
             margin-bottom: clamp(12px, 3vw, 32px);
@@ -396,15 +401,16 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 32px;
+            margin-top: 8px;
+            margin-bottom: 28px;
             gap: 16px;
             flex-wrap: wrap;
         }
 
         .page-header h1 {
-            font-size: 2em;
+            font-size: 1.75em;
             font-weight: 700;
-            letter-spacing: -0.8px;
+            letter-spacing: -0.6px;
             color: var(--dark);
             margin: 0;
         }

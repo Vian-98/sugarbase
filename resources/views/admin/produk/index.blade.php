@@ -3,8 +3,10 @@
 @section('title', 'Manajemen Produk')
 
 @section('page_title')
-    <h1 class="hero-title">Manajemen Produk</h1>
-    <p class="hero-sub">Kelola semua produk di toko Anda</p>
+    <div class="container">
+        <h1 class="hero-title">Manajemen Produk</h1>
+        <p class="hero-sub">Kelola semua produk di toko Anda</p>
+    </div>
 @endsection
 
 @section('content')
