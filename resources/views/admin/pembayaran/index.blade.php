@@ -4,8 +4,10 @@
 
 @section('content')
 
-<div class="page-header">
-    <h1 class="page-title">💳 Manajemen Pembayaran</h1>
+<div class="container">
+    <div class="page-header">
+        <h1 class="hero-title">💳 Manajemen Pembayaran</h1>
+    </div>
 </div>
 
 <div class="admin-card">

@@ -5,9 +5,11 @@
 @section('content')
 
 <!-- HEADER -->
-<div class="page-header">
-    <h1 class="page-title">📋 Detail Pesanan #{{ str_pad($pesanan->id_pesanan, 6, '0', STR_PAD_LEFT) }}</h1>
-    <a href="/admin/pesanan" class="btn btn-ghost">← Kembali</a>
+<div class="container">
+    <div class="page-header">
+        <h1 class="hero-title">📋 Detail Pesanan #{{ str_pad($pesanan->id_pesanan, 6, '0', STR_PAD_LEFT) }}</h1>
+        <a href="/admin/pesanan" class="btn btn-ghost">← Kembali</a>
+    </div>
 </div>
 
 <div class="grid-2">
