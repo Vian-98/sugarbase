@@ -17,24 +17,15 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('*', function ($view) {
             $unreadCount = 0;
-            $adminNotifTotal = 0;
 
             if (auth()->check()) {
                 $unreadCount = DB::table('notifikasi')
                     ->where('user_id', auth()->id())
                     ->where('status_baca', 'belum')
                     ->count();
-
-                // If user is admin, also provide global unread total
-                $user = auth()->user();
-                if (isset($user->role) && $user->role === 'admin') {
-                    $adminNotifTotal = DB::table('notifikasi')
-                        ->where('status_baca', 'belum')
-                        ->count();
-                }
             }
 
-            $view->with('unreadCount', $unreadCount)->with('adminNotifTotal', $adminNotifTotal);
+            $view->with('unreadCount', $unreadCount);
         });
     }
 }

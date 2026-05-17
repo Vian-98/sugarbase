@@ -141,12 +141,6 @@
             }
         }
 
-        function setAdminTotal(val) {
-            const el = document.getElementById('adminNotifTotal');
-            if (!el) return;
-            el.textContent = val + ' total';
-        }
-
         document.querySelectorAll('.mark-read-btn').forEach(btn => {
             btn.addEventListener('click', function () {
                 const url = this.dataset.url;
@@ -172,7 +166,6 @@
                     if (dot) dot.remove();
                     btn.remove();
                     updateBadge(1);
-                    if (data.admin_total !== undefined) setAdminTotal(data.admin_total);
                 }).catch(err => console.error(err));
             });
         });
@@ -196,7 +189,6 @@
                     document.querySelectorAll('.mark-read-btn').forEach(b => b.remove());
                     document.querySelectorAll('div[style*="position: absolute"]').forEach(d => d.remove());
                     const badge = document.getElementById('notifBadge'); if (badge) badge.remove();
-                    if (data.admin_total !== undefined) setAdminTotal(data.admin_total);
                 }).catch(err => console.error(err));
             });
         }

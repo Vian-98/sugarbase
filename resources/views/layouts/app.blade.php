@@ -306,9 +306,6 @@
                 @if(($unreadCount ?? 0) > 0)
                     <span class="badge" id="notifBadge">{{ $unreadCount }}</span>
                 @endif
-                @if(auth()->check() && (auth()->user()->role ?? null) === 'admin')
-                    <span class="admin-badge" id="adminNotifTotal">{{ $adminNotifTotal ?? 0 }} total</span>
-                @endif
             </button>
 
             <!-- Cart -->
@@ -324,7 +321,6 @@
                 <div class="dropdown-menu" id="avatarMenu">
                     <a href="/profil">👤 Profil</a>
                     <a href="/pesanan/saya">📦 Pesanan Saya</a>
-                    <a href="/riwayat">📋 Riwayat</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit">🚪 Logout</button>
@@ -392,6 +388,8 @@
             }
         });
     </script>
+
+    @yield('scripts')
 
 </body>
 </html>

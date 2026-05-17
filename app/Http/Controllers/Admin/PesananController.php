@@ -16,6 +16,17 @@ class PesananController extends Controller
             $query->where('status_pesanan', $request->status);
         }
 
+        if ($request->filled('q')) {
+            $q = $request->q;
+            $query->where(function ($subQuery) use ($q) {
+                $subQuery->where('id_pesanan', 'like', '%' . $q . '%')
+                    ->orWhereHas('user', function ($userQuery) use ($q) {
+                        $userQuery->where('name', 'like', '%' . $q . '%')
+                            ->orWhere('email', 'like', '%' . $q . '%');
+                    });
+            });
+        }
+
         $pesanan = $query->get();
         
         // Calculate revenue for TODAY (before status filtering)

@@ -247,6 +247,58 @@
             position: relative;
         }
 
+        .navbar-search-form {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 220px;
+            max-width: 320px;
+            flex: 1 1 260px;
+        }
+
+        .navbar-search-form input {
+            width: 100%;
+            border: 1px solid rgba(0,0,0,0.08);
+            background: rgba(255,255,255,0.75);
+            border-radius: 999px;
+            padding: 10px 16px;
+            color: var(--dark);
+            font-size: 0.92em;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .navbar-search-form input::placeholder {
+            color: var(--muted);
+        }
+
+        .navbar-search-form input:focus {
+            border-color: rgba(102, 126, 234, 0.55);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.08);
+            background: rgba(255,255,255,0.95);
+        }
+
+        .navbar-search-submit {
+            width: 40px;
+            height: 40px;
+            border-radius: 999px;
+            border: none;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 18px rgba(102, 126, 234, 0.18);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .navbar-search-submit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 22px rgba(102, 126, 234, 0.24);
+        }
+
         /* Profile Avatar */
         .profile-avatar {
             width: 40px;
@@ -1048,15 +1100,27 @@
             <!-- Right Actions -->
             <div class="navbar-right">
                 <!-- Search -->
-                <button class="navbar-icon-btn search-btn" title="Search" onclick="alert('Search feature coming soon!')">
-                    <i class="fas fa-search"></i>
-                </button>
-
-                <!-- Notifications (Optional) -->
-                <button class="navbar-icon-btn" title="Notifications" onclick="alert('Notifications feature coming soon!')">
-                    <i class="fas fa-bell"></i>
-                    <span class="notify-dot"></span>
-                </button>
+                <form class="navbar-search-form" action="{{ url()->current() }}" method="GET">
+                    @foreach(request()->except('q') as $key => $value)
+                        @if(is_array($value))
+                            @foreach($value as $item)
+                                <input type="hidden" name="{{ $key }}[]" value="{{ $item }}">
+                            @endforeach
+                        @else
+                            <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                        @endif
+                    @endforeach
+                    <input
+                        type="search"
+                        name="q"
+                        value="{{ request('q') }}"
+                        placeholder="Cari di halaman ini..."
+                        aria-label="Cari di halaman admin saat ini"
+                    >
+                    <button class="navbar-search-submit" type="submit" title="Cari di halaman ini">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
 
                 <!-- Profile Avatar -->
                 <button class="profile-avatar" title="{{ auth()->user()->name }}">

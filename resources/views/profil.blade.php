@@ -34,7 +34,7 @@
 
                 <div style="margin-top:16px;display:flex;gap:10px;">
                     <a href="{{ route('profil.edit') }}" style="background:var(--primary);color:white;padding:10px 14px;border-radius:8px;text-decoration:none;">✏️ Edit Profil</a>
-                    <a href="{{ route('riwayat') }}" style="background:var(--light);color:var(--dark);padding:10px 14px;border-radius:8px;text-decoration:none;">📋 Riwayat Pesanan</a>
+                    <a href="{{ route('pesanan.saya') }}" style="background:var(--light);color:var(--dark);padding:10px 14px;border-radius:8px;text-decoration:none;">📋 Riwayat Pesanan</a>
                 </div>
             </div>
         </div>

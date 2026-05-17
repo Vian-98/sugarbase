@@ -37,7 +37,7 @@
                 </div>
                 <div>
                     <label style="display: block; font-size: 0.75em; color: #6b7280; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; letter-spacing: 0.4px;">Nomor Telepon</label>
-                    <p style="margin: 0; color: #1f2937; font-weight: 600;">{{ $pelanggan->no_telepon ?? '-' }}</p>
+                    <p style="margin: 0; color: #1f2937; font-weight: 600;">{{ $pelanggan->phone ?? '-' }}</p>
                 </div>
                 <div>
                     <label style="display: block; font-size: 0.75em; color: #6b7280; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; letter-spacing: 0.4px;">Alamat</label>

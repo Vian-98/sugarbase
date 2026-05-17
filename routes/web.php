@@ -121,8 +121,10 @@ Route::middleware(['auth'])->group(function () {
         return redirect()->route('profil')->with('success', 'Profil diperbarui.');
     })->name('profil.update');
 
-    // Riwayat pesanan - tampilkan pesanan milik user (gunakan controller untuk detail konsisten)
-    Route::get('/riwayat', [PesananController::class, 'milikSaya'])->name('riwayat');
+    // Riwayat pesanan: alias ke halaman pesanan saya agar tidak ada duplikasi view
+    Route::get('/riwayat', function () {
+        return redirect()->route('pesanan.saya');
+    })->name('riwayat');
 });
 
 

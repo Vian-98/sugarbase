@@ -117,9 +117,6 @@
     </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <p class="muted"><strong>Produk Aktif:</strong> {{ isset($produkAktif) ? $produkAktif : 'NOT SET' }}</p>
-    <p class="muted"><strong>Total Pelanggan:</strong> {{ isset($totalPelanggan) ? $totalPelanggan : 'NOT SET' }}</p>
-    <p class="muted"><strong>Chart Labels Count:</strong> {{ isset($chartLabels) ? count($chartLabels) : 'NOT SET' }}</p>
 
     </div>
 
