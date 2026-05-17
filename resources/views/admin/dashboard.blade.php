@@ -131,7 +131,7 @@
                     label: 'Jumlah Pesanan',
                     data: @json($chartData),
                     borderColor: '#789DBC',
-                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    backgroundColor: 'rgba(120, 157, 188, 0.1)',
                     tension: 0.4,
                     fill: true,
                     pointRadius: 5,

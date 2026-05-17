@@ -22,26 +22,7 @@ Route::get('/', [GuestLandingPageController::class, 'index'])->name('guest.landi
 Route::get('/guest/katalog', [GuestLandingPageController::class, 'katalog'])->name('guest.katalog');
 Route::get('/guest/produk/{id}', [GuestLandingPageController::class, 'showProduct'])->name('guest.produk.show');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/produk/{id}', [ProdukController::class, 'show'])->name('produk.show');
-    Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang');
-    Route::post('/keranjang/tambah', [KeranjangController::class, 'tambah']);
-    Route::post('/keranjang/update/{id}', [KeranjangController::class, 'update']);
-    Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'hapus']);
-    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
-    Route::post('/checkout', [CheckoutController::class, 'proses']);
-    Route::get('/pembayaran/{id}', [PembayaranController::class, 'show'])->name('pembayaran.show');
-    Route::get('/pesanan/saya', [PesananController::class, 'milikSaya'])->name('pesanan.saya');
-    Route::get('/pesanan/{id}', [TrackingController::class, 'show'])->name('pesanan.show');
-});
 
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::get('/pesanan', [App\Http\Controllers\Admin\PesananController::class, 'index']);
-    Route::get('/pesanan/{id}', [App\Http\Controllers\Admin\PesananController::class, 'show']);
-    Route::post('/pesanan/{id}/status', [App\Http\Controllers\Admin\PesananController::class, 'updateStatus']);
-    Route::post('/pesanan/{id}/tracking', [App\Http\Controllers\Admin\PesananController::class, 'addTracking']);
-    Route::post('/pembayaran/{id}/konfirmasi', [App\Http\Controllers\Admin\PembayaranController::class, 'konfirmasi']);
-});
 
 // ─── AUTH (guest only) ────────────────────────────────────────────────────────
 Route::middleware('guest')->group(function () {

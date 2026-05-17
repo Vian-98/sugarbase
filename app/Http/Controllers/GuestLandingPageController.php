@@ -25,7 +25,6 @@ class GuestLandingPageController extends Controller
         $kategori = Kategori::all();
 
         // Ambil produk terlaris (berdasarkan stok terbanyak)
-        // Note: pesanan_item table dihapus karena empty dan unused
         $produkTerlaris = Produk::where('status_produk', 'aktif')
             ->orderBy('stok', 'desc')
             ->take(8)

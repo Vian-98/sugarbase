@@ -13,13 +13,13 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f9fafb;
-            color: #1f2937;
+            font-family: 'Montserrat', Montserrat, Geneva, Montserrat, sans-serif;
+            background: var(--gradient-soft);
+            color: var(--dark);
         }
 
         .navbar {
-            background: white;
+            background: var(--surface-strong);
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             padding: 1rem 2rem;
             display: flex;
@@ -35,7 +35,7 @@
             align-items: center;
             gap: 0.5rem;
             text-decoration: none;
-            color: #667eea;
+            color: #789DBC;
             font-weight: bold;
             font-size: 1.3rem;
         }
@@ -48,13 +48,13 @@
 
         .navbar-right a {
             text-decoration: none;
-            color: #6b7280;
+            color: var(--text-secondary);
             font-weight: 500;
             transition: color 0.3s;
         }
 
         .navbar-right a:hover {
-            color: #667eea;
+            color: #789DBC;
         }
 
         .btn {
@@ -69,29 +69,29 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #789DBC 0%, #9FBCCD 100%);
             color: white;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 4px 12px rgba(120, 157, 188, 0.4);
         }
 
         .btn-secondary {
-            background: #f3f4f6;
-            color: #667eea;
-            border: 2px solid #667eea;
+            background: var(--surface-muted);
+            color: #789DBC;
+            border: 1px solid rgba(120,157,188,0.15);
         }
 
         .btn-secondary:hover {
-            background: #667eea;
+            background: #789DBC;
             color: white;
         }
 
         .btn-disabled {
             background: #d1d5db;
-            color: #9ca3af;
+            color: var(--text-secondary);
             cursor: not-allowed;
             opacity: 0.6;
         }
@@ -110,7 +110,7 @@
         }
 
         .breadcrumb a {
-            color: #667eea;
+            color: #789DBC;
             text-decoration: none;
             font-weight: 500;
         }
@@ -120,11 +120,11 @@
         }
 
         .product-detail {
-            background: white;
+            background: var(--surface-strong);
             border-radius: 12px;
             padding: 30px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border: 1px solid #e5e7eb;
+            border: 1px solid var(--border);
         }
 
         .product-grid {
@@ -135,7 +135,7 @@
         }
 
         .product-image {
-            background: #f3f4f6;
+            background: var(--surface-muted);
             border-radius: 12px;
             height: 400px;
             overflow: hidden;
@@ -156,7 +156,7 @@
 
         .product-details-section h1 {
             font-size: 2em;
-            color: #1f2937;
+            color: var(--dark);
             margin-bottom: 15px;
         }
 
@@ -174,34 +174,34 @@
 
         .meta-label {
             font-size: 0.85em;
-            color: #6b7280;
+            color: var(--text-secondary);
             font-weight: 600;
         }
 
         .meta-value {
             font-size: 1.1em;
-            color: #1f2937;
+            color: var(--dark);
             font-weight: 600;
         }
 
         .price-section {
-            background: #f9fafb;
+            background: var(--gradient-soft);
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 25px;
-            border: 2px solid #e5e7eb;
+            border: 1px solid rgba(120,157,188,0.15);
         }
 
         .price-label {
             font-size: 0.9em;
-            color: #6b7280;
+            color: var(--text-secondary);
             margin-bottom: 5px;
         }
 
         .price-value {
             font-size: 2.2em;
             font-weight: bold;
-            color: #667eea;
+            color: #789DBC;
         }
 
         .description-section {
@@ -210,12 +210,12 @@
 
         .description-section h3 {
             font-size: 1.2em;
-            color: #1f2937;
+            color: var(--dark);
             margin-bottom: 15px;
         }
 
         .description-section p {
-            color: #6b7280;
+            color: var(--text-secondary);
             line-height: 1.6;
         }
 
@@ -224,13 +224,13 @@
             gap: 15px;
             flex-wrap: wrap;
             padding-top: 25px;
-            border-top: 1px solid #e5e7eb;
+            border-top: 1px solid var(--border);
         }
 
         .login-prompt {
-            background: #eef2ff;
+            background: rgba(120,157,188,0.15);
             border: 1px solid #c7d2fe;
-            color: #3730a3;
+            color: var(--primary);
             padding: 15px 20px;
             border-radius: 8px;
             text-align: center;
@@ -247,18 +247,18 @@
         }
 
         .stock-available {
-            background: #d1fae5;
-            color: #065f46;
+            background: rgba(126,187,152,0.15);
+            color: var(--success);
         }
 
         .stock-limited {
-            background: #fef3c7;
-            color: #92400e;
+            background: rgba(231,200,158,0.15);
+            color: var(--warning);
         }
 
         .stock-unavailable {
-            background: #fee2e2;
-            color: #991b1b;
+            background: rgba(217,137,153,0.15);
+            color: var(--danger);
         }
 
         .footer {
@@ -326,12 +326,12 @@
             <span>›</span>
             <a href="/guest/katalog">Katalog</a>
             <span>›</span>
-            <span style="color: #6b7280;">{{ $produk->nama_produk }}</span>
+            <span style="color: var(--text-secondary);">{{ $produk->nama_produk }}</span>
         </div>
 
         <!-- LOGIN PROMPT -->
         <div class="login-prompt">
-            👋 Anda dapat melihat detail produk ini, namun untuk membeli silakan <a href="/login" style="color: #3730a3; font-weight: bold; text-decoration: underline;">masuk</a> terlebih dahulu.
+            👋 Anda dapat melihat detail produk ini, namun untuk membeli silakan <a href="/login" style="color: var(--primary); font-weight: bold; text-decoration: underline;">masuk</a> terlebih dahulu.
         </div>
 
         <!-- PRODUCT DETAIL -->
@@ -391,7 +391,7 @@
                         <a href="/register" class="btn btn-secondary" style="padding: 12px 30px; width: 100%; text-align: center;">
                             📝 Daftar Akun Baru
                         </a>
-                        <a href="/guest/katalog" class="btn" style="padding: 12px 30px; width: 100%; text-align: center; background: #f3f4f6; color: #6b7280; border: 1px solid #d1d5db;">
+                        <a href="/guest/katalog" class="btn" style="padding: 12px 30px; width: 100%; text-align: center; background: var(--surface-muted); color: var(--text-secondary); border: 1px solid var(--border);">
                             ← Kembali ke Katalog
                         </a>
                     </div>

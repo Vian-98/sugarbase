@@ -12,7 +12,7 @@ $qr_api = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" . url
     <title>QR Code - Sugarbase</title>
     <style>
         body {
-            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Montserrat', sans-serif;
             background: linear-gradient(135deg, #789DBC 0%, #C9E9D2 100%);
             min-height: 100vh;
             display: flex;
@@ -22,11 +22,11 @@ $qr_api = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" . url
         }
         
         .container {
-            background: white;
+            background: var(--surface-strong);
             padding: 40px;
             border-radius: 15px;
             text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(120,157,188,0.10);
         }
         
         h1 {
@@ -37,7 +37,7 @@ $qr_api = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" . url
         .qr-box {
             margin: 30px 0;
             padding: 20px;
-            background: #f3f4f6;
+            background: var(--surface-muted);
             border-radius: 10px;
         }
         
@@ -48,7 +48,7 @@ $qr_api = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" . url
         
         .info {
             margin-top: 20px;
-            color: #6b7280;
+            color: var(--text-secondary);
         }
         
         .url {
@@ -60,11 +60,11 @@ $qr_api = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" . url
         }
         
         .instruction {
-            background: #fef3c7;
+            background: rgba(231,200,158,0.15);
             padding: 15px;
             border-radius: 8px;
             margin-top: 20px;
-            color: #92400e;
+            color: var(--warning);
             border-left: 4px solid #f59e0b;
         }
     </style>

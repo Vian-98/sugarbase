@@ -13,13 +13,13 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f9fafb;
-            color: #1f2937;
+            font-family: 'Montserrat', Montserrat, Geneva, Montserrat, sans-serif;
+            background: var(--gradient-soft);
+            color: var(--dark);
         }
 
         .navbar {
-            background: white;
+            background: var(--surface-strong);
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             padding: 1rem 2rem;
             display: flex;
@@ -35,7 +35,7 @@
             align-items: center;
             gap: 0.5rem;
             text-decoration: none;
-            color: #667eea;
+            color: #789DBC;
             font-weight: bold;
             font-size: 1.3rem;
         }
@@ -48,13 +48,13 @@
 
         .navbar-right a {
             text-decoration: none;
-            color: #6b7280;
+            color: var(--text-secondary);
             font-weight: 500;
             transition: color 0.3s;
         }
 
         .navbar-right a:hover {
-            color: #667eea;
+            color: #789DBC;
         }
 
         .btn {
@@ -69,23 +69,23 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #789DBC 0%, #9FBCCD 100%);
             color: white;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 4px 12px rgba(120, 157, 188, 0.4);
         }
 
         .btn-secondary {
-            background: #f3f4f6;
-            color: #667eea;
-            border: 2px solid #667eea;
+            background: var(--surface-muted);
+            color: #789DBC;
+            border: 1px solid rgba(120,157,188,0.15);
         }
 
         .btn-secondary:hover {
-            background: #667eea;
+            background: #789DBC;
             color: white;
         }
 
@@ -105,7 +105,7 @@
         }
 
         .filters {
-            background: white;
+            background: var(--surface-strong);
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 30px;
@@ -128,13 +128,13 @@
         .filter-group label {
             font-weight: 600;
             font-size: 0.9em;
-            color: #6b7280;
+            color: var(--text-secondary);
         }
 
         .filter-group select,
         .filter-group input {
             padding: 8px 12px;
-            border: 1px solid #d1d5db;
+            border: 1px solid var(--border);
             border-radius: 6px;
             font-size: 0.9em;
         }
@@ -147,11 +147,11 @@
         }
 
         .product-card {
-            background: white;
+            background: var(--surface-strong);
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border: 1px solid #e5e7eb;
+            border: 1px solid var(--border);
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
@@ -159,11 +159,11 @@
 
         .product-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
+            box-shadow: 0 8px 20px rgba(120, 157, 188, 0.15);
         }
 
         .product-image {
-            background: #f3f4f6;
+            background: var(--surface-muted);
             height: 180px;
             overflow: hidden;
             display: flex;
@@ -191,7 +191,7 @@
         .product-name {
             margin: 0 0 8px 0;
             font-size: 0.95em;
-            color: #1f2937;
+            color: var(--dark);
             font-weight: 600;
             line-height: 1.3;
         }
@@ -199,11 +199,11 @@
         .product-category {
             margin: 5px 0;
             font-size: 0.85em;
-            color: #6b7280;
+            color: var(--text-secondary);
         }
 
         .product-category span {
-            background: #e8f9ff;
+            background: rgba(120,157,188,0.15);
             padding: 3px 8px;
             border-radius: 4px;
         }
@@ -211,7 +211,7 @@
         .product-stock {
             margin: 10px 0;
             font-size: 0.9em;
-            color: #6b7280;
+            color: var(--text-secondary);
             flex: 1;
         }
 
@@ -220,20 +220,20 @@
             justify-content: space-between;
             align-items: center;
             margin-top: 10px;
-            border-top: 1px solid #e5e7eb;
+            border-top: 1px solid var(--border);
             padding-top: 10px;
         }
 
         .product-price {
             font-size: 1.1em;
             font-weight: bold;
-            color: #667eea;
+            color: #789DBC;
         }
 
         .login-prompt {
-            background: #eef2ff;
+            background: rgba(120,157,188,0.15);
             border: 1px solid #c7d2fe;
-            color: #3730a3;
+            color: var(--primary);
             padding: 12px 16px;
             border-radius: 8px;
             text-align: center;
@@ -251,32 +251,32 @@
         .pagination a,
         .pagination span {
             padding: 10px 15px;
-            border: 1px solid #d1d5db;
+            border: 1px solid var(--border);
             border-radius: 6px;
             text-decoration: none;
-            color: #667eea;
+            color: #789DBC;
             font-weight: 600;
             transition: all 0.3s;
         }
 
         .pagination a:hover {
-            background: #667eea;
+            background: #789DBC;
             color: white;
-            border-color: #667eea;
+            border-color: #789DBC;
         }
 
         .pagination .active {
-            background: #667eea;
+            background: #789DBC;
             color: white;
-            border-color: #667eea;
+            border-color: #789DBC;
         }
 
         .empty-state {
             text-align: center;
             padding: 60px 20px;
-            background: white;
+            background: var(--surface-strong);
             border-radius: 8px;
-            border: 1px solid #e5e7eb;
+            border: 1px solid var(--border);
         }
 
         .empty-state-emoji {
@@ -287,11 +287,11 @@
         .empty-state h2 {
             font-size: 1.5em;
             margin-bottom: 10px;
-            color: #1f2937;
+            color: var(--dark);
         }
 
         .empty-state p {
-            color: #6b7280;
+            color: var(--text-secondary);
             margin-bottom: 20px;
         }
 
@@ -329,7 +329,7 @@
         </a>
         <div class="navbar-right">
             <a href="/">Beranda</a>
-            <a href="/guest/katalog" style="color: #667eea; font-weight: 600;">Katalog</a>
+            <a href="/guest/katalog" style="color: #789DBC; font-weight: 600;">Katalog</a>
             <a href="/login" class="btn btn-primary" style="padding: 8px 16px;">Masuk</a>
             <a href="/register" class="btn btn-secondary" style="padding: 8px 16px;">Daftar</a>
         </div>
@@ -339,13 +339,13 @@
 
         <!-- LOGIN PROMPT -->
         <div class="login-prompt">
-            👋 Anda dapat melihat produk kami, namun untuk membeli silakan <a href="/login" style="color: #3730a3; font-weight: bold; text-decoration: underline;">masuk</a> terlebih dahulu.
+            👋 Anda dapat melihat produk kami, namun untuk membeli silakan <a href="/login" style="color: var(--primary); font-weight: bold; text-decoration: underline;">masuk</a> terlebih dahulu.
         </div>
 
         <!-- PAGE TITLE -->
         <div class="page-title">
             <h1>📦 Katalog Produk</h1>
-            <p style="color: #6b7280;">Temukan dessert favorit Anda dari koleksi lengkap kami</p>
+            <p style="color: var(--text-secondary);">Temukan dessert favorit Anda dari koleksi lengkap kami</p>
         </div>
 
         <!-- FILTERS -->

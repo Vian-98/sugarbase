@@ -48,7 +48,7 @@
     <!-- FILTER & SEARCH -->
     <div class="admin-card mb-4">
         <div class="filter-bar">
-            <span class="font-600" style="color: #374151; font-size: 0.9em;">Filter:</span>
+            <span class="font-600" style="color: var(--text-secondary); font-size: 0.9em;">Filter:</span>
             @php
             $statuses = ['semua' => 'Semua', 'pending' => 'Pending', 'diproses' => 'Diproses', 'dikirim' => 'Dikirim', 'selesai' => 'Selesai', 'dibatalkan' => 'Dibatalkan'];
             $aktif = request('status', 'semua');

@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'SugarBase') - E-Commerce</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -60,12 +61,14 @@
             --nav-shadow: 0 8px 28px rgba(0,0,0,0.22);
             --nav-shadow-scrolled: 0 10px 30px rgba(0,0,0,0.28);
             --app-bg: linear-gradient(135deg, #111827 0%, #1E293B 50%, #0F172A 100%);
+            --gradient-brand: linear-gradient(135deg, #334155 0%, #0F172A 100%);
+            --gradient-soft: linear-gradient(135deg, rgba(30,41,59,0.8) 0%, rgba(17,24,39,0.9) 100%);
             --text-secondary: #CBD5E1;
             color-scheme: dark;
         }
         
         body {
-            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Montserrat', sans-serif;
             background: var(--app-bg);
             color: var(--dark);
             transition:
@@ -287,7 +290,7 @@
             gap: 4px;
             padding: 10px;
             text-decoration: none;
-            color: #999;
+            color: var(--text-secondary);
             font-size: 0.8em;
             transition: color 0.3s ease;
         }
@@ -372,6 +375,54 @@
             .theme-toggle-label {
                 display: none;
             }
+        }
+        
+        /* ─── PAGINATION ─── */
+        .pagination {
+            display: flex;
+            list-style: none;
+            gap: 8px;
+            padding: 0;
+            margin: 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .page-item .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 38px;
+            height: 38px;
+            padding: 0 12px;
+            background: var(--surface-strong);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-item .page-link:hover {
+            background: var(--surface-muted);
+            color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .page-item.active .page-link {
+            background: var(--gradient-brand);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 12px rgba(120,157,188,0.25);
+        }
+
+        .page-item.disabled .page-link {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
         }
     </style>
 </head>
