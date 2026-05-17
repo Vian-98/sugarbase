@@ -7,20 +7,20 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
 
         :root {
-            --primary:         #6366f1;
-            --primary-hover:   #4f46e5;
+            --primary:         #789DBC;
+            --primary-hover:   #6A8DAB;
             --glass-bg:        rgba(255,255,255,0.72);
             --glass-border:    rgba(255,255,255,0.55);
             --input-bg:        rgba(255,255,255,0.62);
             --input-border:    rgba(0,0,0,0.07);
-            --text-primary:    #1a1a2e;
-            --text-secondary:  #6b6b80;
-            --text-muted:      #9898a8;
+            --text-primary:    #2B2B2B;
+            --text-secondary:  #6B7280;
+            --text-muted:      #6B7280;
             --radius-card:     28px;
             --radius-input:    14px;
             --shadow-card:
@@ -28,18 +28,20 @@
                 0 8px  20px rgba(0,0,0,0.06),
                 inset 0 1px 0 rgba(255,255,255,0.90);
             --shadow-btn:
-                0 8px 24px rgba(99,102,241,0.35),
-                0 2px  8px rgba(99,102,241,0.20);
+                0 8px 24px rgba(120,157,188,0.35),
+                0 2px  8px rgba(120,157,188,0.20);
+            --gradient-brand: linear-gradient(135deg, #789DBC 0%, #C9E9D2 100%);
+            --gradient-soft: linear-gradient(135deg, #FEF9F2 0%, #FFE3E3 40%, #C9E9D2 100%);
         }
 
         /* ── BODY / BACKGROUND ── */
         html, body {
             height: 100%;
-            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         body {
-            background: #f0eff8;
+            background: var(--gradient-soft);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -65,28 +67,28 @@
 
         .orb-1 {
             width: 520px; height: 520px;
-            background: radial-gradient(circle, rgba(139,92,246,0.28) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(120,157,188,0.24) 0%, transparent 70%);
             top: -120px; left: -100px;
             animation: orbFloat1 20s ease-in-out infinite;
         }
 
         .orb-2 {
             width: 480px; height: 480px;
-            background: radial-gradient(circle, rgba(99,102,241,0.22) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(201,233,210,0.24) 0%, transparent 70%);
             bottom: -100px; right: -80px;
             animation: orbFloat2 25s ease-in-out infinite;
         }
 
         .orb-3 {
             width: 320px; height: 320px;
-            background: radial-gradient(circle, rgba(236,72,153,0.14) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255,227,227,0.24) 0%, transparent 70%);
             top: 40%; right: 10%;
             animation: orbFloat3 18s ease-in-out infinite;
         }
 
         .orb-4 {
             width: 280px; height: 280px;
-            background: radial-gradient(circle, rgba(59,130,246,0.16) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(126,187,152,0.16) 0%, transparent 70%);
             bottom: 20%; left: 8%;
             animation: orbFloat4 22s ease-in-out infinite;
         }
@@ -183,10 +185,10 @@
         .logo-mark {
             width: 60px; height: 60px;
             border-radius: 18px;
-            background: linear-gradient(145deg, #818cf8, #6366f1 60%, #4f46e5);
+            background: var(--gradient-brand);
             display: flex; align-items: center; justify-content: center;
             box-shadow:
-                0 8px 24px rgba(99,102,241,0.30),
+                0 8px 24px rgba(120,157,188,0.30),
                 inset 0 1px 0 rgba(255,255,255,0.25);
             margin-bottom: 14px;
             position: relative; overflow: hidden;
@@ -225,7 +227,7 @@
         .alert-error {
             background: rgba(239,68,68,0.08);
             border: 1px solid rgba(239,68,68,0.15);
-            color: #b91c1c;
+            color: #9B3A4A;
             border-radius: 12px;
             padding: 10px 14px;
             font-size: 0.82rem; font-weight: 500;
@@ -254,7 +256,7 @@
             border: 1px solid var(--input-border);
             border-radius: var(--radius-input);
             font-size: 0.92rem;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             color: var(--text-primary);
             transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
             outline: none;
@@ -266,8 +268,8 @@
 
         .form-control:focus {
             background: rgba(255,255,255,0.85);
-            border-color: rgba(99,102,241,0.4);
-            box-shadow: 0 0 0 3px rgba(99,102,241,0.10), inset 0 1px 3px rgba(0,0,0,0.02);
+            border-color: rgba(120,157,188,0.4);
+            box-shadow: 0 0 0 3px rgba(120,157,188,0.10), inset 0 1px 3px rgba(0,0,0,0.02);
         }
 
         .form-control.is-invalid {
@@ -282,7 +284,7 @@
         .invalid-feedback {
             margin-top: 5px;
             font-size: 0.76rem;
-            color: #dc2626;
+            color: #9B3A4A;
             font-weight: 500;
         }
 
@@ -305,11 +307,11 @@
             width: 100%;
             margin-top: 24px;
             padding: 13px 20px;
-            background: linear-gradient(135deg, #818cf8 0%, #6366f1 50%, #4f46e5 100%);
+            background: var(--gradient-brand);
             border: none; border-radius: 14px;
             color: white;
             font-size: 0.95rem; font-weight: 600;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             cursor: pointer;
             box-shadow: var(--shadow-btn);
             position: relative; overflow: hidden;
@@ -333,12 +335,12 @@
 
         .btn-login:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(99,102,241,0.40), 0 4px 12px rgba(99,102,241,0.25);
+            box-shadow: 0 12px 32px rgba(120,157,188,0.40), 0 4px 12px rgba(120,157,188,0.25);
         }
 
         .btn-login:active {
             transform: translateY(0) scale(0.975);
-            box-shadow: 0 4px 12px rgba(99,102,241,0.25);
+            box-shadow: 0 4px 12px rgba(120,157,188,0.25);
         }
 
         /* ── REGISTER LINK ── */

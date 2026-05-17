@@ -14,30 +14,72 @@
         }
         
         :root {
-            --primary: #667eea;
-            --secondary: #764ba2;
-            --success: #22c55e;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --dark: #1f2937;
-            --light: #f3f4f6;
-            --border: #e5e7eb;
-            --bg-light: #fbfbfb;
-            --card-bg: #e8f9ff;
-            --border-accent: #c4d9ff;
-            --highlight: #c5baff;
+            --primary: #789DBC;
+            --secondary: #C9E9D2;
+            --success: #7EBB98;
+            --danger: #D98999;
+            --warning: #E7C89E;
+            --dark: #2B2B2B;
+            --light: #FEF9F2;
+            --border: rgba(120,157,188,0.15);
+            --gradient-brand: linear-gradient(135deg, #789DBC 0%, #C9E9D2 100%);
+            --gradient-soft: linear-gradient(135deg, #FEF9F2 0%, #FFE3E3 40%, #C9E9D2 100%);
+            --bg-light: #FEF9F2;
+            --card-bg: rgba(255,255,255,0.72);
+            --border-accent: rgba(120,157,188,0.15);
+            --highlight: #FFE3E3;
+            --surface: rgba(255,255,255,0.72);
+            --surface-strong: rgba(255,255,255,0.84);
+            --surface-muted: rgba(255,255,255,0.56);
+            --nav-bg: rgba(255,255,255,0.65);
+            --nav-bg-scrolled: rgba(255,255,255,0.82);
+            --nav-shadow: 0 2px 12px rgba(120,157,188,0.12);
+            --nav-shadow-scrolled: 0 10px 30px rgba(120,157,188,0.14);
+            --app-bg: linear-gradient(135deg, #FEF9F2 0%, #FFE3E3 40%, #C9E9D2 100%);
+            --text-secondary: #6B7280;
+        }
+
+        html[data-theme='dark'] {
+            --primary: #789DBC;
+            --secondary: #C9E9D2;
+            --success: #9ED0B0;
+            --danger: #E8BFC6;
+            --warning: #E7C89E;
+            --dark: #F9FAFB;
+            --light: #111827;
+            --border: rgba(255,255,255,0.08);
+            --bg-light: #111827;
+            --card-bg: rgba(17,24,39,0.72);
+            --border-accent: rgba(255,255,255,0.08);
+            --highlight: #E8BFC6;
+            --surface: rgba(30,41,59,0.7);
+            --surface-strong: rgba(17,24,39,0.75);
+            --surface-muted: rgba(17,24,39,0.62);
+            --nav-bg: rgba(17,24,39,0.65);
+            --nav-bg-scrolled: rgba(17,24,39,0.82);
+            --nav-shadow: 0 8px 28px rgba(0,0,0,0.22);
+            --nav-shadow-scrolled: 0 10px 30px rgba(0,0,0,0.28);
+            --app-bg: linear-gradient(135deg, #111827 0%, #1E293B 50%, #0F172A 100%);
+            --text-secondary: #CBD5E1;
+            color-scheme: dark;
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-light);
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--app-bg);
             color: var(--dark);
+            transition:
+                background 0.4s ease,
+                color 0.4s ease,
+                border-color 0.4s ease,
+                box-shadow 0.4s ease;
         }
         
         /* ─── TOP NAVIGATION ─── */
         .top-nav {
-            background: white;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            box-shadow: var(--nav-shadow);
             padding: 12px 20px;
             display: flex;
             justify-content: space-between;
@@ -45,6 +87,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            border-bottom: 1px solid var(--border);
         }
         
         .nav-brand {
@@ -71,17 +114,18 @@
         .search-bar {
             width: 300px;
             padding: 10px 16px;
-            border: 2px solid var(--border-accent);
+            border: 1px solid var(--border-accent);
             border-radius: 24px;
-            background: var(--card-bg);
+            background: var(--surface);
             font-size: 0.9em;
             transition: all 0.3s ease;
+            color: var(--dark);
         }
 
         .search-bar:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 8px rgba(102, 126, 234, 0.2);
+            border-color: rgba(120,157,188,0.45);
+            box-shadow: 0 0 0 4px rgba(120,157,188,0.10);
         }
 
         .nav-right {
@@ -91,24 +135,28 @@
         }
 
         .nav-icon-btn {
-            background: none;
-            border: none;
+            background: var(--surface-muted);
+            border: 1px solid var(--border);
             font-size: 1.3em;
             cursor: pointer;
             position: relative;
-            padding: 8px;
+            padding: 8px 12px;
             transition: all 0.3s ease;
+            border-radius: 12px;
+            color: var(--dark);
+            backdrop-filter: blur(14px);
         }
 
         .nav-icon-btn:hover {
-            transform: scale(1.1);
+            transform: translateY(-1px) scale(1.02);
+            background: var(--surface-strong);
         }
 
         .badge {
             position: absolute;
             top: 0;
             right: 0;
-            background: var(--danger);
+            background: #D98999;
             color: white;
             border-radius: 50%;
             width: 20px;
@@ -124,7 +172,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: #111827;
+            background: rgba(17,24,39,0.88);
             color: white;
             border-radius: 999px;
             padding: 4px 8px;
@@ -141,7 +189,7 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background: var(--gradient-brand);
             color: white;
             display: flex;
             align-items: center;
@@ -149,6 +197,7 @@
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(120,157,188,0.18);
         }
 
         .avatar:hover {
@@ -160,13 +209,14 @@
             position: absolute;
             top: 100%;
             right: 0;
-            background: white;
+            background: var(--surface-strong);
             border: 1px solid var(--border);
             border-radius: 8px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 18px 40px rgba(120,157,188,0.12);
             min-width: 180px;
             z-index: 1000;
             margin-top: 8px;
+            backdrop-filter: blur(20px);
         }
 
         .dropdown-menu.active {
@@ -190,11 +240,11 @@
 
         .dropdown-menu a:hover,
         .dropdown-menu form button:hover {
-            background: var(--light);
+            background: rgba(120,157,188,0.08);
         }
 
         .dropdown-menu form button {
-            color: var(--danger);
+            color: #9B3A4A;
         }
 
         /* ─── CONTENT AREA ─── */
@@ -217,10 +267,11 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: white;
+            background: var(--nav-bg);
             border-top: 1px solid var(--border);
             padding: 8px 0;
             z-index: 99;
+            backdrop-filter: blur(20px);
         }
 
         .bottom-nav-items {
@@ -244,6 +295,40 @@
         .bottom-nav-items a:hover,
         .bottom-nav-items a.active {
             color: var(--primary);
+        }
+
+        .theme-toggle-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--surface-muted);
+            color: var(--dark);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            backdrop-filter: blur(14px);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+            box-shadow: 0 8px 18px rgba(120,157,188,0.12);
+            flex-shrink: 0;
+        }
+
+        .theme-toggle-btn:hover {
+            transform: translateY(-1px);
+            background: var(--surface-strong);
+            box-shadow: 0 10px 22px rgba(120,157,188,0.16);
+        }
+
+        .theme-toggle-btn i {
+            font-size: 0.9em;
+        }
+
+        .theme-toggle-label {
+            display: none;
+            font-size: 0.82em;
+            font-weight: 600;
         }
 
         .nav-icon {
@@ -283,6 +368,10 @@
             .nav-right {
                 gap: 10px;
             }
+
+            .theme-toggle-label {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -300,6 +389,11 @@
         </div>
 
         <div class="nav-right">
+            <button class="theme-toggle-btn" type="button" data-theme-toggle aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+                <span class="theme-toggle-label">Dark</span>
+            </button>
+
             <!-- Notification Bell -->
             <button class="nav-icon-btn" id="notifBtn" onclick="window.location.href='/notifikasi'">
                 🔔
@@ -364,6 +458,52 @@
     </nav>
 
     <script>
+        (function () {
+            const storageKey = 'theme';
+            const root = document.documentElement;
+
+            const preferredTheme = () => {
+                const savedTheme = localStorage.getItem(storageKey);
+                if (savedTheme === 'light' || savedTheme === 'dark') return savedTheme;
+                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            };
+
+            const syncButtons = (theme) => {
+                document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+                    const icon = button.querySelector('i');
+                    const label = button.querySelector('.theme-toggle-label');
+                    if (icon) icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                    if (label) label.textContent = theme === 'dark' ? 'Light' : 'Dark';
+                    button.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+                });
+            };
+
+            const applyTheme = (theme, persist = false) => {
+                root.setAttribute('data-theme', theme);
+                root.style.colorScheme = theme;
+                syncButtons(theme);
+                if (persist) localStorage.setItem(storageKey, theme);
+            };
+
+            applyTheme(preferredTheme());
+
+            document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+                button.addEventListener('click', () => {
+                    const currentTheme = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+                    applyTheme(currentTheme === 'dark' ? 'light' : 'dark', true);
+                });
+            });
+
+            const darkMatcher = window.matchMedia('(prefers-color-scheme: dark)');
+            if (darkMatcher.addEventListener) {
+                darkMatcher.addEventListener('change', (event) => {
+                    if (!localStorage.getItem(storageKey)) {
+                        applyTheme(event.matches ? 'dark' : 'light');
+                    }
+                });
+            }
+        })();
+
         // Avatar Dropdown Toggle
         document.getElementById('avatarBtn').addEventListener('click', function() {
             document.getElementById('avatarMenu').classList.toggle('active');

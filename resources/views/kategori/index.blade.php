@@ -36,7 +36,7 @@
 
     {{-- Alert Sukses --}}
     @if(session('success'))
-    <div style="background: #dcfce7; color: #166534; padding: 12px 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #22c55e;">
+    <div style="background: rgba(201,233,210,0.45); color: #3A7A5A; padding: 12px 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #7EBB98;">
         ✅ {{ session('success') }}
     </div>
     @endif

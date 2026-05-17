@@ -130,12 +130,12 @@
                 datasets: [{
                     label: 'Jumlah Pesanan',
                     data: @json($chartData),
-                    borderColor: '#667eea',
+                    borderColor: '#789DBC',
                     backgroundColor: 'rgba(102, 126, 234, 0.1)',
                     tension: 0.4,
                     fill: true,
                     pointRadius: 5,
-                    pointBackgroundColor: '#667eea',
+                    pointBackgroundColor: '#789DBC',
                     pointBorderColor: '#fff',
                     pointBorderWidth: 2
                 }]
