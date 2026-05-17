@@ -2,17 +2,14 @@
 
 @section('content')
 <div class="container-fluid py-4">
-    <div class="row mb-4 align-items-center">
-        <div class="col">
-            <h2 class="fw-bold">✏️ Edit Produk</h2>
-        </div>
+    <div class="page-header">
+        <h1 class="page-title">✏️ Edit Produk</h1>
     </div>
 
     <div class="row">
         <div class="col-lg-8">
-            <div class="card shadow-sm border-0">
-                <div class="card-body p-4">
-                    <form method="POST" action="{{ route('admin.produk.update', $produk->id_produk) }}" enctype="multipart/form-data">
+            <div class="admin-card">
+                <form method="POST" action="{{ route('admin.produk.update', $produk->id_produk) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -59,7 +56,7 @@
                             <label class="form-label fw-bold">Foto Produk</label>
                             @if($produk->foto)
                             <div class="mb-2">
-                                <img src="{{ asset('storage/' . $produk->foto) }}" alt="Foto" style="max-width: 100px; border-radius: 5px;">
+                                <img src="{{ asset('storage/' . $produk->foto) }}" alt="Foto" class="thumb-img">
                             </div>
                             @endif
                             <input type="file" name="foto" class="form-control @error('foto') is-invalid @enderror" accept="image/*">
@@ -77,7 +74,6 @@
                             <a href="{{ route('admin.produk.index') }}" class="btn btn-secondary">Batal</a>
                         </div>
                     </form>
-                </div>
             </div>
         </div>
     </div>

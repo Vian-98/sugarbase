@@ -2,12 +2,13 @@
 
 @section('content')
 <div class="container-fluid py-4">
-    <h2 class="fw-bold mb-4">➕ Tambah Kategori</h2>
+    <div class="page-header">
+        <h1 class="page-title">➕ Tambah Kategori</h1>
+    </div>
 
     <div class="row">
         <div class="col-lg-6">
-            <div class="card shadow-sm border-0">
-                <div class="card-body p-4">
+            <div class="admin-card">
                     <form method="POST" action="{{ route('admin.kategori.store') }}">
                         @csrf
 
@@ -28,7 +29,6 @@
                             <a href="{{ route('admin.kategori.index') }}" class="btn btn-secondary">Batal</a>
                         </div>
                     </form>
-                </div>
             </div>
         </div>
     </div>

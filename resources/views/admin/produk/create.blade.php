@@ -2,17 +2,14 @@
 
 @section('content')
 <div class="container-fluid py-4">
-    <div class="row mb-4 align-items-center">
-        <div class="col">
-            <h2 class="fw-bold">➕ Tambah Produk</h2>
-        </div>
+    <div class="page-header">
+        <h1 class="page-title">➕ Tambah Produk</h1>
     </div>
 
     <div class="row">
         <div class="col-lg-8">
-            <div class="card shadow-sm border-0">
-                <div class="card-body p-4">
-                    <form method="POST" action="{{ route('admin.produk.store') }}" enctype="multipart/form-data">
+            <div class="admin-card">
+                <form method="POST" action="{{ route('admin.produk.store') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="mb-3">
@@ -69,7 +66,6 @@
                             <a href="{{ route('admin.produk.index') }}" class="btn btn-secondary">Batal</a>
                         </div>
                     </form>
-                </div>
             </div>
         </div>
     </div>

@@ -36,8 +36,9 @@ class Produk extends Model
         return $this->hasMany(KeranjangItem::class, 'id_produk', 'id_produk');
     }
 
-    public function pesananItems()
-    {
-        return $this->hasMany(PesananItem::class, 'id_produk', 'id_produk');
-    }
+    // Relationship dihapus: pesanan_item table sudah di-drop karena empty dan unused
+    // public function pesananItems()
+    // {
+    //     return $this->hasMany(PesananItem::class, 'id_produk', 'id_produk');
+    // }
 }

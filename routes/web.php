@@ -15,10 +15,12 @@ use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\GuestLandingPageController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// ─── GUEST ROUTES (tanpa login required) ────────────────────────────────────
+Route::get('/', [GuestLandingPageController::class, 'index'])->name('guest.landing');
+Route::get('/guest/katalog', [GuestLandingPageController::class, 'katalog'])->name('guest.katalog');
+Route::get('/guest/produk/{id}', [GuestLandingPageController::class, 'showProduct'])->name('guest.produk.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/produk/{id}', [ProdukController::class, 'show'])->name('produk.show');
@@ -75,7 +77,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/qr', function () { return view('qrcode'); })->name('qr');
 });
 
-// ─── PELANGGAN (harus login) ──────────────────────────────────────────────────
 Route::middleware(['auth'])->group(function () {
     Route::get('/beranda', [BerandaController::class, 'index'])->name('beranda');
     Route::get('/katalog', [KatalogController::class, 'index'])->name('katalog');
@@ -93,13 +94,41 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
     Route::post('/checkout', [CheckoutController::class, 'proses']);
     Route::get('/pembayaran/{id}', [PembayaranController::class, 'show'])->name('pembayaran.show');
+    Route::post('/pembayaran/{id}/konfirmasi', [PembayaranController::class, 'konfirmasiPelanggan'])->name('pembayaran.konfirmasi');
     Route::get('/pesanan/saya', [PesananController::class, 'milikSaya'])->name('pesanan.saya');
+
+    // Profil pengguna (sederhana)
+    Route::get('/profil', function () {
+        $user = auth()->user();
+        return view('profil', compact('user'));
+    })->name('profil');
+
+    // Edit profile form
+    Route::get('/profil/edit', function () {
+        $user = auth()->user();
+        return view('profil.edit', compact('user'));
+    })->name('profil.edit');
+
+    // Update profile (simple handler)
+    Route::post('/profil/update', function (\Illuminate\Http\Request $request) {
+        $user = auth()->user();
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:40',
+            'alamat' => 'nullable|string|max:500',
+        ]);
+        $user->update($data);
+        return redirect()->route('profil')->with('success', 'Profil diperbarui.');
+    })->name('profil.update');
+
+    // Riwayat pesanan - tampilkan pesanan milik user (gunakan controller untuk detail konsisten)
+    Route::get('/riwayat', [PesananController::class, 'milikSaya'])->name('riwayat');
 });
 
+
+
 // ─── ROOT REDIRECT ────────────────────────────────────────────────────────────
-Route::get('/', function () {
-    if (auth()->check()) {
-        return redirect(auth()->user()->role === 'admin' ? '/admin/dashboard' : '/beranda');
-    }
-    return redirect('/login');
-});
+// Root route already handled by GuestLandingPageController
+// If user is logged in, it will redirect to their dashboard
+
+

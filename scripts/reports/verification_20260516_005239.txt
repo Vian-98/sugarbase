@@ -1,0 +1,122 @@
+Verification Report - 2026-05-16 00:52:39
+
+User rina@gmail.com (id=4):
+  - profile_updated: phone=08127567176 alamat=Auto Test Addr 6c39d7
+  - profile_verify_ok
+  - order_created: #26 pembayaran=19
+  - order_verify_ok
+  - notification_created
+  - unread_count=4
+
+User budi@gmail.com (id=5):
+  - profile_updated: phone=08126816916 alamat=Auto Test Addr b835a4
+  - profile_verify_ok
+  - order_created: #27 pembayaran=20
+  - order_verify_ok
+  - notification_created
+  - unread_count=8
+
+User citra@gmail.com (id=6):
+  - profile_updated: phone=08126446607 alamat=Auto Test Addr a85bce
+  - profile_verify_ok
+  - order_created: #28 pembayaran=21
+  - order_verify_ok
+  - notification_created
+  - unread_count=1
+
+User dani@gmail.com (id=7):
+  - profile_updated: phone=08127349994 alamat=Auto Test Addr 3bccd5
+  - profile_verify_ok
+  - order_created: #29 pembayaran=22
+  - order_verify_ok
+  - notification_created
+  - unread_count=2
+
+User eka@gmail.com (id=8):
+  - profile_updated: phone=08125322125 alamat=Auto Test Addr 7f8468
+  - profile_verify_ok
+  - order_created: #30 pembayaran=23
+  - order_verify_ok
+  - notification_created
+  - unread_count=4
+
+User fajar@gmail.com (id=9):
+  - profile_updated: phone=08128202420 alamat=Auto Test Addr b5d57c
+  - profile_verify_ok
+  - order_created: #31 pembayaran=24
+  - order_verify_ok
+  - notification_created
+  - unread_count=2
+
+User gita@gmail.com (id=10):
+  - profile_updated: phone=08127662857 alamat=Auto Test Addr 744f23
+  - profile_verify_ok
+  - order_created: #32 pembayaran=25
+  - order_verify_ok
+  - notification_created
+  - unread_count=1
+
+User hendra@gmail.com (id=11):
+  - profile_updated: phone=08127814956 alamat=Auto Test Addr 9ab3e5
+  - profile_verify_ok
+  - order_created: #33 pembayaran=26
+  - order_verify_ok
+  - notification_created
+  - unread_count=1
+
+User indah@gmail.com (id=12):
+  - profile_updated: phone=08125661841 alamat=Auto Test Addr 959b40
+  - profile_verify_ok
+  - order_created: #34 pembayaran=27
+  - order_verify_ok
+  - notification_created
+  - unread_count=2
+
+User joko@gmail.com (id=13):
+  - profile_updated: phone=08123910795 alamat=Auto Test Addr e173d9
+  - profile_verify_ok
+  - order_created: #35 pembayaran=28
+  - order_verify_ok
+  - notification_created
+  - unread_count=3
+
+User test@test.com (id=14):
+  - profile_updated: phone=08126713097 alamat=Auto Test Addr b642b4
+  - profile_verify_ok
+  - order_created: #36 pembayaran=29
+  - order_verify_ok
+  - notification_created
+  - unread_count=1
+
+User simuser+1778890550@example.test (id=15):
+  - profile_updated: phone=08123637870 alamat=Auto Test Addr 89cb4d
+  - profile_verify_ok
+  - order_created: #37 pembayaran=30
+  - order_verify_ok
+  - notification_created
+  - unread_count=1
+
+User simuser+1778890588@example.test (id=16):
+  - profile_updated: phone=08126078124 alamat=Auto Test Addr 0752f9
+  - profile_verify_ok
+  - order_created: #38 pembayaran=31
+  - order_verify_ok
+  - notification_created
+  - unread_count=3
+
+User simuser+1778890647@example.test (id=17):
+  - profile_updated: phone=08129761431 alamat=Auto Test Addr 46a19c
+  - profile_verify_ok
+  - order_created: #39 pembayaran=32
+  - order_verify_ok
+  - notification_created
+  - unread_count=3
+
+User webuser+1778890819235@example.test (id=18):
+  - profile_updated: phone=08127014723 alamat=Auto Test Addr efa1d8
+  - profile_verify_ok
+  - order_created: #40 pembayaran=33
+  - order_verify_ok
+  - notification_created
+  - unread_count=2
+

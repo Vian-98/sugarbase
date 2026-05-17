@@ -14,6 +14,24 @@
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             min-height: 100vh;
         }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: #fff;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 6px 18px rgba(102,126,234,0.18);
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary:focus {
+            outline: 3px solid rgba(255,255,255,0.95);
+            outline-offset: 2px;
+        }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen font-sans">
@@ -107,8 +125,9 @@
 
                 {{-- Submit --}}
                 <button type="submit"
-                        class="w-full text-white font-semibold py-2.5 rounded-lg transition text-sm shadow-sm"
-                        style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);">
+                        class="w-full btn-primary"
+                        aria-label="Masuk ke akun"
+                        title="Masuk ke akun">
                     Masuk
                 </button>
             </form>

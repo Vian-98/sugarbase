@@ -80,8 +80,12 @@ $aktif = request('status', 'semua');
         <div style="padding: 16px 20px; border-bottom: 1px solid #f3f4f6;">
             @foreach($item->items->take(3) as $pi)
             <div style="display: flex; align-items: center; gap: 12px; {{ !$loop->last ? 'margin-bottom: 12px;' : '' }}">
-                <div style="width: 48px; height: 48px; background: #f3f4f6; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.6em; flex-shrink: 0;">
-                    {{ $pi->produk->foto ?? '🍰' }}
+                <div style="width: 48px; height: 48px; background: #f3f4f6; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.6em; flex-shrink: 0; overflow: hidden;">
+                    @if(!empty($pi->produk->foto))
+                        <img src="{{ asset('storage/' . $pi->produk->foto) }}" alt="{{ $pi->produk->nama_produk ?? 'Produk' }}" style="width:48px; height:48px; object-fit:cover; display:block;">
+                    @else
+                        <div style="font-size:1.6em;">🍰</div>
+                    @endif
                 </div>
                 <div style="flex: 1;">
                     <p style="margin: 0; font-size: 0.9em; font-weight: 600; color: #111827;">{{ $pi->produk->nama_produk ?? 'Produk' }}</p>
