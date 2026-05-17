@@ -11,7 +11,7 @@
 
 <!-- FLASH MESSAGES -->
 @if(session('success'))
-<div style="background: rgba(126,187,152,0.15); border: 1px solid #86efac; color: var(--success); padding: 12px 16px; border-radius: 8px; margin-bottom: 20px;">
+<div style="background: rgba(126,187,152,0.15); border: 1px solid #86efac; color: var(--dark); font-weight: 600; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px;">
     ✅ {{ session('success') }}
 </div>
 @endif
@@ -52,11 +52,11 @@ $aktif = request('status', 'semua');
     @foreach($pesanan as $item)
     @php
     $statusColors = [
-        'pending'    => ['bg' => 'rgba(231,200,158,0.15)', 'text' => 'var(--warning)', 'border' => 'var(--border)', 'emoji' => '⏳'],
-        'diproses'   => ['bg' => 'rgba(120,157,188,0.15)', 'text' => 'var(--primary)', 'border' => 'var(--border)', 'emoji' => '🔄'],
-        'dikirim'    => ['bg' => 'rgba(126,187,152,0.15)', 'text' => 'var(--success)', 'border' => 'var(--border)', 'emoji' => '🚚'],
-        'selesai'    => ['bg' => 'rgba(126,187,152,0.15)', 'text' => 'var(--success)', 'border' => 'var(--border)', 'emoji' => '✅'],
-        'dibatalkan' => ['bg' => 'rgba(217,137,153,0.15)', 'text' => 'var(--danger)', 'border' => 'var(--border)', 'emoji' => '❌'],
+        'pending'    => ['bg' => 'rgba(231,200,158,0.15)', 'text' => 'var(--dark)', 'border' => '#fcd34d', 'emoji' => '⏳'],
+        'diproses'   => ['bg' => 'rgba(120,157,188,0.15)', 'text' => 'var(--dark)', 'border' => 'var(--primary)', 'emoji' => '🔄'],
+        'dikirim'    => ['bg' => 'rgba(126,187,152,0.15)', 'text' => 'var(--dark)', 'border' => '#86efac', 'emoji' => '🚚'],
+        'selesai'    => ['bg' => 'rgba(126,187,152,0.15)', 'text' => 'var(--dark)', 'border' => '#86efac', 'emoji' => '✅'],
+        'dibatalkan' => ['bg' => 'rgba(217,137,153,0.15)', 'text' => 'var(--danger)', 'border' => '#fca5a5', 'emoji' => '❌'],
     ];
     $sc = $statusColors[$item->status_pesanan] ?? ['bg' => 'var(--surface-muted)', 'text' => 'var(--text-secondary)', 'border' => 'var(--border)', 'emoji' => '📋'];
     @endphp
@@ -65,12 +65,12 @@ $aktif = request('status', 'semua');
          onmouseover="this.style.boxShadow='0 4px 20px rgba(102,126,234,0.12)'" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,0.05)'">
 
         <!-- Header Pesanan -->
-        <div style="padding: 14px 20px; background: var(--gradient-soft); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+        <div style="padding: 14px 20px; background: var(--surface-muted); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
             <div style="display: flex; align-items: center; gap: 14px;">
-                <span style="font-weight: 700; color: var(--text-secondary); font-size: 0.9em;">Pesanan #{{ $item->id_pesanan }}</span>
+                <span style="font-weight: 700; color: var(--dark); font-size: 0.95em;">Pesanan #{{ $item->id_pesanan }}</span>
                 <span style="font-size: 0.8em; color: var(--text-secondary);">{{ \Carbon\Carbon::parse($item->tanggal_pesan)->format('d M Y') }}</span>
             </div>
-            <span style="padding: 4px 14px; border-radius: 20px; font-size: 0.8em; font-weight: 600;
+            <span style="padding: 4px 14px; border-radius: 20px; font-size: 0.85em; font-weight: 700;
                           background: {{ $sc['bg'] }}; color: {{ $sc['text'] }}; border: 1px solid {{ $sc['border'] }};">
                 {{ $sc['emoji'] }} {{ ucfirst($item->status_pesanan) }}
             </span>

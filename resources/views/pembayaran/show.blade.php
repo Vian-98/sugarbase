@@ -24,7 +24,7 @@
 
 <!-- FLASH MESSAGES -->
 @if(session('success'))
-<div style="background: rgba(126,187,152,0.15); border: 1px solid #86efac; color: var(--success); padding: 12px 16px; border-radius: 8px; margin-bottom: 20px;">
+<div style="background: rgba(126,187,152,0.15); border: 1px solid #86efac; color: var(--dark); font-weight: 600; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px;">
     ✅ {{ session('success') }}
 </div>
 @endif
@@ -41,7 +41,7 @@
         {{-- ============================================ --}}
         @if($metode === 'transfer')
         <div style="background: var(--surface-strong); border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden;">
-            <div style="padding: 20px 24px; border-bottom: 1px solid var(--border); background: var(--gradient-soft);">
+            <div style="padding: 20px 24px; border-bottom: 1px solid var(--border); background: var(--surface-muted);">
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <span style="font-size: 2em;">🏦</span>
                     <div>
@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         <button onclick="copyRek('{{ $rek['no'] }}', this)"
-                            style="padding: 7px 14px; background: var(--surface-muted); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; font-size: 0.8em; color: var(--text-secondary); font-weight: 600; white-space: nowrap;">
+                            style="padding: 7px 14px; background: var(--surface-muted); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; font-size: 0.8em; color: var(--dark); font-weight: 600; white-space: nowrap;">
                             📋 Salin
                         </button>
                     </div>
@@ -96,8 +96,8 @@
 
                 <!-- Instruksi -->
                 <div style="background: rgba(231,200,158,0.15); border: 1px solid #fcd34d; border-radius: 10px; padding: 16px; margin-bottom: 24px;">
-                    <p style="margin: 0 0 10px; font-weight: 600; color: var(--warning); font-size: 0.9em;">⚠️ Perhatian:</p>
-                    <ol style="margin: 0; padding-left: 18px; font-size: 0.85em; color: var(--warning); line-height: 1.8;">
+                    <p style="margin: 0 0 10px; font-weight: 700; color: var(--dark); font-size: 0.9em;">⚠️ Perhatian:</p>
+                    <ol style="margin: 0; padding-left: 18px; font-size: 0.85em; color: var(--dark); line-height: 1.8; font-weight: 500;">
                         <li>Transfer sesuai nominal tepat (termasuk angka unik jika ada)</li>
                         <li>Simpan bukti transfer kamu</li>
                         <li>Klik tombol konfirmasi setelah transfer selesai</li>
@@ -108,7 +108,7 @@
                 <form action="/pembayaran/{{ $pesanan->id_pesanan }}/konfirmasi" method="POST">
                     @csrf
                     <button type="submit"
-                        style="width: 100%; padding: 14px; background: linear-gradient(135deg, #789DBC 0%, #9FBCCD 100%); color: white; border: none; border-radius: 8px; font-size: 1em; font-weight: 600; cursor: pointer;">
+                        style="width: 100%; padding: 14px; background: linear-gradient(135deg, #789DBC 0%, #688CAD 100%); color: white; border: none; border-radius: 8px; font-size: 1.05em; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(120, 157, 188, 0.4);">
                         ✅ Saya Sudah Transfer
                     </button>
                 </form>
@@ -121,7 +121,7 @@
         {{-- ============================================ --}}
         @elseif($metode === 'cod')
         <div style="background: var(--surface-strong); border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden;">
-            <div style="padding: 20px 24px; border-bottom: 1px solid var(--border); background: var(--gradient-soft);">
+            <div style="padding: 20px 24px; border-bottom: 1px solid var(--border); background: var(--surface-muted);">
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <span style="font-size: 2em;">🚚</span>
                     <div>
@@ -150,7 +150,7 @@
                 </div>
 
                 <a href="/pesanan/saya"
-                    style="display: inline-block; padding: 13px 32px; background: linear-gradient(135deg, #789DBC 0%, #9FBCCD 100%); color: white; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.95em;">
+                    style="display: inline-block; padding: 13px 32px; background: linear-gradient(135deg, #789DBC 0%, #688CAD 100%); color: white; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 1em; box-shadow: 0 4px 12px rgba(120, 157, 188, 0.4);">
                     📦 Pantau Status Pesanan
                 </a>
             </div>
@@ -162,7 +162,7 @@
         {{-- ============================================ --}}
         @else
         <div style="background: var(--surface-strong); border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden;">
-            <div style="padding: 20px 24px; border-bottom: 1px solid var(--border); background: var(--gradient-soft);">
+            <div style="padding: 20px 24px; border-bottom: 1px solid var(--border); background: var(--surface-muted);">
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <span style="font-size: 2em;">📱</span>
                     <div>
@@ -298,7 +298,7 @@
                 <form action="/pembayaran/{{ $pesanan->id_pesanan }}/konfirmasi" method="POST" style="margin-top: 4px;">
                     @csrf
                     <button type="submit"
-                        style="width: 100%; padding: 14px; background: linear-gradient(135deg, #789DBC 0%, #9FBCCD 100%); color: white; border: none; border-radius: 8px; font-size: 1em; font-weight: 600; cursor: pointer;">
+                        style="width: 100%; padding: 14px; background: linear-gradient(135deg, #789DBC 0%, #688CAD 100%); color: white; border: none; border-radius: 8px; font-size: 1.05em; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(120, 157, 188, 0.4);">
                         ✅ Konfirmasi Pembayaran
                     </button>
                 </form>
@@ -313,7 +313,7 @@
 
         <!-- Info Pesanan -->
         <div style="background: var(--surface-strong); border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,0.05); padding: 20px;">
-            <h3 style="margin: 0 0 16px; font-size: 1em; font-weight: 700; color: var(--text-secondary); border-bottom: 1px solid var(--border); padding-bottom: 12px;">📄 Detail Pesanan</h3>
+            <h3 style="margin: 0 0 16px; font-size: 1.1em; font-weight: 700; color: var(--dark); border-bottom: 1px solid var(--border); padding-bottom: 12px;">📄 Detail Pesanan</h3>
 
             <div style="display: flex; justify-content: space-between; font-size: 0.85em; margin-bottom: 8px; color: var(--text-secondary);">
                 <span>No. Pesanan</span>
@@ -325,7 +325,7 @@
             </div>
             <div style="display: flex; justify-content: space-between; font-size: 0.85em; margin-bottom: 8px; color: var(--text-secondary);">
                 <span>Status</span>
-                <span style="background: rgba(231,200,158,0.15); color: var(--warning); padding: 2px 10px; border-radius: 20px; font-size: 0.9em; font-weight: 600;">
+                <span style="background: rgba(231,200,158,0.15); color: var(--dark); padding: 2px 10px; border-radius: 20px; font-size: 0.9em; font-weight: 700; border: 1px solid #fcd34d;">
                     {{ ucfirst($pesanan->status_pesanan) }}
                 </span>
             </div>
@@ -342,7 +342,7 @@
 
         <!-- Status Pembayaran -->
         <div style="background: var(--surface-strong); border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,0.05); padding: 20px;">
-            <h3 style="margin: 0 0 14px; font-size: 1em; font-weight: 700; color: var(--text-secondary);">Status Pembayaran</h3>
+            <h3 style="margin: 0 0 14px; font-size: 1.1em; font-weight: 700; color: var(--dark);">Status Pembayaran</h3>
             @php $sp = $pesanan->pembayaran->status_pembayaran ?? 'menunggu'; @endphp
             @if($sp === 'lunas')
             <div style="display: flex; align-items: center; gap: 10px; padding: 12px; background: rgba(126,187,152,0.15); border-radius: 8px; border: 1px solid #86efac;">
@@ -356,15 +356,15 @@
             <div style="display: flex; align-items: center; gap: 10px; padding: 12px; background: rgba(231,200,158,0.15); border-radius: 8px; border: 1px solid #fcd34d;">
                 <span style="font-size: 1.5em;">⏳</span>
                 <div>
-                    <p style="margin: 0; font-weight: 600; color: var(--warning); font-size: 0.9em;">Menunggu Pembayaran</p>
-                    <p style="margin: 2px 0 0; font-size: 0.78em; color: var(--warning);">Selesaikan pembayaranmu</p>
+                    <p style="margin: 0; font-weight: 700; color: var(--dark); font-size: 0.9em;">Menunggu Pembayaran</p>
+                    <p style="margin: 2px 0 0; font-size: 0.78em; color: var(--dark); font-weight: 500;">Selesaikan pembayaranmu</p>
                 </div>
             </div>
             @endif
         </div>
 
         <a href="/pesanan/saya"
-            style="display: block; padding: 12px; background: var(--gradient-soft); color: var(--text-secondary); text-align: center; border-radius: 8px; text-decoration: none; font-size: 0.9em; border: 1px solid var(--border);">
+            style="display: block; padding: 12px; background: var(--surface-muted); color: var(--dark); text-align: center; border-radius: 8px; text-decoration: none; font-size: 0.95em; font-weight: 600; border: 1px solid var(--border);">
             📦 Lihat Semua Pesanan
         </a>
     </div>
@@ -373,12 +373,33 @@
 
 <script>
 function copyRek(text, btn) {
-    navigator.clipboard.writeText(text).then(() => {
+    const onSuccess = () => {
         const orig = btn.textContent;
         btn.textContent = '✅ Disalin!';
         btn.style.color = '#16a34a';
         setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 2000);
-    });
+    };
+
+    if (!navigator.clipboard) {
+        // Fallback untuk non-HTTPS (seperti IP address lokal)
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            if (document.execCommand('copy')) onSuccess();
+        } catch (err) {
+            console.error('Gagal menyalin', err);
+        }
+        document.body.removeChild(textArea);
+        return;
+    }
+
+    navigator.clipboard.writeText(text).then(onSuccess);
 }
 
 function pilihEwallet(id) {

@@ -31,4 +31,13 @@ class PesananController extends Controller
 
         return view('pesanan.saya', compact('pesanan', 'totalPerStatus'));
     }
+
+    public function show($id)
+    {
+        $pesanan = Pesanan::with('pembayaran', 'items.produk', 'user')
+            ->where('user_id', Auth::id())
+            ->findOrFail($id);
+
+        return view('pesanan.show', compact('pesanan'));
+    }
 }

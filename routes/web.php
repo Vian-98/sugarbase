@@ -51,6 +51,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/pesanan', [App\Http\Controllers\Admin\PesananController::class, 'index'])->name('pesanan.index');
     Route::get('/pesanan/{id}', [App\Http\Controllers\Admin\PesananController::class, 'show'])->name('pesanan.show');
     Route::post('/pesanan/{id}/status', [App\Http\Controllers\Admin\PesananController::class, 'updateStatus'])->name('pesanan.status');
+    Route::post('/pesanan/{id}/tracking', [App\Http\Controllers\Admin\PesananController::class, 'addTracking'])->name('pesanan.tracking');
     Route::get('/pelanggan', [PelangganController::class,'index'])->name('pelanggan.index');
     Route::get('/pelanggan/{id}', [PelangganController::class,'show'])->name('pelanggan.show');
     Route::get('/pembayaran', [App\Http\Controllers\Admin\PembayaranController::class, 'index'])->name('pembayaran.index');
@@ -77,6 +78,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pembayaran/{id}', [PembayaranController::class, 'show'])->name('pembayaran.show');
     Route::post('/pembayaran/{id}/konfirmasi', [PembayaranController::class, 'konfirmasiPelanggan'])->name('pembayaran.konfirmasi');
     Route::get('/pesanan/saya', [PesananController::class, 'milikSaya'])->name('pesanan.saya');
+    Route::get('/pesanan/{id}', [PesananController::class, 'show'])->name('pesanan.show_user');
 
     // Profil pengguna (sederhana)
     Route::get('/profil', function () {

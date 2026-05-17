@@ -39,16 +39,6 @@
             </div>
         </div>
 
-        <div style="width:320px;">
-            <div style="background: var(--surface-strong);padding:16px;border-radius:12px;border:1px solid var(--border);">
-                <h3 style="margin:0 0 8px 0;font-size:1em;">Preferensi & Info</h3>
-                <p style="color: var(--text-secondary);font-size:0.95em;">Kelola data kontakmu, lihat notifikasi, dan periksa status pesanan dari panel ini.</p>
-                <ul style="margin-top:8px;list-style:none;padding:0;color: var(--text-secondary);font-size:0.95em;">
-                    <li>🔔 Notifikasi: {{ $unreadCount ?? 0 }}</li>
-                    <li>🛒 Keranjang: <a href="/keranjang">Lihat keranjang</a></li>
-                </ul>
-            </div>
-        </div>
     </div>
 </section>
 

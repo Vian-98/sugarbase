@@ -979,6 +979,9 @@
             color: white;
             box-shadow: 0 8px 24px rgba(102,126,234,0.18);
         }
+        .stat-card.primary .stat-card-label, .stat-card.primary .stat-card__label {
+            color: rgba(255, 255, 255, 0.9);
+        }
 
         /* Stat card icon and value helpers */
         .stat-card { padding: 16px; border-radius: 16px; background: var(--glass-bg); min-width: 220px; }
@@ -1042,9 +1045,10 @@
         .filter-bar { padding: 12px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 
         /* Flash / Alerts */
-        .flash { padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; }
-        .flash-success { background: rgba(201,233,210,0.45); border: 1px solid rgba(126,187,152,0.30); color: #3A7A5A; }
-        .flash-danger { background: rgba(217,137,153,0.15); border: 1px solid #fca5a5; color: var(--danger); }
+        .flash { padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; font-weight: 600; }
+        .flash-success { background: rgba(201,233,210,0.45); border: 1px solid rgba(126,187,152,0.30); color: var(--dark); }
+        .flash-danger { background: rgba(217,137,153,0.15); border: 1px solid #fca5a5; color: var(--dark); }
+        .flash-warning { background: rgba(254, 249, 242, 0.9); border: 1px solid #fcd34d; color: var(--dark); }
 
         /* Filter chips used in Pesanan filter bar */
         .filter-chip { padding: 6px 14px; border-radius: 20px; text-decoration: none; font-size: 0.82em; font-weight: 600; transition: all 0.15s; background: var(--surface-muted); color: var(--text-secondary); display: inline-flex; align-items: center; }
@@ -1272,7 +1276,7 @@
             
             <!-- Alerts -->
             @if ($errors->any())
-                <div class="alert alert-danger">
+                <div class="flash flash-danger">
                     <strong><i class="fas fa-exclamation-circle mr-2"></i>Error!</strong>
                     <ul class="error-list">
                         @foreach ($errors->all() as $error)
@@ -1283,19 +1287,19 @@
             @endif
 
             @if (session('success'))
-                <div class="alert alert-success">
+                <div class="flash flash-success">
                     <i class="fas fa-check-circle mr-2"></i>{{ session('success') }}
                 </div>
             @endif
 
             @if (session('error'))
-                <div class="alert alert-danger">
+                <div class="flash flash-danger">
                     <i class="fas fa-times-circle mr-2"></i>{{ session('error') }}
                 </div>
             @endif
 
             @if (session('warning'))
-                <div class="alert alert-warning">
+                <div class="flash flash-warning">
                     <i class="fas fa-exclamation-triangle mr-2"></i>{{ session('warning') }}
                 </div>
             @endif

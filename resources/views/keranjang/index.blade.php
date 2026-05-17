@@ -11,12 +11,12 @@
 
 <!-- FLASH MESSAGES -->
 @if(session('success'))
-<div style="background: rgba(126,187,152,0.15); border: 1px solid #86efac; color: var(--success); padding: 12px 16px; border-radius: 8px; margin-bottom: 20px;">
+<div style="background: rgba(126,187,152,0.15); border: 1px solid #86efac; color: var(--dark); font-weight: 600; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px;">
     ✅ {{ session('success') }}
 </div>
 @endif
 @if(session('error'))
-<div style="background: rgba(217,137,153,0.15); border: 1px solid #fca5a5; color: var(--danger); padding: 12px 16px; border-radius: 8px; margin-bottom: 20px;">
+<div style="background: rgba(217,137,153,0.15); border: 1px solid #fca5a5; color: var(--dark); font-weight: 600; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px;">
     ⚠️ {{ session('error') }}
 </div>
 @endif
@@ -46,7 +46,7 @@
         <div style="overflow-x: auto;">
             <table style="width: 100%; border-collapse: collapse;">
                 <thead>
-                    <tr style="background: var(--gradient-soft); font-size: 0.85em; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">
+                    <tr style="background: var(--surface-muted); font-size: 0.9em; color: var(--dark); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
                         <th style="padding: 14px 24px; text-align: left;">Produk</th>
                         <th style="padding: 14px 12px; text-align: center;">Harga</th>
                         <th style="padding: 14px 12px; text-align: center;">Jumlah</th>
@@ -56,7 +56,7 @@
                 </thead>
                 <tbody>
                     @foreach($keranjang->items as $item)
-                    <tr style="border-top: 1px solid var(--border); transition: background 0.2s;" onmouseover="this.style.background='#fafafa'" onmouseout="this.style.background='white'">
+                    <tr style="border-top: 1px solid var(--border); transition: background 0.2s;" onmouseover="this.style.background='var(--border)'" onmouseout="this.style.background='transparent'">
                         <!-- Foto + Nama -->
                         <td style="padding: 18px 24px;">
                             <div style="display: flex; align-items: center; gap: 14px;">
@@ -87,7 +87,7 @@
                                 <button type="button" onclick="ubahQtyItem(this, -1)"
                                     style="width: 32px; height: 32px; border: 1px solid var(--border); background: var(--gradient-soft); color: var(--text-secondary); cursor: pointer; border-radius: 6px 0 0 6px; font-size: 1em;">−</button>
                                 <input type="number" name="jumlah" value="{{ $item->jumlah_keranjang }}" min="1" max="{{ $item->produk->stok }}"
-                                    style="width: 48px; height: 32px; border: 1px solid var(--border); border-left: none; border-right: none; text-align: center; font-size: 0.9em; -moz-appearance: textfield; outline: none;">
+                                    style="width: 48px; height: 32px; border: 1px solid var(--border); border-left: none; border-right: none; text-align: center; font-size: 0.9em; -moz-appearance: textfield; outline: none; background: transparent; color: var(--dark);">
                                 <button type="button" onclick="ubahQtyItem(this, 1)"
                                     style="width: 32px; height: 32px; border: 1px solid var(--border); background: var(--gradient-soft); color: var(--text-secondary); cursor: pointer; border-radius: 0 6px 6px 0; font-size: 1em;">+</button>
                                 <button type="submit"
@@ -138,10 +138,10 @@
             </div>
 
             <a href="/checkout"
-                style="display: block; margin-top: 20px; padding: 14px; background: linear-gradient(135deg, #789DBC 0%, #9FBCCD 100%); color: white; text-align: center; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 1em; transition: opacity 0.2s;">
+                style="display: block; margin-top: 20px; padding: 14px; background: linear-gradient(135deg, #789DBC 0%, #688CAD 100%); color: white; text-align: center; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 1.05em; transition: opacity 0.2s; box-shadow: 0 4px 12px rgba(120, 157, 188, 0.4);">
                 Lanjut ke Pembayaran →
             </a>
-            <a href="/katalog" style="display: block; margin-top: 10px; padding: 12px; background: var(--gradient-soft); color: var(--text-secondary); text-align: center; border-radius: 8px; text-decoration: none; font-size: 0.9em; border: 1px solid var(--border);">
+            <a href="/katalog" style="display: block; margin-top: 12px; padding: 12px; background: var(--surface-muted); color: var(--dark); text-align: center; border-radius: 8px; text-decoration: none; font-size: 0.95em; font-weight: 600; border: 1px solid var(--border);">
                 ← Tambah Produk Lain
             </a>
         </div>

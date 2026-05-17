@@ -4,9 +4,11 @@
 
 @section('content')
 
-<div style="display: flex; align-items: center; gap: 16px; margin-bottom: 28px;">
-    <a href="/keranjang" style="color: #789DBC; text-decoration: none; font-size: 0.9em;">← Kembali ke Keranjang</a>
-    <h1 style="font-size: 1.8em; color: var(--dark); margin: 0; font-weight: 700;">Konfirmasi Pesanan</h1>
+<div style="margin-bottom: 32px;">
+    <a href="/keranjang" style="display: inline-flex; align-items: center; gap: 6px; color: var(--text-secondary); text-decoration: none; font-size: 0.95em; font-weight: 500; margin-bottom: 16px; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-secondary)'">
+        <span style="font-size: 1.2em; line-height: 1;">←</span> Kembali ke Keranjang
+    </a>
+    <h1 style="font-size: 2.2em; color: var(--dark); margin: 0; font-weight: 700; letter-spacing: -0.5px;">Konfirmasi Pesanan</h1>
 </div>
 
 <!-- STEP INDICATOR -->
@@ -20,7 +22,7 @@
         <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #789DBC, #9FBCCD); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.85em; font-weight: 700;">2</div>
         <span style="font-size: 0.85em; font-weight: 600; color: #789DBC;">Konfirmasi</span>
     </div>
-    <div style="flex: 1; height: 2px; background: #e5e7eb; margin: 0 12px;"></div>
+    <div style="flex: 1; height: 2px; background: var(--border); margin: 0 12px;"></div>
     <div style="display: flex; align-items: center; gap: 8px;">
         <div style="width: 32px; height: 32px; background: #e5e7eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 0.85em; font-weight: 700;">3</div>
         <span style="font-size: 0.85em; color: var(--text-secondary);">Pembayaran</span>
@@ -36,8 +38,8 @@
 
         <!-- Ringkasan Item -->
         <div style="background: var(--surface-strong); border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden;">
-            <div style="padding: 18px 24px; border-bottom: 1px solid var(--border); background: var(--gradient-soft);">
-                <h2 style="margin: 0; font-size: 1em; font-weight: 700; color: var(--text-secondary);">📋 Ringkasan Item</h2>
+            <div style="padding: 18px 24px; border-bottom: 1px solid var(--border); background: var(--surface-muted);">
+                <h2 style="margin: 0; font-size: 1em; font-weight: 700; color: var(--dark);">📋 Ringkasan Item</h2>
             </div>
             <div>
                 @foreach($keranjang->items as $item)
@@ -65,13 +67,13 @@
 
         <!-- Metode Pembayaran -->
         <div style="background: var(--surface-strong); border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden;">
-            <div style="padding: 18px 24px; border-bottom: 1px solid var(--border); background: var(--gradient-soft);">
-                <h2 style="margin: 0; font-size: 1em; font-weight: 700; color: var(--text-secondary);">💳 Pilih Metode Pembayaran</h2>
+            <div style="padding: 18px 24px; border-bottom: 1px solid var(--border); background: var(--surface-muted);">
+                <h2 style="margin: 0; font-size: 1em; font-weight: 700; color: var(--dark);">💳 Pilih Metode Pembayaran</h2>
             </div>
             <div style="padding: 20px 24px; display: flex; flex-direction: column; gap: 12px;">
 
                 <!-- Transfer Bank -->
-                <label style="display: flex; align-items: center; gap: 14px; padding: 16px; border: 1px solid rgba(120,157,188,0.15); border-radius: 10px; cursor: pointer; transition: all 0.2s;" id="label-transfer">
+                <label style="display: flex; align-items: center; gap: 14px; padding: 16px; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.2s;" id="label-transfer">
                     <input type="radio" name="metode" value="transfer" required onchange="pilihMetode('transfer')"
                         style="width: 18px; height: 18px; accent-color: #789DBC;">
                     <div style="width: 42px; height: 42px; background: rgba(120,157,188,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.4em;">🏦</div>
@@ -82,7 +84,7 @@
                 </label>
 
                 <!-- COD -->
-                <label style="display: flex; align-items: center; gap: 14px; padding: 16px; border: 1px solid rgba(120,157,188,0.15); border-radius: 10px; cursor: pointer; transition: all 0.2s;" id="label-cod">
+                <label style="display: flex; align-items: center; gap: 14px; padding: 16px; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.2s;" id="label-cod">
                     <input type="radio" name="metode" value="cod" onchange="pilihMetode('cod')"
                         style="width: 18px; height: 18px; accent-color: #789DBC;">
                     <div style="width: 42px; height: 42px; background: rgba(126,187,152,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.4em;">🚚</div>
@@ -93,7 +95,7 @@
                 </label>
 
                 <!-- E-Wallet / QRIS -->
-                <label style="display: flex; align-items: center; gap: 14px; padding: 16px; border: 1px solid rgba(120,157,188,0.15); border-radius: 10px; cursor: pointer; transition: all 0.2s;" id="label-ewallet">
+                <label style="display: flex; align-items: center; gap: 14px; padding: 16px; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.2s;" id="label-ewallet">
                     <input type="radio" name="metode" value="ewallet" onchange="pilihMetode('ewallet')"
                         style="width: 18px; height: 18px; accent-color: #789DBC;">
                     <div style="width: 42px; height: 42px; background: rgba(217,137,153,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.4em;">📱</div>
@@ -124,7 +126,7 @@
                 <span style="color: #7EBB98; font-weight: 600;">Gratis</span>
             </div>
 
-            <div style="border-top: 2px solid #e5e7eb; padding-top: 14px; margin-top: 4px; display: flex; justify-content: space-between; font-size: 1.15em; font-weight: 700; color: var(--dark);">
+            <div style="border-top: 2px solid var(--border); padding-top: 14px; margin-top: 4px; display: flex; justify-content: space-between; font-size: 1.15em; font-weight: 700; color: var(--dark);">
                 <span>Total</span>
                 <span style="color: #789DBC;">Rp {{ number_format($total, 0, ',', '.') }}</span>
             </div>
@@ -133,7 +135,7 @@
             <div id="info-metode" style="margin-top: 16px; padding: 12px; background: rgba(120,157,188,0.15); border-radius: 8px; font-size: 0.85em; color: #4338ca; display: none;"></div>
 
             <button type="submit"
-                style="width: 100%; margin-top: 20px; padding: 14px; background: linear-gradient(135deg, #789DBC 0%, #9FBCCD 100%); color: white; border: none; border-radius: 8px; font-size: 1em; font-weight: 600; cursor: pointer; transition: opacity 0.2s;">
+                style="width: 100%; margin-top: 20px; padding: 14px; background: linear-gradient(135deg, #789DBC 0%, #688CAD 100%); color: white; border: none; border-radius: 8px; font-size: 1.05em; font-weight: 700; cursor: pointer; transition: opacity 0.2s; box-shadow: 0 4px 12px rgba(120, 157, 188, 0.4);">
                 🛍 Buat Pesanan
             </button>
             <p style="font-size: 0.78em; color: var(--text-secondary); text-align: center; margin-top: 10px; margin-bottom: 0;">
@@ -155,8 +157,8 @@ const infoMetode = {
 function pilihMetode(metode) {
     ['transfer','cod','ewallet'].forEach(m => {
         const label = document.getElementById('label-' + m);
-        label.style.borderColor = m === metode ? '#789DBC' : '#e5e7eb';
-        label.style.background = m === metode ? '#f0f4ff' : 'white';
+        label.style.borderColor = m === metode ? 'var(--primary)' : 'var(--border)';
+        label.style.background = m === metode ? 'var(--surface-muted)' : 'transparent';
     });
     const info = document.getElementById('info-metode');
     info.style.display = 'block';

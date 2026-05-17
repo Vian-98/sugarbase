@@ -24,9 +24,9 @@
         $selesai = $pesanan->where('status_pesanan', 'selesai')->count();
         @endphp
 
-        <div class="stat-card primary">
+        <div class="stat-card">
             <p class="stat-card__label">💰 Revenue Hari Ini</p>
-            <p class="stat-card__value">Rp {{ number_format($revenueHariIni, 0, ',', '.') }}</p>
+            <p class="stat-card__value text-primary">Rp {{ number_format($revenueHariIni, 0, ',', '.') }}</p>
         </div>
 
         <div class="stat-card">

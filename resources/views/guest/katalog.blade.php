@@ -1,439 +1,303 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Katalog - SugarBase</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+@extends('layouts.guest')
 
-        body {
-            font-family: 'Montserrat', Montserrat, Geneva, Montserrat, sans-serif;
-            background: var(--gradient-soft);
-            color: var(--dark);
-        }
+@section('title', 'Katalog - SugarBase')
 
-        .navbar {
-            background: var(--surface-strong);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+@section('styles')
+<style>
+    .page-title {
+        margin-bottom: 30px;
+    }
 
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-            color: #789DBC;
-            font-weight: bold;
-            font-size: 1.3rem;
-        }
+    .page-title h1 {
+        font-size: 2em;
+        margin-bottom: 10px;
+    }
 
-        .navbar-right {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
+    .filters {
+        background: var(--surface-strong);
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        border: 1px solid var(--border);
+    }
 
-        .navbar-right a {
-            text-decoration: none;
-            color: var(--text-secondary);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
+    .filters-row {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
 
-        .navbar-right a:hover {
-            color: #789DBC;
-        }
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
 
-        .btn {
-            padding: 10px 20px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            display: inline-block;
-        }
+    .filter-group label {
+        font-weight: 600;
+        font-size: 0.9em;
+        color: var(--text-secondary);
+    }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #789DBC 0%, #9FBCCD 100%);
-            color: white;
-        }
+    .filter-group select,
+    .filter-group input {
+        padding: 8px 12px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-size: 0.9em;
+        background: var(--surface);
+        color: var(--dark);
+    }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(120, 157, 188, 0.4);
-        }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
 
-        .btn-secondary {
-            background: var(--surface-muted);
-            color: #789DBC;
-            border: 1px solid rgba(120,157,188,0.15);
-        }
+    .product-card {
+        background: var(--surface-strong);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        border: 1px solid var(--border);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+    }
 
-        .btn-secondary:hover {
-            background: #789DBC;
-            color: white;
-        }
+    .product-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(120, 157, 188, 0.15);
+    }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
+    .product-image {
+        background: var(--surface-muted);
+        height: 180px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-        .page-title {
-            margin-bottom: 30px;
-        }
+    .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 
-        .page-title h1 {
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
+    .product-image-emoji {
+        font-size: 3em;
+    }
 
-        .filters {
-            background: var(--surface-strong);
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
+    .product-info {
+        padding: 15px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
 
+    .product-name {
+        margin: 0 0 8px 0;
+        font-size: 0.95em;
+        color: var(--dark);
+        font-weight: 600;
+        line-height: 1.3;
+    }
+
+    .product-category {
+        margin: 5px 0;
+        font-size: 0.85em;
+        color: var(--text-secondary);
+    }
+
+    .product-category span {
+        background: rgba(120,157,188,0.15);
+        padding: 3px 8px;
+        border-radius: 4px;
+    }
+
+    .product-stock {
+        margin: 10px 0;
+        font-size: 0.9em;
+        color: var(--text-secondary);
+        flex: 1;
+    }
+
+    .product-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+        border-top: 1px solid var(--border);
+        padding-top: 10px;
+    }
+
+    .product-price {
+        font-size: 1.1em;
+        font-weight: bold;
+        color: #789DBC;
+    }
+
+    .login-prompt {
+        background: rgba(120,157,188,0.15);
+        border: 1px solid var(--border);
+        color: var(--text-secondary);
+        padding: 12px 16px;
+        border-radius: 8px;
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: 500;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        background: var(--surface-strong);
+        border-radius: 12px;
+        border: 1px solid var(--border);
+    }
+
+    .empty-state-emoji {
+        font-size: 4em;
+        margin-bottom: 20px;
+    }
+
+    .empty-state h2 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+        color: var(--dark);
+    }
+
+    .empty-state p {
+        color: var(--text-secondary);
+        margin-bottom: 20px;
+    }
+
+    .btn-custom-primary {
+        background: linear-gradient(135deg, #789DBC 0%, #9FBCCD 100%);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        display: inline-block;
+    }
+
+    .btn-custom-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(120, 157, 188, 0.4);
+        color: white;
+    }
+
+    @media (max-width: 768px) {
         .filters-row {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .filter-group {
-            display: flex;
             flex-direction: column;
-            gap: 5px;
-        }
-
-        .filter-group label {
-            font-weight: 600;
-            font-size: 0.9em;
-            color: var(--text-secondary);
-        }
-
-        .filter-group select,
-        .filter-group input {
-            padding: 8px 12px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 0.9em;
+            align-items: stretch;
         }
 
         .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         }
+    }
+</style>
+@endsection
 
-        .product-card {
-            background: var(--surface-strong);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
+@section('content')
 
-        .product-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(120, 157, 188, 0.15);
-        }
+<!-- LOGIN PROMPT -->
+<div class="login-prompt">
+    👋 Anda dapat melihat produk kami, namun untuk membeli silakan <a href="/login" style="color: var(--primary); font-weight: bold; text-decoration: underline;">masuk</a> terlebih dahulu.
+</div>
 
-        .product-image {
-            background: var(--surface-muted);
-            height: 180px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+<!-- PAGE TITLE -->
+<div class="page-title">
+    <h1>📦 Katalog Produk</h1>
+    <p style="color: var(--text-secondary);">Temukan dessert favorit Anda dari koleksi lengkap kami</p>
+</div>
 
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .product-image-emoji {
-            font-size: 3em;
-        }
-
-        .product-info {
-            padding: 15px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-name {
-            margin: 0 0 8px 0;
-            font-size: 0.95em;
-            color: var(--dark);
-            font-weight: 600;
-            line-height: 1.3;
-        }
-
-        .product-category {
-            margin: 5px 0;
-            font-size: 0.85em;
-            color: var(--text-secondary);
-        }
-
-        .product-category span {
-            background: rgba(120,157,188,0.15);
-            padding: 3px 8px;
-            border-radius: 4px;
-        }
-
-        .product-stock {
-            margin: 10px 0;
-            font-size: 0.9em;
-            color: var(--text-secondary);
-            flex: 1;
-        }
-
-        .product-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 10px;
-            border-top: 1px solid var(--border);
-            padding-top: 10px;
-        }
-
-        .product-price {
-            font-size: 1.1em;
-            font-weight: bold;
-            color: #789DBC;
-        }
-
-        .login-prompt {
-            background: rgba(120,157,188,0.15);
-            border: 1px solid #c7d2fe;
-            color: var(--primary);
-            padding: 12px 16px;
-            border-radius: 8px;
-            text-align: center;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 30px;
-        }
-
-        .pagination a,
-        .pagination span {
-            padding: 10px 15px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            text-decoration: none;
-            color: #789DBC;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .pagination a:hover {
-            background: #789DBC;
-            color: white;
-            border-color: #789DBC;
-        }
-
-        .pagination .active {
-            background: #789DBC;
-            color: white;
-            border-color: #789DBC;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            background: var(--surface-strong);
-            border-radius: 8px;
-            border: 1px solid var(--border);
-        }
-
-        .empty-state-emoji {
-            font-size: 4em;
-            margin-bottom: 20px;
-        }
-
-        .empty-state h2 {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-            color: var(--dark);
-        }
-
-        .empty-state p {
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-        }
-
-        .footer {
-            background: #1f2937;
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            margin-top: 60px;
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .filters-row {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- NAVBAR -->
-    <nav class="navbar">
-        <a href="/" class="navbar-brand">
-            🍰 SugarBase
-        </a>
-        <div class="navbar-right">
-            <a href="/">Beranda</a>
-            <a href="/guest/katalog" style="color: #789DBC; font-weight: 600;">Katalog</a>
-            <a href="/login" class="btn btn-primary" style="padding: 8px 16px;">Masuk</a>
-            <a href="/register" class="btn btn-secondary" style="padding: 8px 16px;">Daftar</a>
+<!-- FILTERS -->
+<div class="filters">
+    <form method="GET" action="/guest/katalog">
+        <div class="filters-row">
+            <div class="filter-group" style="flex: 1;">
+                <label for="kategori">Kategori</label>
+                <select name="kategori" id="kategori">
+                    <option value="">Semua Kategori</option>
+                    @foreach($kategori as $kat)
+                        <option value="{{ $kat->id_kategori }}" {{ request('kategori') == $kat->id_kategori ? 'selected' : '' }}>
+                            {{ $kat->nama_kategori }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            
+            <div class="filter-group" style="flex: 2;">
+                <label for="search">Cari Produk</label>
+                <input type="text" name="search" id="search" placeholder="Cari produk..." value="{{ request('search') }}">
+            </div>
+            
+            <div class="filter-group" style="justify-content: flex-end;">
+                <button type="submit" class="btn-custom-primary" style="margin-top: 24px;">Cari</button>
+            </div>
         </div>
-    </nav>
+    </form>
+</div>
 
-    <div class="container">
-
-        <!-- LOGIN PROMPT -->
-        <div class="login-prompt">
-            👋 Anda dapat melihat produk kami, namun untuk membeli silakan <a href="/login" style="color: var(--primary); font-weight: bold; text-decoration: underline;">masuk</a> terlebih dahulu.
-        </div>
-
-        <!-- PAGE TITLE -->
-        <div class="page-title">
-            <h1>📦 Katalog Produk</h1>
-            <p style="color: var(--text-secondary);">Temukan dessert favorit Anda dari koleksi lengkap kami</p>
-        </div>
-
-        <!-- FILTERS -->
-        <div class="filters">
-            <form method="GET" action="/guest/katalog">
-                <div class="filters-row">
-                    <div class="filter-group" style="flex: 1;">
-                        <label for="kategori">Kategori</label>
-                        <select name="kategori" id="kategori">
-                            <option value="">Semua Kategori</option>
-                            @foreach($kategori as $kat)
-                                <option value="{{ $kat->id_kategori }}" {{ request('kategori') == $kat->id_kategori ? 'selected' : '' }}>
-                                    {{ $kat->nama_kategori }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    
-                    <div class="filter-group" style="flex: 2;">
-                        <label for="search">Cari Produk</label>
-                        <input type="text" name="search" id="search" placeholder="Cari produk..." value="{{ request('search') }}">
-                    </div>
-                    
-                    <div class="filter-group" style="justify-content: flex-end;">
-                        <button type="submit" class="btn btn-primary" style="margin-top: 27px;">Cari</button>
-                    </div>
+<!-- PRODUCTS GRID -->
+@if($produk->count() > 0)
+    <div class="grid">
+        @foreach($produk as $item)
+        <div class="product-card">
+            <div class="product-image">
+                @if($item->foto)
+                    <img src="{{ asset('storage/' . $item->foto) }}" alt="{{ $item->nama_produk }}">
+                @else
+                    <div class="product-image-emoji">🍰</div>
+                @endif
+            </div>
+            
+            <div class="product-info">
+                <h3 class="product-name">{{ $item->nama_produk }}</h3>
+                
+                <p class="product-category">
+                    <span>{{ $item->kategori->nama_kategori ?? 'N/A' }}</span>
+                </p>
+                
+                <p class="product-stock">
+                    Stok: <strong>{{ $item->stok }}</strong>
+                </p>
+                
+                <div class="product-footer">
+                    <span class="product-price">Rp {{ number_format($item->harga, 0, ',', '.') }}</span>
+                    <a href="/guest/produk/{{ $item->id_produk }}" class="btn-custom-primary" style="padding: 6px 12px; font-size: 0.85em;">
+                        Lihat
+                    </a>
                 </div>
-            </form>
+            </div>
         </div>
-
-        <!-- PRODUCTS GRID -->
-        @if($produk->count() > 0)
-            <div class="grid">
-                @foreach($produk as $item)
-                <div class="product-card">
-                    <div class="product-image">
-                        @if($item->foto)
-                            <img src="{{ asset('storage/' . $item->foto) }}" alt="{{ $item->nama_produk }}">
-                        @else
-                            <div class="product-image-emoji">🍰</div>
-                        @endif
-                    </div>
-                    
-                    <div class="product-info">
-                        <h3 class="product-name">{{ $item->nama_produk }}</h3>
-                        
-                        <p class="product-category">
-                            <span>{{ $item->kategori->nama_kategori ?? 'N/A' }}</span>
-                        </p>
-                        
-                        <p class="product-stock">
-                            Stok: <strong>{{ $item->stok }}</strong>
-                        </p>
-                        
-                        <div class="product-footer">
-                            <span class="product-price">Rp {{ number_format($item->harga, 0, ',', '.') }}</span>
-                            <a href="/guest/produk/{{ $item->id_produk }}" class="btn btn-primary" style="padding: 8px 12px; font-size: 0.85em;">
-                                Lihat
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-
-            <!-- PAGINATION -->
-            @if(method_exists($produk, 'links'))
-            <div class="pagination">
-                {{ $produk->appends(request()->query())->links() }}
-            </div>
-            @endif
-        @else
-            <div class="empty-state">
-                <div class="empty-state-emoji">📭</div>
-                <h2>Tidak Ada Produk</h2>
-                <p>Produk yang Anda cari tidak tersedia. Silakan coba filter lain.</p>
-                <a href="/guest/katalog" class="btn btn-primary">Lihat Semua Produk</a>
-            </div>
-        @endif
-
+        @endforeach
     </div>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-        <h3>🍰 SugarBase</h3>
-        <p style="margin-top: 10px; opacity: 0.8;">Toko Dessert Premium dengan Berbagai Pilihan Produk Terbaik</p>
-        <p style="margin-top: 20px; opacity: 0.6; font-size: 0.9em;">© 2026 SugarBase. All rights reserved.</p>
-    </footer>
+    <!-- PAGINATION -->
+    @if(method_exists($produk, 'links'))
+    <div class="pagination">
+        {{ $produk->appends(request()->query())->links() }}
+    </div>
+    @endif
+@else
+    <div class="empty-state">
+        <div class="empty-state-emoji">📭</div>
+        <h2>Tidak Ada Produk</h2>
+        <p>Produk yang Anda cari tidak tersedia. Silakan coba filter lain.</p>
+        <a href="/guest/katalog" class="btn-custom-primary">Lihat Semua Produk</a>
+    </div>
+@endif
 
-</body>
-</html>
+@endsection

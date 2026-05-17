@@ -9,7 +9,7 @@
 
     <div style="background: var(--surface-strong);padding:18px;border-radius:12px;border:1px solid var(--border);">
         @if(session('success'))
-            <div style="background: rgba(126,187,152,0.15); border:1px solid #d1fae5; padding:10px; border-radius:8px; margin-bottom:10px; color: var(--success);">{{ session('success') }}</div>
+            <div style="background: rgba(126,187,152,0.15); border:1px solid #d1fae5; padding:10px; border-radius:8px; margin-bottom:10px; color: var(--dark); font-weight: 600;">{{ session('success') }}</div>
         @endif
 
         <form method="POST" action="{{ route('profil.update') }}">
