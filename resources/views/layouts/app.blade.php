@@ -287,15 +287,16 @@
 
         <div class="nav-right">
             <!-- Notification Bell -->
-            <button class="nav-icon-btn" id="notifBtn">
+            <button class="nav-icon-btn" onclick="window.location.href='/notifikasi'">
                 🔔
-                <span class="badge" style="display: none;">3</span>
+                @if(($unreadCount ?? 0) > 0)
+                    <span class="badge">{{ $unreadCount }}</span>
+                @endif
             </button>
 
             <!-- Cart -->
             <button class="nav-icon-btn" onclick="window.location.href='/keranjang'">
                 🛒
-                <span class="badge" style="display: none;">2</span>
             </button>
 
             <!-- Avatar Dropdown -->

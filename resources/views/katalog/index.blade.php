@@ -82,8 +82,13 @@
             @foreach($produk as $item)
             <div style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #e5e7eb; transition: all 0.3s ease; display: flex; flex-direction: column;">
                 <!-- Foto -->
-                <div style="background: #f3f4f6; height: 140px; display: flex; align-items: center; justify-content: center; font-size: 2.5em;">
-                    {{ $item->foto ?? '🍰' }}
+                <div style="background: #f3f4f6; height: 140px; overflow: hidden;">
+                    @if($item->foto)
+                        <img src="{{ asset('storage/' . $item->foto) }}" alt="{{ $item->nama_produk }}"
+                             style="width: 100%; height: 100%; object-fit: cover;">
+                    @else
+                        <div style="height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2.5em;">🍰</div>
+                    @endif
                 </div>
                 
                 <!-- Info -->

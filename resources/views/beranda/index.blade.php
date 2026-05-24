@@ -37,8 +37,13 @@
         @foreach($produkTerlaris as $produk)
         <div style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #e5e7eb; transition: all 0.3s ease; display: flex; flex-direction: column;">
             <!-- Foto Produk -->
-            <div style="background: #f3f4f6; height: 180px; display: flex; align-items: center; justify-content: center; font-size: 3em;">
-                {{ $produk->foto ?? '🍰' }}
+            <div style="background: #f3f4f6; height: 180px; overflow: hidden;">
+                @if($produk->foto)
+                    <img src="{{ asset('storage/' . $produk->foto) }}" alt="{{ $produk->nama_produk }}"
+                         style="width: 100%; height: 100%; object-fit: cover;">
+                @else
+                    <div style="height: 100%; display: flex; align-items: center; justify-content: center; font-size: 3em;">🍰</div>
+                @endif
             </div>
             
             <!-- Info Produk -->
@@ -76,8 +81,13 @@
         @foreach($produkTerbaru as $produk)
         <div style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #e5e7eb; transition: all 0.3s ease; display: flex; flex-direction: column;">
             <!-- Foto Produk -->
-            <div style="background: #f3f4f6; height: 180px; display: flex; align-items: center; justify-content: center; font-size: 3em;">
-                {{ $produk->foto ?? '🍰' }}
+            <div style="background: #f3f4f6; height: 180px; overflow: hidden;">
+                @if($produk->foto)
+                    <img src="{{ asset('storage/' . $produk->foto) }}" alt="{{ $produk->nama_produk }}"
+                         style="width: 100%; height: 100%; object-fit: cover;">
+                @else
+                    <div style="height: 100%; display: flex; align-items: center; justify-content: center; font-size: 3em;">🍰</div>
+                @endif
             </div>
             
             <!-- Info Produk -->
