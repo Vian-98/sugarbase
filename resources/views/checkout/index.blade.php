@@ -57,7 +57,7 @@
                         <p style="margin: 0; font-weight: 600; color: var(--dark); font-size: 0.9em;">{{ $item->produk->nama_produk }}</p>
                         <p style="margin: 3px 0 0; font-size: 0.8em; color: var(--text-secondary);">{{ $item->jumlah_keranjang }} × Rp {{ number_format($item->harga_satuan_keranjang, 0, ',', '.') }}</p>
                     </div>
-                    <div style="font-weight: 700; color: #789DBC; font-size: 0.9em; white-space: nowrap;">
+                    <div style="font-weight: 700; color: var(--dark); font-size: 0.9em; white-space: nowrap;">
                         Rp {{ number_format($item->subtotal_keranjang, 0, ',', '.') }}
                     </div>
                 </div>
@@ -74,7 +74,7 @@
 
                 <!-- Transfer Bank -->
                 <label style="display: flex; align-items: center; gap: 14px; padding: 16px; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.2s;" id="label-transfer">
-                    <input type="radio" name="metode" value="transfer" required onchange="pilihMetode('transfer')"
+                    <input type="radio" name="metode" value="transfer" required checked onchange="pilihMetode('transfer')"
                         style="width: 18px; height: 18px; accent-color: #789DBC;">
                     <div style="width: 42px; height: 42px; background: rgba(120,157,188,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.4em;">🏦</div>
                     <div>
@@ -123,16 +123,16 @@
             </div>
             <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9em; color: var(--text-secondary);">
                 <span>Ongkir</span>
-                <span style="color: #7EBB98; font-weight: 600;">Gratis</span>
+                <span style="color: var(--dark); font-weight: 600;">Gratis</span>
             </div>
 
             <div style="border-top: 2px solid var(--border); padding-top: 14px; margin-top: 4px; display: flex; justify-content: space-between; font-size: 1.15em; font-weight: 700; color: var(--dark);">
                 <span>Total</span>
-                <span style="color: #789DBC;">Rp {{ number_format($total, 0, ',', '.') }}</span>
+                <span style="color: var(--dark);">Rp {{ number_format($total, 0, ',', '.') }}</span>
             </div>
 
             <!-- Info Metode Dipilih -->
-            <div id="info-metode" style="margin-top: 16px; padding: 12px; background: rgba(120,157,188,0.15); border-radius: 8px; font-size: 0.85em; color: #4338ca; display: none;"></div>
+            <div id="info-metode" style="margin-top: 16px; padding: 12px; background: rgba(120,157,188,0.15); border-radius: 8px; font-size: 0.85em; color: var(--dark); display: none;"></div>
 
             <button type="submit"
                 style="width: 100%; margin-top: 20px; padding: 14px; background: linear-gradient(135deg, #789DBC 0%, #688CAD 100%); color: white; border: none; border-radius: 8px; font-size: 1.05em; font-weight: 700; cursor: pointer; transition: opacity 0.2s; box-shadow: 0 4px 12px rgba(120, 157, 188, 0.4);">
@@ -164,6 +164,15 @@ function pilihMetode(metode) {
     info.style.display = 'block';
     info.textContent = infoMetode[metode];
 }
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+    // Check which radio is selected and apply styling
+    const selectedRadio = document.querySelector('input[name="metode"]:checked');
+    if (selectedRadio) {
+        pilihMetode(selectedRadio.value);
+    }
+});
 </script>
 
 <style>

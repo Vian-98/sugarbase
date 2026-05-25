@@ -4,6 +4,73 @@
 
 @section('content')
 
+<style>
+    /* PAGINATION STYLING */
+    .pagination-wrapper {
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    .pagination-info {
+        color: var(--text-secondary);
+        font-size: 0.9em;
+        margin-bottom: 20px;
+    }
+
+    .pagination-wrapper ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .pagination-wrapper li {
+        display: inline-flex;
+    }
+
+    .pagination-wrapper a,
+    .pagination-wrapper span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        height: 40px;
+        padding: 0 12px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface-strong);
+        color: var(--dark);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9em;
+        transition: all 0.2s ease;
+    }
+
+    .pagination-wrapper a:hover {
+        background: linear-gradient(135deg, #789DBC 0%, #C9E9D2 100%);
+        color: white;
+        border-color: #789DBC;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(120, 157, 188, 0.3);
+    }
+
+    .pagination-wrapper .active span {
+        background: linear-gradient(135deg, #789DBC 0%, #C9E9D2 100%);
+        color: white;
+        border-color: #789DBC;
+        box-shadow: 0 4px 12px rgba(120, 157, 188, 0.3);
+    }
+
+    .pagination-wrapper .disabled span {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+</style>
+
 <div style="margin-bottom: 30px;">
     <h1 style="font-size: 2em; color: var(--dark); margin-bottom: 10px;">🍰 Katalog Produk</h1>
     <p style="color: var(--text-secondary);">Temukan produk favorit Anda</p>
@@ -120,8 +187,11 @@
         </div>
         
         <!-- Pagination -->
-        <div style="display: flex; justify-content: center; gap: 10px; margin-top: 30px;">
-            {{ $produk->links('pagination::bootstrap-4') }}
+        <div class="pagination-wrapper">
+            <div class="pagination-info">
+                Menampilkan <strong>{{ $produk->firstItem() ?? 0 }}</strong> hingga <strong>{{ $produk->lastItem() ?? 0 }}</strong> dari <strong>{{ $produk->total() }}</strong> produk
+            </div>
+            {{ $produk->appends(request()->query())->links('pagination.custom') }}
         </div>
         @else
         <div style="text-align: center; padding: 60px 20px; background: var(--surface-muted); border-radius: 8px;">

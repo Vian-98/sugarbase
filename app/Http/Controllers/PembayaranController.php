@@ -20,7 +20,10 @@ class PembayaranController extends Controller
     public function konfirmasiPelanggan($id)
     {
         $pesanan = Pesanan::where('user_id', Auth::id())->findOrFail($id);
-        $pesanan->pembayaran->update(['status_pembayaran' => 'lunas']);
+        $pesanan->pembayaran->update([
+            'status_pembayaran' => 'lunas',
+            'tanggal_bayar' => now()->toDateString()
+        ]);
 
         return redirect('/pesanan/saya')->with('success', 'Pembayaran dikonfirmasi! Pesanan sedang diproses.');
     }

@@ -103,7 +103,7 @@
         </div>
             <div class="admin-card-body">
             <div class="quick-actions">
-                <a href="{{ route('admin.produk.index') }}" class="btn btn-primary">
+                <a href="{{ route('admin.produk.index') }}" class="btn btn-primary btn-gradient-blue">
                     <i class="fas fa-box"></i>Kelola Produk
                 </a>
                 <a href="{{ route('admin.kategori.index') }}" class="btn btn-primary btn-gradient-purple">

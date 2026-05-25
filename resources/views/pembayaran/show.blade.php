@@ -12,13 +12,13 @@
     </div>
     <div style="flex: 1; height: 2px; background: var(--success); margin: 0 12px;"></div>
     <div style="display: flex; align-items: center; gap: 8px;">
-        <div style="width: 32px; height: 32px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.85em; font-weight: 700;">✓</div>
-        <span style="font-size: 0.85em; font-weight: 600; color: var(--success);">Konfirmasi</span>
+        <div style="width: 32px; height: 32px; background: #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.85em; font-weight: 700;">✓</div>
+        <span style="font-size: 0.85em; font-weight: 600; color: #22c55e;">Konfirmasi</span>
     </div>
-    <div style="flex: 1; height: 2px; background: var(--primary); margin: 0 12px;"></div>
+    <div style="flex: 1; height: 2px; background: #22c55e; margin: 0 12px;"></div>
     <div style="display: flex; align-items: center; gap: 8px;">
-        <div style="width: 32px; height: 32px; background: var(--gradient-brand); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.85em; font-weight: 700;">3</div>
-        <span style="font-size: 0.85em; font-weight: 600; color: var(--primary);">Pembayaran</span>
+        <div style="width: 32px; height: 32px; background: #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.85em; font-weight: 700;">3</div>
+        <span style="font-size: 0.85em; font-weight: 600; color: #22c55e;">Pembayaran</span>
     </div>
 </div>
 
@@ -45,8 +45,8 @@
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <span style="font-size: 2em;">🏦</span>
                     <div>
-                        <h2 style="margin: 0; font-size: 1.1em; font-weight: 700; color: var(--primary);">Transfer Bank</h2>
-                        <p style="margin: 2px 0 0; font-size: 0.85em; color: var(--primary);">Selesaikan pembayaran sebelum 24 jam</p>
+                        <h2 style="margin: 0; font-size: 1.1em; font-weight: 700; color: var(--dark);">Transfer Bank</h2>
+                        <p style="margin: 2px 0 0; font-size: 0.85em; color: var(--dark); opacity: 0.85;">Selesaikan pembayaran sebelum 24 jam</p>
                     </div>
                 </div>
             </div>
@@ -125,8 +125,8 @@
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <span style="font-size: 2em;">🚚</span>
                     <div>
-                        <h2 style="margin: 0; font-size: 1.1em; font-weight: 700; color: #3A7A5A;">COD — Bayar di Tempat</h2>
-                        <p style="margin: 2px 0 0; font-size: 0.85em; color: #7EBB98;">Tidak perlu bayar sekarang!</p>
+                        <h2 style="margin: 0; font-size: 1.1em; font-weight: 700; color: var(--dark);">COD — Bayar di Tempat</h2>
+                        <p style="margin: 2px 0 0; font-size: 0.85em; color: var(--dark); opacity: 0.85;">Tidak perlu bayar sekarang!</p>
                     </div>
                 </div>
             </div>
@@ -140,7 +140,7 @@
                 </p>
 
                 <div style="background: rgba(126,187,152,0.15); border: 1px solid #86efac; border-radius: 10px; padding: 20px; margin-bottom: 24px; text-align: left;">
-                    <p style="margin: 0 0 8px; font-weight: 600; color: #3A7A5A; font-size: 0.9em;">📋 Yang perlu kamu lakukan:</p>
+                    <p style="margin: 0 0 8px; font-weight: 600; color: var(--success); font-size: 0.9em;">📋 Yang perlu kamu lakukan:</p>
                     <ul style="margin: 0; padding-left: 18px; font-size: 0.85em; color: var(--text-secondary); line-height: 2;">
                         <li>Pastikan ada di rumah saat kurir datang</li>
                         <li>Siapkan uang pas jika memungkinkan</li>
@@ -166,8 +166,8 @@
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <span style="font-size: 2em;">📱</span>
                     <div>
-                        <h2 style="margin: 0; font-size: 1.1em; font-weight: 700; color: #6b21a8;">E-Wallet / QRIS</h2>
-                        <p style="margin: 2px 0 0; font-size: 0.85em; color: #a855f7;">Scan & bayar dalam hitungan detik</p>
+                        <h2 style="margin: 0; font-size: 1.1em; font-weight: 700; color: var(--dark);">E-Wallet / QRIS</h2>
+                        <p style="margin: 2px 0 0; font-size: 0.85em; color: var(--dark); opacity: 0.85;">Scan & bayar dalam hitungan detik</p>
                     </div>
                 </div>
             </div>
@@ -264,7 +264,7 @@
                     <h3 style="font-size: 1.1em; color: var(--dark); margin: 0 0 8px;">GoPay</h3>
                     <p style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 16px;">Nomor GoPay tujuan:</p>
                     <div style="background: rgba(126,187,152,0.15); border: 1px solid #86efac; border-radius: 10px; padding: 16px; display: inline-block; margin-bottom: 20px;">
-                        <p style="margin: 0; font-family: monospace; font-size: 1.4em; font-weight: 700; color: #3A7A5A; letter-spacing: 2px;">0812-3456-7890</p>
+                        <p style="margin: 0; font-family: monospace; font-size: 1.4em; font-weight: 700; color: var(--success); letter-spacing: 2px;">0812-3456-7890</p>
                         <p style="margin: 6px 0 0; font-size: 0.8em; color: var(--text-secondary);">a/n SugarBase</p>
                     </div>
                     <p style="font-size: 1.2em; font-weight: 700; color: #789DBC; margin-bottom: 20px;">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
@@ -276,7 +276,7 @@
                     <h3 style="font-size: 1.1em; color: var(--dark); margin: 0 0 8px;">OVO</h3>
                     <p style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 16px;">Nomor OVO tujuan:</p>
                     <div style="background: rgba(217,137,153,0.15); border: 1px solid #e9d5ff; border-radius: 10px; padding: 16px; display: inline-block; margin-bottom: 20px;">
-                        <p style="margin: 0; font-family: monospace; font-size: 1.4em; font-weight: 700; color: #6b21a8; letter-spacing: 2px;">0813-9876-5432</p>
+                        <p style="margin: 0; font-family: monospace; font-size: 1.4em; font-weight: 700; color: var(--danger); letter-spacing: 2px;">0813-9876-5432</p>
                         <p style="margin: 6px 0 0; font-size: 0.8em; color: var(--text-secondary);">a/n SugarBase</p>
                     </div>
                     <p style="font-size: 1.2em; font-weight: 700; color: #789DBC; margin-bottom: 20px;">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
@@ -348,8 +348,8 @@
             <div style="display: flex; align-items: center; gap: 10px; padding: 12px; background: rgba(126,187,152,0.15); border-radius: 8px; border: 1px solid #86efac;">
                 <span style="font-size: 1.5em;">✅</span>
                 <div>
-                    <p style="margin: 0; font-weight: 600; color: #3A7A5A; font-size: 0.9em;">Lunas</p>
-                    <p style="margin: 2px 0 0; font-size: 0.78em; color: #7EBB98;">Pembayaran terkonfirmasi</p>
+                    <p style="margin: 0; font-weight: 600; color: var(--success); font-size: 0.9em;">Lunas</p>
+                    <p style="margin: 2px 0 0; font-size: 0.78em; color: var(--text-secondary);">Pembayaran terkonfirmasi</p>
                 </div>
             </div>
             @else
@@ -416,8 +416,10 @@ function pilihEwallet(id) {
     tab.style.color = 'var(--primary)';
 }
 
-// Default: pilih QRIS
-pilihEwallet('qris');
+// Default: pilih QRIS (hanya jika fungsi ada dan elemen tersedia)
+if (typeof pilihEwallet === 'function' && document.getElementById('panel-qris')) {
+    pilihEwallet('qris');
+}
 </script>
 
 <style>

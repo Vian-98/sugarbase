@@ -49,9 +49,30 @@ class PesananController extends Controller
             'status' => 'required|in:pending,diproses,dikirim,selesai,dibatalkan'
         ]);
 
-        Pesanan::findOrFail($id)->update(['status_pesanan' => $request->status]);
+        $pesanan = Pesanan::findOrFail($id);
+        $newStatus = $request->status;
+        
+        // Update pesanan status
+        $pesanan->update(['status_pesanan' => $newStatus]);
 
-        return back()->with('success', 'Status pesanan diperbarui.');
+        // Map status ke tracking status messages
+        $statusMap = [
+            'pending' => 'Pesanan Diterima',
+            'diproses' => 'Sedang Diproses',
+            'dikirim' => 'Dalam Pengiriman',
+            'selesai' => 'Pesanan Selesai',
+            'dibatalkan' => 'Pesanan Dibatalkan'
+        ];
+
+        // Automatically create tracking record
+        TrackingStatus::create([
+            'id_pesanan' => $pesanan->id_pesanan,
+            'status' => $statusMap[$newStatus] ?? $newStatus,
+            'waktu_update' => now(),
+            'keterangan' => "Status pesanan diubah ke: " . ucfirst($newStatus)
+        ]);
+
+        return back()->with('success', 'Status pesanan diperbarui dan tracking ditambahkan.');
     }
 
     public function addTracking(Request $request, $id)

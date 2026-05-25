@@ -177,6 +177,76 @@
         margin-bottom: 20px;
     }
 
+    /* PAGINATION STYLING */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin: 40px 0;
+        flex-wrap: wrap;
+    }
+
+    .pagination a,
+    .pagination span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        height: 40px;
+        padding: 0 12px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface-strong);
+        color: var(--dark);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9em;
+        transition: all 0.2s ease;
+    }
+
+    .pagination a:hover {
+        background: linear-gradient(135deg, #789DBC 0%, #C9E9D2 100%);
+        color: white;
+        border-color: #789DBC;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(120, 157, 188, 0.3);
+    }
+
+    .pagination span.relative.inline-flex {
+        background: var(--surface-strong);
+    }
+
+    .pagination span.active,
+    .pagination .active span {
+        background: linear-gradient(135deg, #789DBC 0%, #C9E9D2 100%);
+        color: white;
+        border-color: #789DBC;
+        box-shadow: 0 4px 12px rgba(120, 157, 188, 0.3);
+    }
+
+    .pagination span.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        border-color: var(--border);
+    }
+
+    /* Previous & Next buttons */
+    .pagination a[rel="prev"],
+    .pagination a[rel="next"],
+    .pagination a:contains("prev"),
+    .pagination a:contains("next") {
+        min-width: 110px;
+    }
+
+    /* Info text */
+    .pagination-info {
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 0.9em;
+        margin-bottom: 20px;
+    }
+
     .btn-custom-primary {
         background: linear-gradient(135deg, #789DBC 0%, #9FBCCD 100%);
         color: white;
@@ -287,8 +357,13 @@
 
     <!-- PAGINATION -->
     @if(method_exists($produk, 'links'))
-    <div class="pagination">
-        {{ $produk->appends(request()->query())->links() }}
+    <div style="text-align: center;">
+        <div class="pagination-info">
+            Menampilkan <strong>{{ $produk->firstItem() ?? 0 }}</strong> hingga <strong>{{ $produk->lastItem() ?? 0 }}</strong> dari <strong>{{ $produk->total() }}</strong> produk
+        </div>
+        <nav class="pagination">
+            {{ $produk->appends(request()->query())->links('pagination.custom') }}
+        </nav>
     </div>
     @endif
 @else

@@ -47,18 +47,18 @@
             <table style="width: 100%; border-collapse: collapse;">
                 <thead>
                     <tr style="background: var(--surface-muted); font-size: 0.9em; color: var(--dark); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
-                        <th style="padding: 14px 24px; text-align: left;">Produk</th>
-                        <th style="padding: 14px 12px; text-align: center;">Harga</th>
-                        <th style="padding: 14px 12px; text-align: center;">Jumlah</th>
-                        <th style="padding: 14px 12px; text-align: center;">Subtotal</th>
-                        <th style="padding: 14px 24px; text-align: center;">Hapus</th>
+                        <th style="padding: 14px 24px; text-align: left; min-width: 250px;">Produk</th>
+                        <th style="padding: 14px 12px; text-align: center; min-width: 110px;">Harga</th>
+                        <th style="padding: 14px 12px; text-align: center; min-width: 120px;">Jumlah</th>
+                        <th style="padding: 14px 12px; text-align: center; min-width: 130px;">Subtotal</th>
+                        <th style="padding: 14px 24px; text-align: center; min-width: 60px;">Hapus</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($keranjang->items as $item)
                     <tr style="border-top: 1px solid var(--border); transition: background 0.2s;" onmouseover="this.style.background='var(--border)'" onmouseout="this.style.background='transparent'">
                         <!-- Foto + Nama -->
-                        <td style="padding: 18px 24px;">
+                        <td style="padding: 16px 24px; vertical-align: middle;">
                             <div style="display: flex; align-items: center; gap: 14px;">
                                 @if($item->produk->foto)
                                 <img src="{{ asset('storage/' . $item->produk->foto) }}" alt="{{ $item->produk->nama_produk }}" 
@@ -76,37 +76,35 @@
                         </td>
 
                         <!-- Harga Satuan -->
-                        <td style="padding: 18px 12px; text-align: center; color: #789DBC; font-weight: 600; font-size: 0.9em; white-space: nowrap;">
+                        <td style="padding: 16px 12px; text-align: center; color: #789DBC; font-weight: 600; font-size: 0.95em; white-space: nowrap; vertical-align: middle;">
                             Rp {{ number_format($item->harga_satuan_keranjang, 0, ',', '.') }}
                         </td>
 
                         <!-- Update Qty -->
-                        <td style="padding: 18px 12px; text-align: center;">
-                            <form action="/keranjang/update/{{ $item->id_item }}" method="POST" style="display: flex; align-items: center; justify-content: center; gap: 0;">
-                                @csrf
-                                <button type="button" onclick="ubahQtyItem(this, -1)"
-                                    style="width: 32px; height: 32px; border: 1px solid var(--border); background: var(--gradient-soft); color: var(--text-secondary); cursor: pointer; border-radius: 6px 0 0 6px; font-size: 1em;">−</button>
-                                <input type="number" name="jumlah" value="{{ $item->jumlah_keranjang }}" min="1" max="{{ $item->produk->stok }}"
-                                    style="width: 48px; height: 32px; border: 1px solid var(--border); border-left: none; border-right: none; text-align: center; font-size: 0.9em; -moz-appearance: textfield; outline: none; background: transparent; color: var(--dark);">
-                                <button type="button" onclick="ubahQtyItem(this, 1)"
-                                    style="width: 32px; height: 32px; border: 1px solid var(--border); background: var(--gradient-soft); color: var(--text-secondary); cursor: pointer; border-radius: 0 6px 6px 0; font-size: 1em;">+</button>
-                                <button type="submit"
-                                    style="margin-left: 8px; padding: 0 10px; height: 32px; background: #789DBC; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.78em; font-weight: 600; white-space: nowrap;">Update</button>
-                            </form>
+                        <td style="padding: 16px 12px; text-align: center; vertical-align: middle;">
+                            <div class="qty-group" data-item-id="{{ $item->id_item }}" data-max-stock="{{ $item->produk->stok }}" style="display: flex; align-items: center; justify-content: center; gap: 0;">
+                                <button type="button" class="qty-btn qty-minus"
+                                    style="width: 28px; height: 28px; border: 1px solid var(--border); background: rgba(255, 227, 227, 0.3); color: #789DBC; cursor: pointer; border-radius: 4px 0 0 4px; font-size: 0.9em; font-weight: bold; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center;">−</button>
+                                <input type="number" class="qty-input" value="{{ $item->jumlah_keranjang }}" min="1" max="{{ $item->produk->stok }}"
+                                    style="width: 45px; height: 28px; border: 1px solid var(--border); border-left: none; border-right: none; text-align: center; font-size: 0.9em; font-weight: 600; -moz-appearance: textfield; outline: none; background: var(--surface-strong); color: var(--dark);">
+                                <button type="button" class="qty-btn qty-plus"
+                                    style="width: 28px; height: 28px; border: 1px solid var(--border); background: rgba(201, 233, 210, 0.3); color: #789DBC; cursor: pointer; border-radius: 0 4px 4px 0; font-size: 0.9em; font-weight: bold; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center;">+</button>
+                            </div>
+                            <span class="qty-status" style="display: block; font-size: 0.7em; color: #789DBC; font-weight: 600; margin-top: 4px; min-height: 12px; text-align: center;"></span>
                         </td>
 
                         <!-- Subtotal -->
-                        <td style="padding: 18px 12px; text-align: center; font-weight: 700; color: var(--dark); white-space: nowrap;">
+                        <td style="padding: 16px 12px; text-align: center; font-weight: 700; color: var(--dark); white-space: nowrap; font-size: 0.95em; vertical-align: middle;">
                             Rp {{ number_format($item->subtotal_keranjang, 0, ',', '.') }}
                         </td>
 
                         <!-- Hapus -->
-                        <td style="padding: 18px 24px; text-align: center;">
-                            <form action="/keranjang/hapus/{{ $item->id_item }}" method="POST">
+                        <td style="padding: 16px 24px; text-align: center; vertical-align: middle;">
+                            <form action="/keranjang/hapus/{{ $item->id_item }}" method="POST" style="margin: 0;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" onclick="return confirm('Hapus item ini?')"
-                                    style="background: rgba(217,137,153,0.15); color: var(--danger); border: 1px solid #fca5a5; width: 36px; height: 36px; border-radius: 8px; cursor: pointer; font-size: 1em; transition: all 0.2s;">🗑</button>
+                                    style="background: rgba(217,137,153,0.15); color: var(--danger); border: 1px solid #fca5a5; width: 36px; height: 36px; border-radius: 8px; cursor: pointer; font-size: 1em; transition: all 0.2s ease; display: inline-flex; align-items: center; justify-content: center; padding: 0;">🗑</button>
                             </form>
                         </td>
                     </tr>
@@ -151,15 +149,149 @@
 @endif
 
 <script>
-function ubahQtyItem(btn, delta) {
-    const form = btn.closest('form');
-    const input = form.querySelector('input[type=number]');
-    const max = parseInt(input.max);
-    let val = parseInt(input.value) + delta;
-    if (val < 1) val = 1;
-    if (val > max) val = max;
-    input.value = val;
-}
+document.addEventListener('DOMContentLoaded', function() {
+    // Event delegation untuk tombol qty
+    document.querySelectorAll('.qty-group').forEach(group => {
+        const minusBtn = group.querySelector('.qty-minus');
+        const plusBtn = group.querySelector('.qty-plus');
+        const input = group.querySelector('.qty-input');
+        const status = group.parentElement.querySelector('.qty-status');
+        const itemId = group.dataset.itemId;
+        const maxStock = parseInt(group.dataset.maxStock);
+
+        if (!minusBtn || !plusBtn || !input || !status) {
+            console.error('Element tidak ditemukan', { minusBtn, plusBtn, input, status });
+            return;
+        }
+
+        // Get CSRF token
+        const getCsrfToken = () => {
+            return document.querySelector('meta[name="csrf-token"]')?.content || '';
+        };
+
+        // Function untuk update quantity
+        async function updateQty(newQty) {
+            const minQty = 1;
+            const maxQty = maxStock;
+
+            // Validate
+            if (newQty < minQty) newQty = minQty;
+            if (newQty > maxQty) newQty = maxQty;
+
+            input.value = newQty;
+            status.textContent = '⏳ Updating...';
+            status.style.color = '#789DBC';
+
+            try {
+                const response = await fetch(`/keranjang/update/${itemId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': getCsrfToken(),
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ jumlah: newQty })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    // Update subtotal di tabel
+                    const row = group.closest('tr');
+                    const subtotalCell = row.querySelector('td:nth-child(4)');
+                    if (subtotalCell && data.subtotal) {
+                        const formatter = new Intl.NumberFormat('id-ID');
+                        subtotalCell.textContent = 'Rp ' + formatter.format(data.subtotal);
+                    }
+
+                    // Update ringkasan total dengan delay untuk DOM update
+                    setTimeout(updateRingkasanPesanan, 100);
+                    
+                    status.textContent = '✓ Tersimpan';
+                    status.style.color = '#7EBB98';
+                    setTimeout(() => {
+                        status.textContent = '';
+                    }, 2000);
+                } else {
+                    status.textContent = '✗ Gagal: ' + (data.error || 'Unknown error');
+                    status.style.color = '#FF6B6B';
+                    setTimeout(() => {
+                        status.textContent = '';
+                    }, 3000);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                status.textContent = '✗ Error Network';
+                status.style.color = '#FF6B6B';
+                setTimeout(() => {
+                    status.textContent = '';
+                }, 2000);
+            }
+        }
+
+        // Tombol minus
+        minusBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            let newQty = parseInt(input.value) - 1;
+            updateQty(newQty);
+        });
+
+        // Tombol plus
+        plusBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            let newQty = parseInt(input.value) + 1;
+            updateQty(newQty);
+        });
+
+        // Direct input change
+        input.addEventListener('change', () => {
+            let newQty = parseInt(input.value) || 1;
+            updateQty(newQty);
+        });
+    });
+
+    // Function untuk update ringkasan pesanan
+    function updateRingkasanPesanan() {
+        let totalSubtotal = 0;
+
+        document.querySelectorAll('tbody tr').forEach(row => {
+            const subtotalText = row.querySelector('td:nth-child(4)').textContent;
+            const subtotal = parseInt(subtotalText.replace(/[^0-9]/g, '')) || 0;
+            totalSubtotal += subtotal;
+        });
+
+        const formatter = new Intl.NumberFormat('id-ID');
+        const formattedSubtotal = 'Rp ' + formatter.format(totalSubtotal);
+        
+        // Find ringkasan container (h2 with "Ringkasan Pesanan")
+        const ringkasanHeading = document.querySelector('h2');
+        if (!ringkasanHeading || !ringkasanHeading.textContent.includes('Ringkasan')) {
+            console.warn('Ringkasan heading not found');
+            return;
+        }
+        
+        const ringkasanContainer = ringkasanHeading.parentElement;
+        if (!ringkasanContainer) return;
+        
+        // Find all flex divs in ringkasan
+        const flexDivs = ringkasanContainer.querySelectorAll('div[style*="display: flex"][style*="justify-content: space-between"]');
+        
+        // Update subtotal (first flex div) dan total (second flex div)
+        if (flexDivs.length >= 3) {
+            // flexDivs[0] = Subtotal
+            const subtotalSpans = flexDivs[0].querySelectorAll('span');
+            if (subtotalSpans.length >= 2) {
+                subtotalSpans[1].textContent = formattedSubtotal;
+            }
+            
+            // flexDivs[2] = Total (yang punya border-top)
+            const totalSpans = flexDivs[2].querySelectorAll('span');
+            if (totalSpans.length >= 2) {
+                totalSpans[1].textContent = formattedSubtotal;
+            }
+        }
+    }
+});
 </script>
 
 <style>
