@@ -75,6 +75,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
     Route::post('/checkout', [CheckoutController::class, 'proses']);
+
     Route::get('/pembayaran/{id}', [PembayaranController::class, 'show'])->name('pembayaran.show');
     Route::post('/pembayaran/{id}/konfirmasi', [PembayaranController::class, 'konfirmasiPelanggan'])->name('pembayaran.konfirmasi');
     Route::get('/pesanan/saya', [PesananController::class, 'milikSaya'])->name('pesanan.saya');
@@ -115,5 +116,4 @@ Route::middleware(['auth'])->group(function () {
 // ─── ROOT REDIRECT ────────────────────────────────────────────────────────────
 // Root route already handled by GuestLandingPageController
 // If user is logged in, it will redirect to their dashboard
-
 
