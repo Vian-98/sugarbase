@@ -1,29 +1,21 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * [DEPRECATED] This migration was creating duplicate 'pesanans' table
+     * The system uses 'pesanan' table from the main migration instead.
+     * This migration is now a no-op to maintain history.
+     */
     public function up(): void
     {
-        Schema::dropIfExists('pesanan_item');
-        Schema::dropIfExists('pesanans');
-
-        Schema::create('pesanans', function (Blueprint $table) {
-            $table->id('id_pesanan');
-            $table->foreignId('user_id')->constrained();
-            $table->date('tanggal_pesan');
-            $table->decimal('total_harga', 15, 2);
-            $table->enum('status_pesanan', ['pending','diproses','dikirim','selesai','dibatalkan'])
-                  ->default('pending');
-            $table->timestamps();
-        });
+        // No-op: deprecated duplicate table creation
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('pesanans');
+        // No-op: deprecated duplicate table creation
     }
 };

@@ -20,8 +20,30 @@
         </div>
     @endif
 
+<<<<<<< HEAD
     {{-- Card Produk --}}
     <div style="background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; gap: 0;">
+=======
+    <div class="card shadow-sm">
+        <div class="row g-0">
+            <div class="col-md-5 text-center p-4">
+                @if($produk->foto)
+                    <img src="{{ asset('storage/'.$produk->foto) }}"
+                         class="img-fluid rounded" style="max-height:320px; object-fit:cover;">
+                @else
+                    <div class="bg-light rounded d-flex align-items-center justify-content-center"
+                         style="height:280px; font-size:5rem;">🍰</div>
+                @endif
+            </div>
+            <div class="col-md-7 p-4">
+                <span class="badge bg-danger mb-2">{{ $produk->kategori->nama_kategori ?? 'Uncategorized' }}</span>
+                <h2 class="fw-bold">{{ $produk->nama_produk }}</h2>
+                <h4 class="text-danger fw-bold">
+                    Rp {{ number_format($produk->harga, 0, ',', '.') }}
+                </h4>
+                <p class="text-muted">Stok tersedia: <strong>{{ $produk->stok }}</strong></p>
+                <p>{{ $produk->deskripsi_produk }}</p>
+>>>>>>> 7dd8a3553b3a1e0411b3ec35bf3f1ba547a829da
 
         {{-- Foto --}}
         <div style="background: #f3f4f6; min-height: 350px; display: flex; align-items: center; justify-content: center; overflow: hidden;">

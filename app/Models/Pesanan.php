@@ -10,6 +10,9 @@ class Pesanan extends Model
 
     protected $primaryKey = 'id_pesanan';
     protected $fillable   = ['user_id', 'tanggal_pesan', 'total_harga', 'status_pesanan'];
+    protected $casts = [
+        'tanggal_pesan' => 'datetime',
+    ];
 
     public function items()
     {
@@ -24,5 +27,10 @@ class Pesanan extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function tracking()
+    {
+        return $this->hasMany(TrackingStatus::class, 'id_pesanan', 'id_pesanan');
     }
 }

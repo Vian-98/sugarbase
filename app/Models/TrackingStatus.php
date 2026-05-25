@@ -17,6 +17,10 @@ class TrackingStatus extends Model
         'keterangan',
     ];
 
+    protected $casts = [
+        'waktu_update' => 'datetime',
+    ];
+
     public function pesanan()
     {
         return $this->belongsTo(Pesanan::class, 'id_pesanan', 'id_pesanan');

@@ -12,8 +12,8 @@ $qr_api = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" . url
     <title>QR Code - Sugarbase</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #789DBC 0%, #C9E9D2 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -22,22 +22,22 @@ $qr_api = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" . url
         }
         
         .container {
-            background: white;
+            background: var(--surface-strong);
             padding: 40px;
             border-radius: 15px;
             text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(120,157,188,0.10);
         }
         
         h1 {
-            color: #667eea;
+            color: #789DBC;
             margin-bottom: 20px;
         }
         
         .qr-box {
             margin: 30px 0;
             padding: 20px;
-            background: #f3f4f6;
+            background: var(--surface-muted);
             border-radius: 10px;
         }
         
@@ -48,23 +48,23 @@ $qr_api = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" . url
         
         .info {
             margin-top: 20px;
-            color: #6b7280;
+            color: var(--text-secondary);
         }
         
         .url {
             font-size: 1.2em;
             font-weight: bold;
-            color: #667eea;
+            color: #789DBC;
             margin: 15px 0;
             font-family: monospace;
         }
         
         .instruction {
-            background: #fef3c7;
+            background: rgba(231,200,158,0.15);
             padding: 15px;
             border-radius: 8px;
             margin-top: 20px;
-            color: #92400e;
+            color: var(--warning);
             border-left: 4px solid #f59e0b;
         }
     </style>

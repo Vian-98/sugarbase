@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('nama_produk', 100)->comment('Nama produk');
             $table->decimal('harga', 12, 2)->comment('Harga produk');
             $table->integer('stok')->default(0)->comment('Jumlah stok tersedia');
-            $table->string('foto', 255)->comment('Path foto produk');
+            $table->string('foto', 255)->nullable()->comment('Path foto produk');
             $table->enum('status_produk', ['aktif', 'nonaktif'])->default('aktif')->comment('aktif / nonaktif');
             $table->string('deskripsi_produk', 255)->nullable()->comment('Deskripsi produk');
             $table->timestamps();

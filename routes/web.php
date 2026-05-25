@@ -13,29 +13,16 @@ use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PesananController;
+use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\GuestLandingPageController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// ─── GUEST ROUTES (tanpa login required) ────────────────────────────────────
+Route::get('/', [GuestLandingPageController::class, 'index'])->name('guest.landing');
+Route::get('/guest/katalog', [GuestLandingPageController::class, 'katalog'])->name('guest.katalog');
+Route::get('/guest/produk/{id}', [GuestLandingPageController::class, 'showProduct'])->name('guest.produk.show');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/produk/{id}', [ProdukController::class, 'show'])->name('produk.show');
-    Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang');
-    Route::post('/keranjang/tambah', [KeranjangController::class, 'tambah']);
-    Route::post('/keranjang/update/{id}', [KeranjangController::class, 'update']);
-    Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'hapus']);
-    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
-    Route::post('/checkout', [CheckoutController::class, 'proses']);
-    Route::get('/pembayaran/{id}', [PembayaranController::class, 'show'])->name('pembayaran.show');
-    Route::get('/pesanan/saya', [PesananController::class, 'milikSaya'])->name('pesanan.saya');
-});
 
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::get('/pesanan', [App\Http\Controllers\Admin\PesananController::class, 'index']);
-    Route::post('/pesanan/{id}/status', [App\Http\Controllers\Admin\PesananController::class, 'updateStatus']);
-    Route::post('/pembayaran/{id}/konfirmasi', [App\Http\Controllers\Admin\PembayaranController::class, 'konfirmasi']);
-});
 
 // ─── AUTH (guest only) ────────────────────────────────────────────────────────
 Route::middleware('guest')->group(function () {
@@ -62,14 +49,16 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/kategori/store', [KategoriController::class, 'store'])->name('kategori.store');
     Route::delete('/kategori/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
     Route::get('/pesanan', [App\Http\Controllers\Admin\PesananController::class, 'index'])->name('pesanan.index');
+    Route::get('/pesanan/{id}', [App\Http\Controllers\Admin\PesananController::class, 'show'])->name('pesanan.show');
     Route::post('/pesanan/{id}/status', [App\Http\Controllers\Admin\PesananController::class, 'updateStatus'])->name('pesanan.status');
+    Route::post('/pesanan/{id}/tracking', [App\Http\Controllers\Admin\PesananController::class, 'addTracking'])->name('pesanan.tracking');
     Route::get('/pelanggan', [PelangganController::class,'index'])->name('pelanggan.index');
+    Route::get('/pelanggan/{id}', [PelangganController::class,'show'])->name('pelanggan.show');
     Route::get('/pembayaran', [App\Http\Controllers\Admin\PembayaranController::class, 'index'])->name('pembayaran.index');
     Route::post('/pembayaran/{id}/konfirmasi', [App\Http\Controllers\Admin\PembayaranController::class, 'konfirmasi'])->name('pembayaran.konfirmasi');
     Route::get('/qr', function () { return view('qrcode'); })->name('qr');
 });
 
-// ─── PELANGGAN (harus login) ──────────────────────────────────────────────────
 Route::middleware(['auth'])->group(function () {
     Route::get('/beranda', [BerandaController::class, 'index'])->name('beranda');
     Route::get('/katalog', [KatalogController::class, 'index'])->name('katalog');
@@ -88,17 +77,43 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/checkout', [CheckoutController::class, 'proses']);
 
     Route::get('/pembayaran/{id}', [PembayaranController::class, 'show'])->name('pembayaran.show');
-    
-    // ← tambahkan ini
     Route::post('/pembayaran/{id}/konfirmasi', [PembayaranController::class, 'konfirmasiPelanggan'])->name('pembayaran.konfirmasi');
-
     Route::get('/pesanan/saya', [PesananController::class, 'milikSaya'])->name('pesanan.saya');
+    Route::get('/pesanan/{id}', [PesananController::class, 'show'])->name('pesanan.show_user');
+
+    // Profil pengguna (sederhana)
+    Route::get('/profil', function () {
+        $user = auth()->user();
+        return view('profil', compact('user'));
+    })->name('profil');
+
+    // Edit profile form
+    Route::get('/profil/edit', function () {
+        $user = auth()->user();
+        return view('profil.edit', compact('user'));
+    })->name('profil.edit');
+
+    // Update profile (simple handler)
+    Route::post('/profil/update', function (\Illuminate\Http\Request $request) {
+        $user = auth()->user();
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:40',
+            'alamat' => 'nullable|string|max:500',
+        ]);
+        $user->update($data);
+        return redirect()->route('profil')->with('success', 'Profil diperbarui.');
+    })->name('profil.update');
+
+    // Riwayat pesanan: alias ke halaman pesanan saya agar tidak ada duplikasi view
+    Route::get('/riwayat', function () {
+        return redirect()->route('pesanan.saya');
+    })->name('riwayat');
 });
+
+
 
 // ─── ROOT REDIRECT ────────────────────────────────────────────────────────────
-Route::get('/', function () {
-    if (auth()->check()) {
-        return redirect(auth()->user()->role === 'admin' ? '/admin/dashboard' : '/beranda');
-    }
-    return redirect('/login');
-});
+// Root route already handled by GuestLandingPageController
+// If user is logged in, it will redirect to their dashboard
+

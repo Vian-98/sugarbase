@@ -12,9 +12,15 @@ class ProdukController extends Controller
     /**
      * Tampilkan semua produk
      */
-    public function index()
+    public function index(Request $request)
     {
-        $produk = Produk::with('kategori')->latest()->get();
+        $query = Produk::with('kategori')->latest();
+
+        if ($request->filled('q')) {
+            $query->where('nama_produk', 'like', '%' . $request->q . '%');
+        }
+
+        $produk = $query->get();
         return view('produk.index', compact('produk'));
     }
 

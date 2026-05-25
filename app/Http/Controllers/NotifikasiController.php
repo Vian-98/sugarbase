@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Notifikasi;
+use Illuminate\Support\Facades\Auth;
 
 class NotifikasiController extends Controller
 {
@@ -12,7 +13,8 @@ class NotifikasiController extends Controller
      */
     public function index()
     {
-        $notifikasi = Notifikasi::orderByRaw("
+        $notifikasi = Notifikasi::where('user_id', \Illuminate\Support\Facades\Auth::id())
+            ->orderByRaw("
                 CASE 
                     WHEN status_baca = 'belum' THEN 0
                     ELSE 1
@@ -29,9 +31,18 @@ class NotifikasiController extends Controller
      */
     public function markAsRead($id)
     {
-        $notif = Notifikasi::findOrFail($id);
+        $notif = Notifikasi::where('id_notifikasi', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
         $notif->status_baca = 'sudah';
         $notif->save();
+
+        // If AJAX/JSON requested, return json with new admin total
+        if (request()->wantsJson() || request()->ajax()) {
+            $adminTotal = Notifikasi::where('status_baca', 'belum')->count();
+            return response()->json(['ok' => true, 'admin_total' => $adminTotal]);
+        }
 
         return back();
     }
@@ -41,8 +52,14 @@ class NotifikasiController extends Controller
      */
     public function markAllAsRead()
     {
-        Notifikasi::where('status_baca', 'belum')
+        Notifikasi::where('user_id', Auth::id())
+            ->where('status_baca', 'belum')
             ->update(['status_baca' => 'sudah']);
+
+        if (request()->wantsJson() || request()->ajax()) {
+            $adminTotal = Notifikasi::where('status_baca', 'belum')->count();
+            return response()->json(['ok' => true, 'admin_total' => $adminTotal]);
+        }
 
         return back();
     }
