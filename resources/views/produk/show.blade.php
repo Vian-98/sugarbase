@@ -5,7 +5,6 @@
 @section('content')
 <div style="max-width: 900px; margin: 0 auto; padding: 20px;">
 
-    {{-- Breadcrumb --}}
     <div style="margin-bottom: 20px;">
         <a href="/beranda" style="color: #667eea; text-decoration: none;">Beranda</a>
         <span style="color: #6b7280;"> / </span>
@@ -20,46 +19,19 @@
         </div>
     @endif
 
-<<<<<<< HEAD
-    {{-- Card Produk --}}
-    <div style="background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; gap: 0;">
-=======
-    <div class="card shadow-sm">
-        <div class="row g-0">
-            <div class="col-md-5 text-center p-4">
-                @if($produk->foto)
-                    <img src="{{ asset('storage/'.$produk->foto) }}"
-                         class="img-fluid rounded" style="max-height:320px; object-fit:cover;">
-                @else
-                    <div class="bg-light rounded d-flex align-items-center justify-content-center"
-                         style="height:280px; font-size:5rem;">🍰</div>
-                @endif
-            </div>
-            <div class="col-md-7 p-4">
-                <span class="badge bg-danger mb-2">{{ $produk->kategori->nama_kategori ?? 'Uncategorized' }}</span>
-                <h2 class="fw-bold">{{ $produk->nama_produk }}</h2>
-                <h4 class="text-danger fw-bold">
-                    Rp {{ number_format($produk->harga, 0, ',', '.') }}
-                </h4>
-                <p class="text-muted">Stok tersedia: <strong>{{ $produk->stok }}</strong></p>
-                <p>{{ $produk->deskripsi_produk }}</p>
->>>>>>> 7dd8a3553b3a1e0411b3ec35bf3f1ba547a829da
+    <div style="background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); overflow: hidden; display: grid; grid-template-columns: 1fr 1fr;">
 
-        {{-- Foto --}}
         <div style="background: #f3f4f6; min-height: 350px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
             @if($produk->foto)
                 <img src="{{ asset('storage/'.$produk->foto) }}"
                      alt="{{ $produk->nama_produk }}"
                      style="width: 100%; height: 100%; object-fit: cover;">
             @else
-                <div style="font-size: 5rem; text-align: center;">🍰</div>
+                <div style="font-size: 5rem;">🍰</div>
             @endif
         </div>
 
-        {{-- Info Produk --}}
         <div style="padding: 35px;">
-
-            {{-- Badge Kategori --}}
             <span style="background: #e8f9ff; color: #667eea; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600;">
                 {{ $produk->kategori->nama_kategori ?? 'Uncategorized' }}
             </span>
@@ -85,24 +57,23 @@
                 @csrf
                 <input type="hidden" name="id_produk" value="{{ $produk->id_produk }}">
 
-                {{-- Input Qty --}}
                 <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
                     <label style="font-weight: 600; color: #1f2937;">Jumlah:</label>
                     <div style="display: flex; align-items: center; border: 2px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
                         <button type="button"
-                            style="background: #f3f4f6; border: none; padding: 8px 14px; font-size: 1.1em; cursor: pointer; color: #374151;"
+                            style="background: #f3f4f6; border: none; padding: 8px 14px; font-size: 1.1em; cursor: pointer;"
                             onclick="let i=document.getElementById('qty'); if(i.value>1) i.value--">−</button>
                         <input type="number" id="qty" name="jumlah" value="1"
                                min="1" max="{{ $produk->stok }}"
                                style="width: 60px; border: none; text-align: center; font-size: 1em; padding: 8px 0; outline: none;">
                         <button type="button"
-                            style="background: #f3f4f6; border: none; padding: 8px 14px; font-size: 1.1em; cursor: pointer; color: #374151;"
+                            style="background: #f3f4f6; border: none; padding: 8px 14px; font-size: 1.1em; cursor: pointer;"
                             onclick="let i=document.getElementById('qty'); if(parseInt(i.value)<{{ $produk->stok }}) i.value=parseInt(i.value)+1">+</button>
                     </div>
                 </div>
 
                 <button type="submit"
-                    style="width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 14px; border-radius: 8px; font-size: 1em; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                    style="width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 14px; border-radius: 8px; font-size: 1em; font-weight: 600; cursor: pointer;">
                     🛒 Tambah ke Keranjang
                 </button>
             </form>
@@ -111,7 +82,6 @@
                     ⚠️ Stok Habis
                 </div>
             @endif
-
         </div>
     </div>
 </div>
