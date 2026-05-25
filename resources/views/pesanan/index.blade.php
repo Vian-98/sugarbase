@@ -13,6 +13,6 @@
         <h2>Daftar Pesanan</h2>
         <a href="#" class="btn btn-primary">+ Pesanan Baru</a>
     </div>
-    <p style="color: #6b7280;">Data pesanan akan ditampilkan di sini. Silakan lengkapi fitur ini bersama tim Anda.</p>
+    <p style="color: var(--text-secondary);">Data pesanan akan ditampilkan di sini. Silakan lengkapi fitur ini bersama tim Anda.</p>
 </div>
 @endsection

@@ -13,6 +13,6 @@
         <h2>Daftar Pembayaran</h2>
         <a href="#" class="btn btn-primary">+ Pembayaran Baru</a>
     </div>
-    <p style="color: #6b7280;">Data pembayaran akan ditampilkan di sini. Silakan lengkapi fitur ini bersama tim Anda.</p>
+    <p style="color: var(--text-secondary);">Data pembayaran akan ditampilkan di sini. Silakan lengkapi fitur ini bersama tim Anda.</p>
 </div>
 @endsection

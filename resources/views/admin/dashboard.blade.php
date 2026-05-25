@@ -3,59 +3,163 @@
 @section('title', 'Dashboard')
 
 @section('page_title')
-    <h1>📊 Dashboard Admin</h1>
-    <p>Selamat datang di Sugarbase - Admin Panel</p>
+    <div class="container">
+        <h1 class="hero-title">Dashboard</h1>
+        <p class="hero-sub">Selamat datang di Admin Panel SugarBase</p>
+    </div>
 @endsection
 
 @section('content')
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+    <div class="container">
+    <!-- STAT CARDS GRID (single row) -->
+    <div class="stat-row">
         
-        {{-- Total Akun --}}
-        <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #667eea;">
-            <div style="font-size: 2.5em; margin-bottom: 10px;">👥</div>
-            <h3 style="color: #667eea; font-size: 1.8em; margin: 10px 0;">{{ $totalAkun }}</h3>
-            <p style="color: #6b7280;">Total Akun</p>
+        <!-- Revenue Today Card -->
+        <div class="stat-card">
+            <div class="stat-card-icon stat-icon-green">
+                <i class="fas fa-dollar-sign icon-lg text-green"></i>
+            </div>
+            <div class="stat-card-label">Revenue Hari Ini</div>
+            <div class="stat-card-value stat-value-green">
+                @if(isset($revenueToday))
+                    Rp {{ number_format($revenueToday, 0, ',', '.') }}
+                @else
+                    -
+                @endif
+            </div>
+        </div>
+
+        <!-- Total Revenue Card -->
+        <div class="stat-card">
+            <div class="stat-card-icon stat-icon-indigo">
+                <i class="fas fa-chart-pie icon-lg text-indigo"></i>
+            </div>
+            <div class="stat-card-label">Total Revenue</div>
+            <div class="stat-card-value stat-value-indigo">
+                @if(isset($revenue))
+                    Rp {{ number_format($revenue, 0, ',', '.') }}
+                @else
+                    -
+                @endif
+            </div>
         </div>
         
-        {{-- Total Produk --}}
-        <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #22c55e;">
-            <div style="font-size: 2.5em; margin-bottom: 10px;">📦</div>
-            <h3 style="color: #22c55e; font-size: 1.8em; margin: 10px 0;">{{ $totalProduk }}</h3>
-            <p style="color: #6b7280;">Total Produk</p>
+        <!-- Active Products Card -->
+        <div class="stat-card">
+            <div class="stat-card-icon stat-icon-yellow">
+                <i class="fas fa-box icon-lg text-yellow"></i>
+            </div>
+            <div class="stat-card-label">Produk Aktif</div>
+            <div class="stat-card-value stat-value-yellow">{{ $produkAktif ?? 0 }}</div>
         </div>
-        
-        {{-- Total Pesanan --}}
-        <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #f59e0b;">
-            <div style="font-size: 2.5em; margin-bottom: 10px;">🛒</div>
-            <h3 style="color: #f59e0b; font-size: 1.8em; margin: 10px 0;">{{ $totalPesanan }}</h3>
-            <p style="color: #6b7280;">Total Pesanan</p>
+
+        <!-- Total Customers Card -->
+        <div class="stat-card">
+            <div class="stat-card-icon stat-icon-blue">
+                <i class="fas fa-users icon-lg text-blue"></i>
+            </div>
+            <div class="stat-card-label">Total Pelanggan</div>
+            <div class="stat-card-value stat-value-blue">{{ $totalPelanggan ?? 0 }}</div>
         </div>
-        
-        {{-- Total Kategori --}}
-        <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #8b5cf6;">
-            <div style="font-size: 2.5em; margin-bottom: 10px;">📂</div>
-            <h3 style="color: #8b5cf6; font-size: 1.8em; margin: 10px 0;">{{ $totalKategori }}</h3>
-            <p style="color: #6b7280;">Total Kategori</p>
+
+        <!-- Total Orders Card -->
+        <div class="stat-card">
+            <div class="stat-card-icon stat-icon-pink">
+                <i class="fas fa-shopping-cart icon-lg text-pink"></i>
+            </div>
+            <div class="stat-card-label">Total Pesanan</div>
+            <div class="stat-card-value stat-value-pink">{{ $totalPesanan ?? 0 }}</div>
+        </div>
+
+        <!-- Total Categories Card -->
+        <div class="stat-card">
+            <div class="stat-card-icon stat-icon-purple">
+                <i class="fas fa-tag icon-lg text-purple"></i>
+            </div>
+            <div class="stat-card-label">Total Kategori</div>
+            <div class="stat-card-value stat-value-purple">{{ $totalKategori ?? 0 }}</div>
         </div>
 
     </div>
 
-    <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 20px;">
-        <h2 style="margin-bottom: 15px;">📈 Quick Actions</h2>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <a href="{{ route('admin.produk.index') }}" 
-               style="background: #667eea; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; display: inline-block;">
-                Kelola Produk
-            </a>
-            <a href="{{ route('admin.kategori.index') }}" 
-               style="background: #764ba2; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; display: inline-block;">
-                Kelola Kategori
-            </a>
-            <a href="{{ route('admin.pesanan.index') }}" 
-               style="background: #8b5cf6; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; display: inline-block;">
-                Kelola Pesanan
-            </a>
+    <!-- CHART SECTION -->
+    <div class="admin-card mb-4">
+        <div class="admin-card-header">
+            <h2>
+                <i class="fas fa-chart-line icon-spaced text-indigo"></i>Trend Pesanan 7 Hari Terakhir
+            </h2>
+        </div>
+        <div class="admin-card-body">
+            <canvas id="orderChart" height="80" class="chart-canvas"></canvas>
         </div>
     </div>
+
+    <!-- QUICK ACTIONS SECTION -->
+    <div class="admin-card">
+        <div class="admin-card-header">
+            <h2>
+                <i class="fas fa-lightning-bolt icon-spaced text-yellow"></i>Quick Actions
+            </h2>
+        </div>
+            <div class="admin-card-body">
+            <div class="quick-actions">
+                <a href="{{ route('admin.produk.index') }}" class="btn btn-primary btn-gradient-blue">
+                    <i class="fas fa-box"></i>Kelola Produk
+                </a>
+                <a href="{{ route('admin.kategori.index') }}" class="btn btn-primary btn-gradient-purple">
+                    <i class="fas fa-tag"></i>Kelola Kategori
+                </a>
+                <a href="{{ route('admin.pesanan.index') }}" class="btn btn-primary btn-gradient-indigo">
+                    <i class="fas fa-shopping-cart"></i>Kelola Pesanan
+                </a>
+            </div>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    </div>
+
+<script>
+    const ctx = document.getElementById('orderChart');
+    if (ctx) {
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: @json($chartLabels),
+                datasets: [{
+                    label: 'Jumlah Pesanan',
+                    data: @json($chartData),
+                    borderColor: '#789DBC',
+                    backgroundColor: 'rgba(120, 157, 188, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    pointRadius: 5,
+                    pointBackgroundColor: '#789DBC',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+    }
+</script>
 
 @endsection

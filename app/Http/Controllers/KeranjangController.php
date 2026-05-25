@@ -68,7 +68,14 @@ class KeranjangController extends Controller
         $request->validate(['jumlah' => 'required|integer|min:1']);
 
         if ($request->jumlah > $produk->stok) {
-            return back()->with('error', 'Stok tidak mencukupi.');
+            $message = 'Stok tidak mencukupi.';
+            
+            // Jika request JSON, return JSON
+            if ($request->expectsJson()) {
+                return response()->json(['error' => $message], 400);
+            }
+            
+            return back()->with('error', $message);
         }
 
         $item->update([
@@ -76,7 +83,19 @@ class KeranjangController extends Controller
             'subtotal_keranjang' => $item->harga_satuan_keranjang * $request->jumlah,
         ]);
 
-        return back()->with('success', 'Keranjang diperbarui.');
+        $message = 'Keranjang diperbarui.';
+        
+        // Jika request JSON, return JSON dengan subtotal
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => $message,
+                'subtotal' => $item->subtotal_keranjang,
+                'jumlah' => $item->jumlah_keranjang
+            ]);
+        }
+
+        return back()->with('success', $message);
     }
 
     public function hapus($id)
