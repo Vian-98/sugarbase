@@ -23,12 +23,14 @@
 
         <div style="background: #f3f4f6; min-height: 350px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
             @if($produk->foto)
-                <img src="{{ asset('storage/'.$produk->foto) }}"
-                     alt="{{ $produk->nama_produk }}"
-                     style="width: 100%; height: 100%; object-fit: cover;">
-            @else
-                <div style="font-size: 5rem;">🍰</div>
-            @endif
+    <img src="{{ asset('storage/'.$produk->foto) }}"
+         alt="{{ $produk->nama_produk }}"
+         style="width: 100%; height: 100%; object-fit: cover;">
+@else
+    <img src="https://placehold.co/400x350/667eea/white?text=🍰"
+         alt="No Image"
+         style="width: 100%; height: 100%; object-fit: cover;">
+@endif
         </div>
 
         <div style="padding: 35px;">

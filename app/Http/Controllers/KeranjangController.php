@@ -99,8 +99,9 @@ class KeranjangController extends Controller
     }
 
     public function hapus($id)
-    {
-        KeranjangItem::findOrFail($id)->delete();
-        return back()->with('success', 'Item dihapus dari keranjang.');
-    }
+{
+    $item = KeranjangItem::findOrFail($id);
+    $item->delete();
+    return back()->with('success', 'Item dihapus dari keranjang.');
+}
 }

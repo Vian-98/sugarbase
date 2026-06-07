@@ -82,12 +82,13 @@
         <div style="background: var(--surface-strong); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid var(--border); transition: all 0.3s ease; display: flex; flex-direction: column;">
             <!-- Foto Produk -->
             <div style="background: var(--surface-muted); height: 180px; overflow: hidden;">
-                @if($produk->foto)
-                    <img src="{{ asset('storage/' . $produk->foto) }}" alt="{{ $produk->nama_produk }}"
-                         style="width: 100%; height: 100%; object-fit: cover;">
-                @else
-                    <div style="height: 100%; display: flex; align-items: center; justify-content: center; font-size: 3em;">🍰</div>
-                @endif
+                @if($produk->foto && file_exists(public_path('storage/' . $produk->foto)))
+    <img src="{{ asset('storage/' . $produk->foto) }}"
+         style="width: 100%; height: 100%; object-fit: cover;">
+@else
+    <img src="https://placehold.co/300x200/667eea/white?text={{ urlencode($produk->nama_produk) }}"
+         style="width: 100%; height: 100%; object-fit: cover;">
+@endif
             </div>
             
             <!-- Info Produk -->
