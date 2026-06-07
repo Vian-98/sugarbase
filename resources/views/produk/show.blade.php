@@ -3,54 +3,87 @@
 @section('title', $produk->nama_produk)
 
 @section('content')
-<div class="container py-4" style="max-width:800px">
+<div style="max-width: 900px; margin: 0 auto; padding: 20px;">
+
+    <div style="margin-bottom: 20px;">
+        <a href="/beranda" style="color: #667eea; text-decoration: none;">Beranda</a>
+        <span style="color: #6b7280;"> / </span>
+        <a href="/katalog" style="color: #667eea; text-decoration: none;">Katalog</a>
+        <span style="color: #6b7280;"> / </span>
+        <span style="color: #1f2937;">{{ $produk->nama_produk }}</span>
+    </div>
 
     @if(session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
+        <div style="background: #fee2e2; color: #991b1b; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px;">
+            ❌ {{ session('error') }}
+        </div>
     @endif
 
-    <div class="card shadow-sm">
-        <div class="row g-0">
-            <div class="col-md-5 text-center p-4">
-                @if($produk->foto)
-                    <img src="{{ asset('storage/'.$produk->foto) }}"
-                         class="img-fluid rounded" style="max-height:320px; object-fit:cover;">
-                @else
-                    <div class="bg-light rounded d-flex align-items-center justify-content-center"
-                         style="height:280px; font-size:5rem;">🍰</div>
-                @endif
-            </div>
-            <div class="col-md-7 p-4">
-                <span class="badge bg-danger mb-2">{{ $produk->kategori->nama_kategori ?? 'Uncategorized' }}</span>
-                <h2 class="fw-bold">{{ $produk->nama_produk }}</h2>
-                <h4 class="text-danger fw-bold">
-                    Rp {{ number_format($produk->harga, 0, ',', '.') }}
-                </h4>
-                <p class="text-muted">Stok tersedia: <strong>{{ $produk->stok }}</strong></p>
-                <p>{{ $produk->deskripsi_produk }}</p>
+    <div style="background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); overflow: hidden; display: grid; grid-template-columns: 1fr 1fr;">
 
-                @if($produk->stok > 0)
-                <form method="POST" action="/keranjang/tambah">
-                    @csrf
-                    <input type="hidden" name="id_produk" value="{{ $produk->id_produk }}">
-                    <div class="d-flex align-items-center gap-3 mb-3">
-                        <label class="fw-semibold">Jumlah:</label>
-                        <button type="button" class="btn btn-outline-secondary btn-sm"
+        <div style="background: #f3f4f6; min-height: 350px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+            @if($produk->foto)
+    <img src="{{ asset('storage/'.$produk->foto) }}"
+         alt="{{ $produk->nama_produk }}"
+         style="width: 100%; height: 100%; object-fit: cover;">
+@else
+    <img src="https://placehold.co/400x350/667eea/white?text=🍰"
+         alt="No Image"
+         style="width: 100%; height: 100%; object-fit: cover;">
+@endif
+        </div>
+
+        <div style="padding: 35px;">
+            <span style="background: #e8f9ff; color: #667eea; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600;">
+                {{ $produk->kategori->nama_kategori ?? 'Uncategorized' }}
+            </span>
+
+            <h1 style="font-size: 1.8em; color: #1f2937; margin: 12px 0 8px; font-weight: 700;">
+                {{ $produk->nama_produk }}
+            </h1>
+
+            <div style="font-size: 1.6em; font-weight: bold; color: #667eea; margin-bottom: 12px;">
+                Rp {{ number_format($produk->harga, 0, ',', '.') }}
+            </div>
+
+            <div style="color: #6b7280; font-size: 0.9em; margin-bottom: 12px;">
+                Stok tersedia: <strong style="color: #1f2937;">{{ $produk->stok }}</strong>
+            </div>
+
+            <p style="color: #4b5563; line-height: 1.6; margin-bottom: 24px; font-size: 0.95em;">
+                {{ $produk->deskripsi_produk }}
+            </p>
+
+            @if($produk->stok > 0)
+            <form method="POST" action="/keranjang/tambah">
+                @csrf
+                <input type="hidden" name="id_produk" value="{{ $produk->id_produk }}">
+
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                    <label style="font-weight: 600; color: #1f2937;">Jumlah:</label>
+                    <div style="display: flex; align-items: center; border: 2px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
+                        <button type="button"
+                            style="background: #f3f4f6; border: none; padding: 8px 14px; font-size: 1.1em; cursor: pointer;"
                             onclick="let i=document.getElementById('qty'); if(i.value>1) i.value--">−</button>
                         <input type="number" id="qty" name="jumlah" value="1"
                                min="1" max="{{ $produk->stok }}"
-                               class="form-control text-center" style="width:70px">
-                        <button type="button" class="btn btn-outline-secondary btn-sm"
-                            onclick="let i=document.getElementById('qty'); if(i.value<{{ $produk->stok }}) i.value++">+</button>
+                               style="width: 60px; border: none; text-align: center; font-size: 1em; padding: 8px 0; outline: none;">
+                        <button type="button"
+                            style="background: #f3f4f6; border: none; padding: 8px 14px; font-size: 1.1em; cursor: pointer;"
+                            onclick="let i=document.getElementById('qty'); if(parseInt(i.value)<{{ $produk->stok }}) i.value=parseInt(i.value)+1">+</button>
                     </div>
-                    <button type="submit" class="btn btn-danger w-100 py-2 fw-bold">
-                        🛒 Tambah ke Keranjang
-                    </button>
-                </form>
-                @else
-                    <div class="alert alert-warning">Stok habis</div>
-                @endif
-            </div>
+                </div>
+
+                <button type="submit"
+                    style="width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 14px; border-radius: 8px; font-size: 1em; font-weight: 600; cursor: pointer;">
+                    🛒 Tambah ke Keranjang
+                </button>
+            </form>
+            @else
+                <div style="background: #fef3c7; color: #92400e; padding: 12px 16px; border-radius: 8px; text-align: center; font-weight: 600;">
+                    ⚠️ Stok Habis
+                </div>
+            @endif
         </div>
     </div>
 </div>

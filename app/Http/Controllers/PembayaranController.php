@@ -8,14 +8,16 @@ use Illuminate\Support\Facades\Auth;
 
 class PembayaranController extends Controller
 {
-    public function show($id)
-    {
-        $pembayaran = Pembayaran::with('pesanan')
-            ->whereHas('pesanan', fn($q) => $q->where('user_id', Auth::id()))
-            ->findOrFail($id);
+   public function show($id)
+{
+    $pembayaran = Pembayaran::with('pesanan')
+        ->whereHas('pesanan', fn($q) => $q->where('user_id', Auth::id()))
+        ->findOrFail($id);
 
-        return view('pembayaran.show', compact('pembayaran'));
-    }
+    $pesanan = $pembayaran->pesanan;
+
+    return view('pembayaran.show', compact('pembayaran', 'pesanan'));
+}
 
     public function konfirmasiPelanggan($id)
     {
