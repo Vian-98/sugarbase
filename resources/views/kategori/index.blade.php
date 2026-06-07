@@ -4,7 +4,7 @@
 
 @section('page_title')
     <div class="container">
-        <h1 class="hero-title">📂 Kategori Produk</h1>
+        <h1 class="hero-title">Kategori Produk</h1>
         <p class="hero-sub">Kelola pengelompokan produk Anda untuk mempermudah pencarian.</p>
     </div>
 @endsection

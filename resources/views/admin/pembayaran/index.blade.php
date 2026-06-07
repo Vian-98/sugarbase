@@ -4,7 +4,7 @@
 
 @section('page_title')
     <div class="container">
-        <h1 class="hero-title">💳 Manajemen Pembayaran</h1>
+        <h1 class="hero-title">Manajemen Pembayaran</h1>
     </div>
 @endsection
 

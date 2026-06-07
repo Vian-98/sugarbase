@@ -23,7 +23,7 @@
             --dark: #2B2B2B;
             --light: #FEF9F2;
             --border: rgba(120,157,188,0.15);
-            --gradient-brand: linear-gradient(135deg, #789DBC 0%, #C9E9D2 100%);
+            --gradient-brand: linear-gradient(135deg, #3B5B82 0%, #789DBC 100%);
             --gradient-soft: linear-gradient(135deg, #FEF9F2 0%, #FFE3E3 40%, #C9E9D2 100%);
             --bg-light: #FEF9F2;
             --card-bg: rgba(255,255,255,0.72);
@@ -430,8 +430,7 @@
 
     <!-- TOP NAVIGATION -->
     <nav class="top-nav">
-        <a href="/" class="nav-brand">
-            <span style="font-size: 1.2em;">🍰</span>
+        <a href="/" class="nav-brand" style="display: flex; align-items: center; gap: 8px;">
             SugarBase
         </a>
 
@@ -486,23 +485,23 @@
     <nav class="bottom-nav">
         <ul class="bottom-nav-items">
             <li><a href="/" class="nav-link {{ request()->is('/') || request()->is('beranda') ? 'active' : '' }}">
-                <span class="nav-icon">🏠</span>
+                <span class="nav-icon"><i class="fas fa-home"></i></span>
                 <span>Beranda</span>
             </a></li>
             <li><a href="/katalog" class="nav-link {{ request()->is('katalog*') ? 'active' : '' }}">
-                <span class="nav-icon">🍰</span>
+                <span class="nav-icon"><i class="fas fa-store"></i></span>
                 <span>Katalog</span>
             </a></li>
             <li><a href="/keranjang" class="nav-link {{ request()->is('keranjang*') ? 'active' : '' }}">
-                <span class="nav-icon">🛒</span>
+                <span class="nav-icon"><i class="fas fa-shopping-cart"></i></span>
                 <span>Keranjang</span>
             </a></li>
             <li><a href="/pesanan/saya" class="nav-link {{ request()->is('pesanan*') ? 'active' : '' }}">
-                <span class="nav-icon">📦</span>
+                <span class="nav-icon"><i class="fas fa-box"></i></span>
                 <span>Pesanan</span>
             </a></li>
             <li><a href="/profil" class="nav-link {{ request()->is('profil*') ? 'active' : '' }}">
-                <span class="nav-icon">👤</span>
+                <span class="nav-icon"><i class="fas fa-user"></i></span>
                 <span>Profil</span>
             </a></li>
         </ul>

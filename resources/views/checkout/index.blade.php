@@ -14,17 +14,17 @@
 <!-- STEP INDICATOR -->
 <div style="display: flex; align-items: center; margin-bottom: 32px; gap: 0;">
     <div style="display: flex; align-items: center; gap: 8px;">
-        <div style="width: 32px; height: 32px; background: #7EBB98; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.85em; font-weight: 700;">✓</div>
-        <span style="font-size: 0.85em; font-weight: 600; color: #7EBB98;">Keranjang</span>
+        <div style="width: 32px; height: 32px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.85em; font-weight: 700;">✓</div>
+        <span style="font-size: 0.85em; font-weight: 600; color: var(--success);">Keranjang</span>
     </div>
-    <div style="flex: 1; height: 2px; background: #789DBC; margin: 0 12px;"></div>
+    <div style="flex: 1; height: 2px; background: var(--primary); margin: 0 12px;"></div>
     <div style="display: flex; align-items: center; gap: 8px;">
-        <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #789DBC, #9FBCCD); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.85em; font-weight: 700;">2</div>
-        <span style="font-size: 0.85em; font-weight: 600; color: #789DBC;">Konfirmasi</span>
+        <div style="width: 32px; height: 32px; background: var(--gradient-brand); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.85em; font-weight: 700;">2</div>
+        <span style="font-size: 0.85em; font-weight: 600; color: var(--primary);">Konfirmasi</span>
     </div>
     <div style="flex: 1; height: 2px; background: var(--border); margin: 0 12px;"></div>
     <div style="display: flex; align-items: center; gap: 8px;">
-        <div style="width: 32px; height: 32px; background: #e5e7eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 0.85em; font-weight: 700;">3</div>
+        <div style="width: 32px; height: 32px; background: var(--surface-muted); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 0.85em; font-weight: 700;">3</div>
         <span style="font-size: 0.85em; color: var(--text-secondary);">Pembayaran</span>
     </div>
 </div>
@@ -75,7 +75,7 @@
                 <!-- Transfer Bank -->
                 <label style="display: flex; align-items: center; gap: 14px; padding: 16px; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.2s;" id="label-transfer">
                     <input type="radio" name="metode" value="transfer" required checked onchange="pilihMetode('transfer')"
-                        style="width: 18px; height: 18px; accent-color: #789DBC;">
+                        style="width: 18px; height: 18px; accent-color: var(--primary);">
                     <div style="width: 42px; height: 42px; background: rgba(120,157,188,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.4em;">🏦</div>
                     <div>
                         <p style="margin: 0; font-weight: 600; color: var(--dark); font-size: 0.95em;">Transfer Bank</p>
@@ -86,7 +86,7 @@
                 <!-- COD -->
                 <label style="display: flex; align-items: center; gap: 14px; padding: 16px; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.2s;" id="label-cod">
                     <input type="radio" name="metode" value="cod" onchange="pilihMetode('cod')"
-                        style="width: 18px; height: 18px; accent-color: #789DBC;">
+                        style="width: 18px; height: 18px; accent-color: var(--primary);">
                     <div style="width: 42px; height: 42px; background: rgba(126,187,152,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.4em;">🚚</div>
                     <div>
                         <p style="margin: 0; font-weight: 600; color: var(--dark); font-size: 0.95em;">COD (Bayar di Tempat)</p>
@@ -97,7 +97,7 @@
                 <!-- E-Wallet / QRIS -->
                 <label style="display: flex; align-items: center; gap: 14px; padding: 16px; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.2s;" id="label-ewallet">
                     <input type="radio" name="metode" value="ewallet" onchange="pilihMetode('ewallet')"
-                        style="width: 18px; height: 18px; accent-color: #789DBC;">
+                        style="width: 18px; height: 18px; accent-color: var(--primary);">
                     <div style="width: 42px; height: 42px; background: rgba(217,137,153,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.4em;">📱</div>
                     <div>
                         <p style="margin: 0; font-weight: 600; color: var(--dark); font-size: 0.95em;">E-Wallet / QRIS</p>
@@ -135,8 +135,8 @@
             <div id="info-metode" style="margin-top: 16px; padding: 12px; background: rgba(120,157,188,0.15); border-radius: 8px; font-size: 0.85em; color: var(--dark); display: none;"></div>
 
             <button type="submit"
-                style="width: 100%; margin-top: 20px; padding: 14px; background: linear-gradient(135deg, #789DBC 0%, #688CAD 100%); color: white; border: none; border-radius: 8px; font-size: 1.05em; font-weight: 700; cursor: pointer; transition: opacity 0.2s; box-shadow: 0 4px 12px rgba(120, 157, 188, 0.4);">
-                🛍 Buat Pesanan
+                style="width: 100%; margin-top: 20px; padding: 14px; background: var(--gradient-brand); color: white; border: none; border-radius: 8px; font-size: 1em; font-weight: 700; cursor: pointer; transition: opacity 0.2s; box-shadow: 0 4px 12px rgba(120, 157, 188, 0.4);">
+                Buat Pesanan
             </button>
             <p style="font-size: 0.78em; color: var(--text-secondary); text-align: center; margin-top: 10px; margin-bottom: 0;">
                 Dengan menekan tombol di atas, kamu menyetujui syarat & ketentuan SugarBase.

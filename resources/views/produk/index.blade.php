@@ -5,7 +5,7 @@
 @section('page_title')
     <div class="container d-flex" style="justify-content: space-between; align-items: flex-end;">
         <div>
-            <h1 class="hero-title">📦 Manajemen Produk</h1>
+            <h1 class="hero-title">Manajemen Produk</h1>
             <p class="hero-sub">Kelola, edit, dan pantau stok barang Anda di sini.</p>
         </div>
         <div style="padding-bottom: 15px;">

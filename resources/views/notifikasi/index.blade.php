@@ -30,8 +30,8 @@
 
     {{-- Alert Success --}}
     @if(session('success'))
-        <div style="background: rgba(126,187,152,0.15); color: var(--dark); padding: 16px 20px; border-radius: 16px; margin-bottom: 30px; border: 1px solid #bbf7d0; display: flex; align-items: center; gap: 12px; font-weight: 600;">
-            <span style="background: #7EBB98; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem;">✓</span>
+        <div style="background: rgba(126,187,152,0.15); color: var(--dark); padding: 16px 20px; border-radius: 16px; margin-bottom: 30px; border: 1px solid var(--success); display: flex; align-items: center; gap: 12px; font-weight: 600;">
+            <span style="background: var(--success); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem;">✓</span>
             {{ session('success') }}
         </div>
     @endif
@@ -72,7 +72,7 @@
 
                 {{-- Indikator Titik (Floating) --}}
                 @if($isUnread)
-                    <div style="position: absolute; left: -6px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background: #8b5cf6; border-radius: 50%; border: 3px solid var(--surface-strong); box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);"></div>
+                    <div style="position: absolute; left: -6px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background: var(--primary); border-radius: 50%; border: 3px solid var(--surface-strong); box-shadow: 0 0 10px rgba(120, 157, 188, 0.4);"></div>
                 @endif
 
                 {{-- Ikon Dinamis --}}
@@ -107,8 +107,8 @@
                         width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
                         cursor: pointer; transition: all 0.2s; font-size: 1.1rem;
                     " title="Tandai sudah dibaca"
-                    onmouseover="this.style.background='#8b5cf6'; this.style.color='white'; this.style.borderColor='#8b5cf6';" 
-                    onmouseout="this.style.background='transparent'; this.style.color='#8b5cf6'; this.style.borderColor='#f5f3ff';">
+                    onmouseover="this.style.background='var(--primary)'; this.style.color='white'; this.style.borderColor='var(--primary)';" 
+                    onmouseout="this.style.background='transparent'; this.style.color='var(--primary)'; this.style.borderColor='var(--surface-muted)';">
                         ✓
                     </button>
                 @endif

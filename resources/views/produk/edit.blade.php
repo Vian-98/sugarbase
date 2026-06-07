@@ -31,28 +31,28 @@
             <div style="grid-column: span 2; margin-bottom: 15px;">
                 <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-secondary);">Nama Produk</label>
                 <input type="text" name="nama_produk" value="{{ old('nama_produk', $produk->nama_produk) }}" 
-                    style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; outline-color: #789DBC;">
+                    style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; outline-color: var(--primary);">
             </div>
 
             {{-- Harga --}}
             <div style="margin-bottom: 15px;">
                 <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-secondary);">Harga (Rp)</label>
                 <input type="number" name="harga" value="{{ old('harga', $produk->harga) }}" 
-                    style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; outline-color: #789DBC;">
+                    style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; outline-color: var(--primary);">
             </div>
 
             {{-- Stok --}}
             <div style="margin-bottom: 15px;">
                 <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-secondary);">Stok Unit</label>
                 <input type="number" name="stok" value="{{ old('stok', $produk->stok) }}" 
-                    style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; outline-color: #789DBC;">
+                    style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; outline-color: var(--primary);">
             </div>
         </div>
 
         {{-- Kategori --}}
         <div style="margin-bottom: 15px;">
             <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-secondary);">Kategori</label>
-            <select name="id_kategori" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-strong); outline-color: #789DBC;">
+            <select name="id_kategori" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-strong); outline-color: var(--primary);">
                 @foreach($kategori as $k)
                     <option value="{{ $k->id_kategori }}" {{ old('id_kategori', $produk->id_kategori) == $k->id_kategori ? 'selected' : '' }}>
                         {{ $k->nama_kategori }}
@@ -64,7 +64,7 @@
         {{-- Deskripsi --}}
         <div style="margin-bottom: 15px;">
             <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-secondary);">Deskripsi Produk</label>
-            <textarea name="deskripsi_produk" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; min-height: 120px; box-sizing: border-box; outline-color: #789DBC; font-family: inherit;">{{ old('deskripsi_produk', $produk->deskripsi_produk) }}</textarea>
+            <textarea name="deskripsi_produk" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; min-height: 120px; box-sizing: border-box; outline-color: var(--primary); font-family: inherit;">{{ old('deskripsi_produk', $produk->deskripsi_produk) }}</textarea>
         </div>
 
         {{-- Upload Foto dengan Preview --}}
@@ -84,13 +84,13 @@
                 </div>
 
                 {{-- Panah Indikator (Hanya muncul saat preview ada) --}}
-                <div id="arrow-indicator" style="display: none; font-size: 1.5rem; color: #789DBC;">➡️</div>
+                <div id="arrow-indicator" style="display: none; font-size: 1.5rem; color: var(--primary);">➡️</div>
 
                 {{-- Preview Foto Baru --}}
                 <div id="preview-container" style="display: none;">
                     <p style="font-size: 0.75em; color: var(--text-secondary); margin-bottom: 5px;">Preview Baru</p>
                     <img id="image-preview" src="#" alt="Preview Baru" 
-                         style="width: 120px; height: 120px; object-fit: cover; border-radius: 10px; border: 3px solid #789DBC; box-shadow: 0 4px 12px rgba(120, 157, 188, 0.2);">
+                         style="width: 120px; height: 120px; object-fit: cover; border-radius: 10px; border: 3px solid var(--primary); box-shadow: 0 4px 12px rgba(120, 157, 188, 0.2);">
                 </div>
             </div>
             
@@ -105,7 +105,7 @@
         {{-- Action Buttons --}}
         <div style="display: flex; gap: 12px; border-top: 1px solid var(--border); padding-top: 20px;">
             <button type="submit" 
-                style="background: #789DBC; color: white; padding: 12px 25px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.3s; flex: 1;">
+                style="background: var(--gradient-brand); color: white; padding: 12px 25px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.3s; flex: 1;">
                 💾 Simpan Perubahan
             </button>
             

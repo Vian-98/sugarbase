@@ -178,7 +178,7 @@
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
                         <div style="flex: 1;">
                             <p style="margin: 0 0 4px; font-size: 0.85em; font-weight: 600; color: var(--text-secondary);">{{ $item->produk->nama_produk }}</p>
-                            <small style="color: var(--text-secondary); font-size: 0.8em;">Qty: <span style="font-weight: 700; color: #789DBC;">{{ $item->jumlah_pesanan }}x</span></small>
+                            <small style="color: var(--text-secondary); font-size: 0.8em;">Qty: <span style="font-weight: 700; color: var(--primary);">{{ $item->jumlah_pesanan }}x</span></small>
                         </div>
                         <div style="text-align: right; flex-shrink: 0;">
                             <small style="color: var(--text-secondary); display: block; font-size: 0.75em; margin-bottom: 2px;">Rp {{ number_format($item->subtotal_pesanan, 0, ',', '.') }}</small>

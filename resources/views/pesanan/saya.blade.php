@@ -6,12 +6,12 @@
 
 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px;">
     <h1 style="font-size: 1.8em; color: var(--dark); margin: 0; font-weight: 700;">📦 Pesanan Saya</h1>
-    <a href="/katalog" style="display: inline-block; background: linear-gradient(135deg, #789DBC 0%, #9FBCCD 100%); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 0.85em; font-weight: 600;">+ Belanja Lagi</a>
+    <a href="/katalog" style="display: inline-block; background: var(--gradient-brand); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 0.85em; font-weight: 600;">+ Belanja Lagi</a>
 </div>
 
 <!-- FLASH MESSAGES -->
 @if(session('success'))
-<div style="background: rgba(126,187,152,0.15); border: 1px solid #86efac; color: var(--dark); font-weight: 600; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px;">
+<div style="background: rgba(126,187,152,0.15); border: 1px solid var(--success); color: var(--dark); font-weight: 600; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px;">
     ✅ {{ session('success') }}
 </div>
 @endif
@@ -26,7 +26,7 @@ $aktif = request('status', 'semua');
     @foreach($statuses as $key => $label)
     <a href="/pesanan/saya?status={{ $key }}"
         style="padding: 8px 18px; border-radius: 20px; text-decoration: none; font-size: 0.85em; font-weight: 600; transition: all 0.2s;
-               background: {{ $aktif === $key ? 'linear-gradient(135deg, #789DBC, #9FBCCD)' : 'var(--surface-muted)' }};
+               background: {{ $aktif === $key ? 'var(--gradient-brand)' : 'var(--surface-muted)' }};
                color: {{ $aktif === $key ? 'white' : 'var(--text-secondary)' }};">
         {{ $label }}
         @if($aktif === $key && isset($totalPerStatus[$key]))
@@ -42,7 +42,7 @@ $aktif = request('status', 'semua');
     <div style="font-size: 5em; margin-bottom: 20px;">📭</div>
     <h2 style="color: var(--text-secondary); font-size: 1.3em; margin-bottom: 10px;">Belum ada pesanan</h2>
     <p style="color: var(--text-secondary); margin-bottom: 24px;">Yuk, mulai belanja dessert favoritmu!</p>
-    <a href="/katalog" style="display: inline-block; background: linear-gradient(135deg, #789DBC 0%, #9FBCCD 100%); color: white; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 600;">
+    <a href="/katalog" style="display: inline-block; background: var(--gradient-brand); color: white; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 600;">
         Belanja Sekarang →
     </a>
 </div>
@@ -52,11 +52,11 @@ $aktif = request('status', 'semua');
     @foreach($pesanan as $item)
     @php
     $statusColors = [
-        'pending'    => ['bg' => 'rgba(231,200,158,0.15)', 'text' => 'var(--dark)', 'border' => '#fcd34d', 'emoji' => '⏳'],
+        'pending'    => ['bg' => 'rgba(231,200,158,0.15)', 'text' => 'var(--dark)', 'border' => 'var(--warning)', 'emoji' => '⏳'],
         'diproses'   => ['bg' => 'rgba(120,157,188,0.15)', 'text' => 'var(--dark)', 'border' => 'var(--primary)', 'emoji' => '🔄'],
-        'dikirim'    => ['bg' => 'rgba(126,187,152,0.15)', 'text' => 'var(--dark)', 'border' => '#86efac', 'emoji' => '🚚'],
-        'selesai'    => ['bg' => 'rgba(126,187,152,0.15)', 'text' => 'var(--dark)', 'border' => '#86efac', 'emoji' => '✅'],
-        'dibatalkan' => ['bg' => 'rgba(217,137,153,0.15)', 'text' => 'var(--danger)', 'border' => '#fca5a5', 'emoji' => '❌'],
+        'dikirim'    => ['bg' => 'rgba(126,187,152,0.15)', 'text' => 'var(--dark)', 'border' => 'var(--success)', 'emoji' => '🚚'],
+        'selesai'    => ['bg' => 'rgba(126,187,152,0.15)', 'text' => 'var(--dark)', 'border' => 'var(--success)', 'emoji' => '✅'],
+        'dibatalkan' => ['bg' => 'rgba(217,137,153,0.15)', 'text' => 'var(--danger)', 'border' => 'var(--danger)', 'emoji' => '❌'],
     ];
     $sc = $statusColors[$item->status_pesanan] ?? ['bg' => 'var(--surface-muted)', 'text' => 'var(--text-secondary)', 'border' => 'var(--border)', 'emoji' => '📋'];
     @endphp
@@ -119,10 +119,10 @@ $aktif = request('status', 'semua');
             </div>
 
             <div style="display: flex; align-items: center; gap: 14px;">
-                <span style="font-weight: 700; color: #789DBC; font-size: 1em;">Rp {{ number_format($item->total_harga, 0, ',', '.') }}</span>
+                <span style="font-weight: 700; color: var(--primary); font-size: 1em;">Rp {{ number_format($item->total_harga, 0, ',', '.') }}</span>
                 <a href="/pesanan/{{ $item->id_pesanan }}"
                     style="padding: 8px 16px; background: var(--surface-muted); color: var(--text-secondary); border-radius: 8px; text-decoration: none; font-size: 0.85em; font-weight: 600; border: 1px solid var(--border); transition: all 0.2s;"
-                    onmouseover="this.style.background='#789DBC'; this.style.color='white'"
+                    onmouseover="this.style.background='var(--primary)'; this.style.color='white'"
                     onmouseout="this.style.background='var(--surface-muted)'; this.style.color='var(--text-secondary)'">
                     Lihat Detail →
                 </a>

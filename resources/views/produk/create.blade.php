@@ -30,7 +30,7 @@
             <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-secondary);">Nama Produk</label>
             <input type="text" name="nama_produk" value="{{ old('nama_produk') }}" 
                 placeholder="Contoh: Gula Pasir Kristal 1kg"
-                style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; outline-color: #789DBC;">
+                style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; outline-color: var(--primary);">
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
@@ -39,7 +39,7 @@
                 <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-secondary);">Harga (Rp)</label>
                 <input type="number" name="harga" value="{{ old('harga') }}" 
                     placeholder="0"
-                    style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; outline-color: #789DBC;">
+                    style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; outline-color: var(--primary);">
             </div>
 
             {{-- Stok --}}
@@ -47,14 +47,14 @@
                 <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-secondary);">Stok Awal</label>
                 <input type="number" name="stok" value="{{ old('stok') }}" 
                     placeholder="0"
-                    style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; outline-color: #789DBC;">
+                    style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; outline-color: var(--primary);">
             </div>
         </div>
 
         {{-- Kategori --}}
         <div style="margin-bottom: 20px;">
             <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-secondary);">Kategori</label>
-            <select name="id_kategori" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-strong); outline-color: #789DBC; cursor: pointer;">
+            <select name="id_kategori" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-strong); outline-color: var(--primary); cursor: pointer;">
                 <option value="">-- Pilih Kategori Produk --</option>
                 @foreach($kategori as $k)
                     <option value="{{ $k->id_kategori }}" {{ old('id_kategori') == $k->id_kategori ? 'selected' : '' }}>
@@ -68,7 +68,7 @@
         <div style="margin-bottom: 20px;">
             <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-secondary);">Deskripsi Lengkap</label>
             <textarea name="deskripsi_produk" placeholder="Tuliskan detail produk, spesifikasi, atau informasi tambahan lainnya..."
-                style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; min-height: 120px; box-sizing: border-box; outline-color: #789DBC; font-family: inherit;">{{ old('deskripsi_produk') }}</textarea>
+                style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; min-height: 120px; box-sizing: border-box; outline-color: var(--primary); font-family: inherit;">{{ old('deskripsi_produk') }}</textarea>
         </div>
 
         {{-- Upload Foto dengan Live Preview --}}
@@ -99,7 +99,7 @@
         {{-- Action Buttons --}}
         <div style="display: flex; gap: 12px; border-top: 1px solid var(--border); padding-top: 25px;">
             <button type="submit" 
-                style="background: #7EBB98; color: white; padding: 12px 30px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.3s; flex: 2;">
+                style="background: var(--success); color: white; padding: 12px 30px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.3s; flex: 2;">
                 🚀 Simpan Produk Baru
             </button>
             

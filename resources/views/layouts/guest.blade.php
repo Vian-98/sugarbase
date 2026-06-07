@@ -315,8 +315,7 @@
 
     <!-- TOP NAVIGATION -->
     <nav class="top-nav">
-        <a href="/" class="nav-brand">
-            <span style="font-size: 1.2em;">🍰</span>
+        <a href="/" style="display: flex; align-items: center; gap: 8px; font-size: 1.4em; font-weight: 700; color: var(--dark); text-decoration: none;">
             SugarBase
         </a>
 
@@ -350,7 +349,7 @@
 
     <!-- FOOTER -->
     <footer class="footer">
-        <h3>🍰 SugarBase</h3>
+        <h3>SugarBase</h3>
         <p style="margin-top: 10px; opacity: 0.8;">Toko Dessert Premium dengan Berbagai Pilihan Produk Terbaik</p>
         <p style="margin-top: 20px; opacity: 0.6; font-size: 0.9em;">© 2026 SugarBase. All rights reserved.</p>
     </footer>

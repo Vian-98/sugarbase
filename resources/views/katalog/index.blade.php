@@ -51,17 +51,17 @@
     }
 
     .pagination-wrapper a:hover {
-        background: linear-gradient(135deg, #789DBC 0%, #C9E9D2 100%);
+        background: var(--gradient-brand);
         color: white;
-        border-color: #789DBC;
+        border-color: var(--primary);
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(120, 157, 188, 0.3);
     }
 
     .pagination-wrapper .active span {
-        background: linear-gradient(135deg, #789DBC 0%, #C9E9D2 100%);
+        background: var(--gradient-brand);
         color: white;
-        border-color: #789DBC;
+        border-color: var(--primary);
         box-shadow: 0 4px 12px rgba(120, 157, 188, 0.3);
     }
 
@@ -72,7 +72,7 @@
 </style>
 
 <div style="margin-bottom: 30px;">
-    <h1 style="font-size: 2em; color: var(--dark); margin-bottom: 10px;">🍰 Katalog Produk</h1>
+    <h1 style="font-size: 2em; color: var(--dark); margin-bottom: 10px;">Katalog Produk</h1>
     <p style="color: var(--text-secondary);">Temukan produk favorit Anda</p>
 </div>
 
@@ -87,7 +87,7 @@
             <!-- Filter Kategori -->
             <div>
                 <label style="display: block; font-weight: 600; color: var(--dark); margin-bottom: 8px; font-size: 0.9em;">Kategori</label>
-                <select name="kategori" style="width: 100%; padding: 8px; border: 1px solid #c4d9ff; border-radius: 6px; background: var(--surface-strong); cursor: pointer;">
+                <select name="kategori" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface-strong); cursor: pointer;">
                     <option value="">Semua Kategori</option>
                     @foreach($kategori as $kat)
                     <option value="{{ $kat->id_kategori }}" {{ request('kategori') == $kat->id_kategori ? 'selected' : '' }}>
@@ -100,7 +100,7 @@
             <!-- Sort -->
             <div>
                 <label style="display: block; font-weight: 600; color: var(--dark); margin-bottom: 8px; font-size: 0.9em;">Urutan</label>
-                <select name="sort" style="width: 100%; padding: 8px; border: 1px solid #c4d9ff; border-radius: 6px; background: var(--surface-strong); cursor: pointer;">
+                <select name="sort" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface-strong); cursor: pointer;">
                     <option value="terbaru" {{ request('sort') == 'terbaru' ? 'selected' : '' }}>Terbaru</option>
                     <option value="harga_asc" {{ request('sort') == 'harga_asc' ? 'selected' : '' }}>Harga Terendah</option>
                     <option value="harga_desc" {{ request('sort') == 'harga_desc' ? 'selected' : '' }}>Harga Tertinggi</option>
@@ -111,14 +111,14 @@
             <div>
                 <label style="display: block; font-weight: 600; color: var(--dark); margin-bottom: 8px; font-size: 0.9em;">Cari</label>
                 <input type="text" name="q" placeholder="Nama produk..." value="{{ request('q') }}" 
-                       style="width: 100%; padding: 8px; border: 1px solid #c4d9ff; border-radius: 6px; font-size: 0.9em;">
+                       style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.9em;">
             </div>
             
-            <button type="submit" style="background: linear-gradient(135deg, #789DBC 0%, #9FBCCD 100%); color: white; padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">
+            <button type="submit" style="background: var(--gradient-brand); color: white; padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">
                 Terapkan Filter
             </button>
             
-            <a href="/katalog" style="text-align: center; padding: 10px; color: #789DBC; text-decoration: none; border: 1px solid #789DBC; border-radius: 6px; font-size: 0.9em; transition: all 0.3s ease;">
+            <a href="/katalog" style="text-align: center; padding: 10px; color: var(--primary); text-decoration: none; border: 1px solid var(--primary); border-radius: 6px; font-size: 0.9em; transition: all 0.3s ease;">
                 Reset
             </a>
         </form>
@@ -176,8 +176,8 @@
                     <p style="margin: 5px 0; font-size: 0.75em; color: var(--text-secondary);">Stok: {{ $item->stok }}</p>
                     
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 8px; border-top: 1px solid var(--border);">
-                        <span style="font-size: 0.95em; font-weight: bold; color: #789DBC;">Rp {{ number_format($item->harga, 0, ',', '.') }}</span>
-                        <a href="/produk/{{ $item->id_produk }}" style="background: #789DBC; color: white; padding: 5px 10px; border-radius: 4px; text-decoration: none; font-size: 0.75em; font-weight: 600; transition: all 0.3s ease;">
+                        <span style="font-size: 0.95em; font-weight: bold; color: var(--primary);">Rp {{ number_format($item->harga, 0, ',', '.') }}</span>
+                        <a href="/produk/{{ $item->id_produk }}" style="background: var(--gradient-brand); color: white; padding: 5px 10px; border-radius: 4px; text-decoration: none; font-size: 0.75em; font-weight: 600; transition: all 0.3s ease;">
                             Lihat
                         </a>
                     </div>
@@ -198,7 +198,7 @@
             <div style="font-size: 3em; margin-bottom: 15px;">😢</div>
             <h3 style="color: var(--dark); margin-bottom: 8px;">Produk Tidak Ditemukan</h3>
             <p style="color: var(--text-secondary); margin-bottom: 20px;">Coba ubah filter atau cari produk lain</p>
-            <a href="/katalog" style="display: inline-block; background: #789DBC; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600;">
+            <a href="/katalog" style="display: inline-block; background: var(--gradient-brand); color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600;">
                 Reset Filter
             </a>
         </div>

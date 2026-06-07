@@ -4,7 +4,7 @@
 
 @section('page_title')
     <div class="container">
-        <h1 class="hero-title">👥 Manajemen Pelanggan</h1>
+        <h1 class="hero-title">Manajemen Pelanggan</h1>
         <p class="hero-sub">Kelola data pelanggan dan pantau aktivitas akun mereka</p>
     </div>
 @endsection

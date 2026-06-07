@@ -213,7 +213,7 @@
 
 <!-- HERO BANNER -->
 <section class="hero">
-    <h1>🍰 Semua Manis, Satu Platform</h1>
+    <h1>Semua Manis, Satu Platform</h1>
     <p>Nikmati koleksi dessert premium kami dengan kualitas terbaik</p>
     <a href="/guest/katalog" class="btn-custom-primary">Jelajahi Produk →</a>
 </section>

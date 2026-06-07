@@ -12,11 +12,11 @@
     
     @php
     $statusColors = [
-        'pending'    => ['bg' => 'rgba(231,200,158,0.15)', 'text' => 'var(--dark)', 'border' => '#fcd34d', 'emoji' => '⏳'],
+        'pending'    => ['bg' => 'rgba(231,200,158,0.15)', 'text' => 'var(--dark)', 'border' => 'var(--warning)', 'emoji' => '⏳'],
         'diproses'   => ['bg' => 'rgba(120,157,188,0.15)', 'text' => 'var(--dark)', 'border' => 'var(--primary)', 'emoji' => '🔄'],
-        'dikirim'    => ['bg' => 'rgba(126,187,152,0.15)', 'text' => 'var(--dark)', 'border' => '#86efac', 'emoji' => '🚚'],
-        'selesai'    => ['bg' => 'rgba(126,187,152,0.15)', 'text' => 'var(--dark)', 'border' => '#86efac', 'emoji' => '✅'],
-        'dibatalkan' => ['bg' => 'rgba(217,137,153,0.15)', 'text' => 'var(--danger)', 'border' => '#fca5a5', 'emoji' => '❌'],
+        'dikirim'    => ['bg' => 'rgba(126,187,152,0.15)', 'text' => 'var(--dark)', 'border' => 'var(--success)', 'emoji' => '🚚'],
+        'selesai'    => ['bg' => 'rgba(126,187,152,0.15)', 'text' => 'var(--dark)', 'border' => 'var(--success)', 'emoji' => '✅'],
+        'dibatalkan' => ['bg' => 'rgba(217,137,153,0.15)', 'text' => 'var(--danger)', 'border' => 'var(--danger)', 'emoji' => '❌'],
     ];
     $sc = $statusColors[$pesanan->status_pesanan] ?? ['bg' => 'var(--surface-muted)', 'text' => 'var(--dark)', 'border' => 'var(--border)', 'emoji' => '📋'];
     @endphp
@@ -95,9 +95,9 @@
             </div>
             
             @if($pesanan->status_pesanan === 'pending' && $sp !== 'lunas')
-            <div style="margin-top: 16px;">
-                <a href="/pembayaran/{{ $pesanan->id_pesanan }}" style="display: block; width: 100%; text-align: center; padding: 12px; background: linear-gradient(135deg, #789DBC 0%, #688CAD 100%); color: white; border-radius: 8px; font-size: 0.95em; font-weight: 700; text-decoration: none; box-shadow: 0 4px 12px rgba(120, 157, 188, 0.4);">
-                    Selesaikan Pembayaran →
+            <div style="margin-top: 24px;">
+                <a href="/pembayaran/{{ $pesanan->id_pesanan }}" style="display: block; width: 100%; text-align: center; padding: 12px; background: var(--gradient-brand); color: white; border-radius: 8px; font-size: 0.95em; font-weight: 700; text-decoration: none; box-shadow: 0 4px 12px rgba(120, 157, 188, 0.4);">
+                    Selesaikan Pembayaran Sekarang
                 </a>
             </div>
             @endif

@@ -40,6 +40,7 @@
             --card-shadow-hover: 0 18px 50px rgba(120,157,188,0.12);
             --button-shadow: 0 8px 20px rgba(120,157,188,0.25);
             --button-shadow-hover: 0 8px 20px rgba(120,157,188,0.25);
+            --gradient-brand: linear-gradient(135deg, #3B5B82 0%, #789DBC 100%);
             color-scheme: light;
         }
 
@@ -67,6 +68,7 @@
             --card-shadow-hover: 0 18px 50px rgba(0,0,0,0.35);
             --button-shadow: 0 8px 20px rgba(120,157,188,0.20);
             --button-shadow-hover: 0 8px 20px rgba(120,157,188,0.28);
+            --gradient-brand: linear-gradient(135deg, #334155 0%, #0F172A 100%);
             color-scheme: dark;
         }
 
@@ -111,11 +113,11 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            height: 64px;
+            height: 66px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: clamp(12px, 2.5vw, 40px);
+            padding: 0 clamp(20px, 4vw, 40px);
             
             /* Liquid Glass Effect */
             background: var(--navbar-bg);
@@ -147,9 +149,9 @@
         }
 
         .navbar-logo-text {
-            font-size: 1.0625em;
+            font-size: 1.15em;
             font-weight: 700;
-            letter-spacing: -0.6px;
+            letter-spacing: -0.5px;
             color: var(--dark);
         }
 
@@ -184,11 +186,11 @@
         .navbar-menu a {
             display: flex;
             align-items: center;
-            padding: 8px 18px;
+            padding: 8px 16px;
             text-decoration: none;
             color: var(--dark);
             font-weight: 500;
-            font-size: 0.9375em;
+            font-size: 0.95em;
             letter-spacing: -0.3px;
             border-radius: 8px;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -452,7 +454,7 @@
             margin: 0 auto;
             padding: 0 20px;
         }
-            .hero-title { font-size: 2.25em; font-weight: 700; letter-spacing: -1px; color: var(--dark); margin: 0 0 8px 0; }
+            .hero-title { font-size: 1.8em; font-weight: 700; letter-spacing: -0.5px; color: var(--dark); margin: 0 0 8px 0; }
 
             /* Ensure headings use consistent casing and rhythm */
             .hero-title, .page-header h1, .page-title h1 { text-transform: none; }
@@ -598,8 +600,8 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
+            background: var(--gradient-brand);
+            color: #FFFFFF;
             box-shadow: var(--button-shadow);
         }
 
@@ -1021,12 +1023,7 @@
         .stat-icon-pink { background: linear-gradient(135deg, rgba(255,227,227,0.55) 0%, rgba(254,249,242,0.92) 100%); }
         .stat-icon-purple { background: linear-gradient(135deg, rgba(201,233,210,0.42) 0%, rgba(120,157,188,0.14) 100%); }
 
-        .stat-value-green { color: #7EBB98; }
-        .stat-value-indigo { color: var(--primary); }
-        .stat-value-yellow { color: #7A5B24; }
-        .stat-value-blue { color: #789DBC; }
-        .stat-value-pink { color: #D98999; }
-        .stat-value-purple { color: #C9E9D2; }
+        /* Warna value akan fallback ke var(--dark) untuk visibilitas maksimal */
 
         /* Quick actions container */
         .quick-actions { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -1197,7 +1194,6 @@
             
             <!-- Logo -->
             <a href="{{ route('admin.dashboard') }}" class="navbar-logo">
-                <span class="navbar-logo-icon">🍰</span>
                 <span class="navbar-logo-text">SugarBase</span>
             </a>
 

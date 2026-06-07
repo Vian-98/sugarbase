@@ -12,19 +12,19 @@
     </div>
     <div style="flex: 1; height: 2px; background: var(--success); margin: 0 12px;"></div>
     <div style="display: flex; align-items: center; gap: 8px;">
-        <div style="width: 32px; height: 32px; background: #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.85em; font-weight: 700;">✓</div>
-        <span style="font-size: 0.85em; font-weight: 600; color: #22c55e;">Konfirmasi</span>
+        <div style="width: 32px; height: 32px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.85em; font-weight: 700;">✓</div>
+        <span style="font-size: 0.85em; font-weight: 600; color: var(--success);">Konfirmasi</span>
     </div>
-    <div style="flex: 1; height: 2px; background: #22c55e; margin: 0 12px;"></div>
+    <div style="flex: 1; height: 2px; background: var(--success); margin: 0 12px;"></div>
     <div style="display: flex; align-items: center; gap: 8px;">
-        <div style="width: 32px; height: 32px; background: #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.85em; font-weight: 700;">3</div>
-        <span style="font-size: 0.85em; font-weight: 600; color: #22c55e;">Pembayaran</span>
+        <div style="width: 32px; height: 32px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.85em; font-weight: 700;">3</div>
+        <span style="font-size: 0.85em; font-weight: 600; color: var(--success);">Pembayaran</span>
     </div>
 </div>
 
 <!-- FLASH MESSAGES -->
 @if(session('success'))
-<div style="background: rgba(126,187,152,0.15); border: 1px solid #86efac; color: var(--dark); font-weight: 600; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px;">
+<div style="background: rgba(126,187,152,0.15); border: 1px solid var(--success); color: var(--dark); font-weight: 600; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px;">
     ✅ {{ session('success') }}
 </div>
 @endif
@@ -82,20 +82,32 @@
                     @endforeach
                 </div>
 
+                @if($pesanan->status_pesanan === 'selesai')
+                <div style="background: rgba(126,187,152,0.15); border: 1px solid var(--success); border-radius: 10px; padding: 16px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <h4 style="margin: 0; color: var(--success); font-size: 1.1em; font-weight: 700;">✅ Pembayaran Berhasil</h4>
+                        <p style="margin: 2px 0 0; font-size: 0.85em; color: var(--text-secondary);">Pembayaran telah diverifikasi.</p>
+                    </div>
+                    <button onclick="window.print()" 
+                        style="padding: 7px 14px; background: rgba(126,187,152,0.15); border: 1px solid var(--success); border-radius: 6px; cursor: pointer; font-size: 0.8em; color: var(--success); font-weight: 600; white-space: nowrap;">
+                        Cetak Resi
+                    </button>
+                </div>
+                @else
                 <!-- Jumlah Transfer -->
-                <div style="background: rgba(126,187,152,0.15); border: 1px solid #86efac; border-radius: 10px; padding: 16px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
+                <div style="background: rgba(126,187,152,0.15); border: 1px solid var(--success); border-radius: 10px; padding: 16px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
                     <div>
                         <p style="margin: 0; font-size: 0.85em; color: var(--text-secondary);">Jumlah yang harus ditransfer</p>
                         <p style="margin: 6px 0 0; font-size: 1.4em; font-weight: 700; color: var(--success);">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
                     </div>
                     <button onclick="copyRek('{{ $pesanan->total_harga }}', this)"
-                        style="padding: 7px 14px; background: rgba(126,187,152,0.15); border: 1px solid #86efac; border-radius: 6px; cursor: pointer; font-size: 0.8em; color: var(--success); font-weight: 600; white-space: nowrap;">
+                        style="padding: 7px 14px; background: rgba(126,187,152,0.15); border: 1px solid var(--success); border-radius: 6px; cursor: pointer; font-size: 0.8em; color: var(--success); font-weight: 600; white-space: nowrap;">
                         📋 Salin
                     </button>
                 </div>
 
                 <!-- Instruksi -->
-                <div style="background: rgba(231,200,158,0.15); border: 1px solid #fcd34d; border-radius: 10px; padding: 16px; margin-bottom: 24px;">
+                <div style="background: rgba(231,200,158,0.15); border: 1px solid var(--warning); border-radius: 10px; padding: 16px; margin-bottom: 24px;">
                     <p style="margin: 0 0 10px; font-weight: 700; color: var(--dark); font-size: 0.9em;">⚠️ Perhatian:</p>
                     <ol style="margin: 0; padding-left: 18px; font-size: 0.85em; color: var(--dark); line-height: 1.8; font-weight: 500;">
                         <li>Transfer sesuai nominal tepat (termasuk angka unik jika ada)</li>
@@ -108,10 +120,11 @@
                 <form action="/pembayaran/{{ $pesanan->id_pesanan }}/konfirmasi" method="POST">
                     @csrf
                     <button type="submit"
-                        style="width: 100%; padding: 14px; background: linear-gradient(135deg, #789DBC 0%, #688CAD 100%); color: white; border: none; border-radius: 8px; font-size: 1.05em; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(120, 157, 188, 0.4);">
+                        style="width: 100%; padding: 14px; background: var(--gradient-brand); color: white; border: none; border-radius: 8px; font-size: 1.05em; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(120, 157, 188, 0.4);">
                         ✅ Saya Sudah Transfer
                     </button>
                 </form>
+                @endif
             </div>
         </div>
 
@@ -136,10 +149,16 @@
                 <h3 style="font-size: 1.3em; color: var(--dark); margin: 0 0 12px;">Pesanan Sedang Diproses!</h3>
                 <p style="color: var(--text-secondary); font-size: 0.95em; line-height: 1.7; margin-bottom: 24px;">
                     Pesananmu sedang dipersiapkan. Kurir kami akan segera mengantar ke alamatmu.<br>
-                    <strong>Siapkan uang tunai</strong> sebesar <strong style="color: #789DBC;">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</strong> saat barang tiba.
+                    <strong>Siapkan uang tunai</strong> sebesar <strong style="color: var(--primary);">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</strong> saat barang tiba.
                 </p>
 
-                <div style="background: rgba(126,187,152,0.15); border: 1px solid #86efac; border-radius: 10px; padding: 20px; margin-bottom: 24px; text-align: left;">
+                @if(in_array($pesanan->status_pesanan, ['diproses', 'dikirim', 'selesai']))
+                <div style="background: rgba(126,187,152,0.15); border: 1px solid var(--success); border-radius: 10px; padding: 20px; margin-bottom: 24px; text-align: left;">
+                    <h4 style="margin: 0 0 10px; color: var(--success); font-size: 1em; font-weight: 700;">✅ Bukti Pembayaran Diterima</h4>
+                    <p style="margin: 0; font-size: 0.9em; color: var(--text-secondary); line-height: 1.5;">Terima kasih, pembayaran Anda telah kami konfirmasi. Pesanan sedang dalam tahap selanjutnya.</p>
+                </div>
+                @else
+                <div style="background: rgba(126,187,152,0.15); border: 1px solid var(--success); border-radius: 10px; padding: 20px; margin-bottom: 24px; text-align: left;">
                     <p style="margin: 0 0 8px; font-weight: 600; color: var(--success); font-size: 0.9em;">📋 Yang perlu kamu lakukan:</p>
                     <ul style="margin: 0; padding-left: 18px; font-size: 0.85em; color: var(--text-secondary); line-height: 2;">
                         <li>Pastikan ada di rumah saat kurir datang</li>
@@ -148,9 +167,10 @@
                         <li>Simpan struk pembayaran dari kurir</li>
                     </ul>
                 </div>
+                @endif
 
                 <a href="/pesanan/saya"
-                    style="display: inline-block; padding: 13px 32px; background: linear-gradient(135deg, #789DBC 0%, #688CAD 100%); color: white; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 1em; box-shadow: 0 4px 12px rgba(120, 157, 188, 0.4);">
+                    style="display: inline-block; padding: 13px 32px; background: var(--gradient-brand); color: white; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 1em; box-shadow: 0 4px 12px rgba(120, 157, 188, 0.4);">
                     📦 Pantau Status Pesanan
                 </a>
             </div>
@@ -249,7 +269,7 @@
 
                     <div style="background: rgba(217,137,153,0.15); border: 1px solid #e9d5ff; border-radius: 10px; padding: 16px; margin-bottom: 20px; display: inline-block; min-width: 260px;">
                         <p style="margin: 0 0 4px; font-size: 0.8em; color: var(--text-secondary);">Total Pembayaran</p>
-                        <p style="margin: 0; font-size: 1.5em; font-weight: 700; color: #6b21a8;">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
+                        <p style="margin: 0; font-size: 1.5em; font-weight: 700; color: var(--primary);">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
                         <p style="margin: 6px 0 0; font-size: 0.75em; color: var(--text-secondary);">a/n SugarBase Indonesia</p>
                     </div>
 
@@ -267,7 +287,7 @@
                         <p style="margin: 0; font-family: monospace; font-size: 1.4em; font-weight: 700; color: var(--success); letter-spacing: 2px;">0812-3456-7890</p>
                         <p style="margin: 6px 0 0; font-size: 0.8em; color: var(--text-secondary);">a/n SugarBase</p>
                     </div>
-                    <p style="font-size: 1.2em; font-weight: 700; color: #789DBC; margin-bottom: 20px;">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
+                    <p style="font-size: 1.2em; font-weight: 700; color: var(--primary); margin-bottom: 20px;">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
                 </div>
 
                 <!-- OVO Panel -->
@@ -279,7 +299,7 @@
                         <p style="margin: 0; font-family: monospace; font-size: 1.4em; font-weight: 700; color: var(--danger); letter-spacing: 2px;">0813-9876-5432</p>
                         <p style="margin: 6px 0 0; font-size: 0.8em; color: var(--text-secondary);">a/n SugarBase</p>
                     </div>
-                    <p style="font-size: 1.2em; font-weight: 700; color: #789DBC; margin-bottom: 20px;">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
+                    <p style="font-size: 1.2em; font-weight: 700; color: var(--primary); margin-bottom: 20px;">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
                 </div>
 
                 <!-- DANA Panel -->
@@ -291,14 +311,14 @@
                         <p style="margin: 0; font-family: monospace; font-size: 1.4em; font-weight: 700; color: var(--primary); letter-spacing: 2px;">0821-1122-3344</p>
                         <p style="margin: 6px 0 0; font-size: 0.8em; color: var(--text-secondary);">a/n SugarBase</p>
                     </div>
-                    <p style="font-size: 1.2em; font-weight: 700; color: #789DBC; margin-bottom: 20px;">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
+                    <p style="font-size: 1.2em; font-weight: 700; color: var(--primary); margin-bottom: 20px;">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
                 </div>
 
                 <!-- Tombol Konfirmasi -->
                 <form action="/pembayaran/{{ $pesanan->id_pesanan }}/konfirmasi" method="POST" style="margin-top: 4px;">
                     @csrf
                     <button type="submit"
-                        style="width: 100%; padding: 14px; background: linear-gradient(135deg, #789DBC 0%, #688CAD 100%); color: white; border: none; border-radius: 8px; font-size: 1.05em; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(120, 157, 188, 0.4);">
+                        style="width: 100%; padding: 14px; background: var(--gradient-brand); color: white; border: none; border-radius: 8px; font-size: 1.05em; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(120, 157, 188, 0.4);">
                         ✅ Konfirmasi Pembayaran
                     </button>
                 </form>
@@ -336,7 +356,7 @@
 
             <div style="border-top: 1px solid var(--border); padding-top: 12px; margin-top: 4px; display: flex; justify-content: space-between; font-size: 1em; font-weight: 700; color: var(--dark);">
                 <span>Total</span>
-                <span style="color: #789DBC;">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</span>
+                <span style="color: var(--primary);">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</span>
             </div>
         </div>
 
@@ -411,7 +431,7 @@ function pilihEwallet(id) {
         t.style.color = 'var(--text-secondary)';
     });
     const tab = document.getElementById('tab-' + id);
-    tab.style.borderColor = '#789DBC';
+    tab.style.borderColor = 'var(--primary)';
     tab.style.background = 'rgba(120,157,188,0.15)';
     tab.style.color = 'var(--primary)';
 }
