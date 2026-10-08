@@ -1,6 +1,6 @@
 <?php
 // Endpoint untuk generate QR code
-$url = "http://192.168.2.33:8000";
+$url = config('app.url');
 $qr_api = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" . urlencode($url);
 ?>
 
@@ -86,7 +86,7 @@ $qr_api = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" . url
         <div class="instruction">
             <strong>📱 Cara Akses dari HP:</strong><br>
             1. Scan QR code di atas<br>
-            2. Atau ketik langsung: http://192.168.2.33:8000<br>
+            2. Atau ketik langsung: {{ config('app.url') }}<br>
             3. Pastikan HP connect ke WiFi yang sama
         </div>
         
