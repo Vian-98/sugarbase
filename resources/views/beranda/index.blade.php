@@ -280,7 +280,7 @@
             @if($heroProduct && $heroProduct->foto && file_exists(public_path('storage/' . $heroProduct->foto)))
                 <img src="{{ asset('storage/' . $heroProduct->foto) }}" alt="{{ $heroProduct->nama_produk }}" class="hero-img">
             @else
-                <img src="{{ asset('storage/produk/red-velvet-slice.jpg') }}" alt="Premium Dessert" class="hero-img">
+                <img src="{{ asset('storage/produk/red-velvet-slice-2.jpg') }}" alt="Premium Dessert" class="hero-img">
             @endif
             <div class="hero-glass-card">
                 <div class="glass-icon">⭐</div>
